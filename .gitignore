@@ -14,6 +14,7 @@ pip-delete-this-directory.txt
 
 # Build and distribution outputs
 dist/
+!packages/shared-types/dist/
 build/
 .next/
 out/
