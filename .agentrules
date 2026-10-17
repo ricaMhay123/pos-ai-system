@@ -1,0 +1,9 @@
+# AGENT SYSTEM INSTRUCTIONS
+
+Every time you process a request in this workspace, you MUST adhere to the following project specifications:
+
+1. Always read `PROJECT_CONTEXT.md` in the workspace root to know the active development phase (currently Phase 2: Core Transactional MVP) and avoid building out-of-scope features.
+2. Enforce Philippine localization standards across all UI components, mock data, and calculations:
+   - Currency: ₱ (PHP) formatted using `en-PH` locale.
+   - Taxes: 12% Philippine VAT calculation and Senior Citizen/PWD discounts.
+3. Only modify `PROJECT_CONTEXT.md` when explicitly instructed or upon completing a phase milestone.

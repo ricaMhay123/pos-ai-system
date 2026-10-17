@@ -1,0 +1,33 @@
+{
+  "name": "pos-ai-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Enterprise POS System integrated with an AI-driven Inventory Recommendation Engine",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev --workspace=@pos-ai/api-gateway",
+    "dev:web": "npm run dev --workspace=@pos-ai/web-pos",
+    "dev:ml": "cd apps/ml-service && uvicorn app.main:app --reload --port 8000",
+    "ml:etl": "python apps/ml-service/run_etl.py",
+    "build": "npm run build --workspace=@pos-ai/shared-types && npm run build --workspace=@pos-ai/api-gateway && npm run build --workspace=@pos-ai/web-pos",
+    "lint": "npm run lint --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "db:setup": "node scripts/setup-db.js",
+    "db:migrate": "psql -h localhost -U postgres -d pos_db -f packages/database/migrations/001_initial_pos_and_inventory_schema.sql",
+    "db:seed": "psql -h localhost -U postgres -d pos_db -f packages/database/seeds/001_seed_initial_data.sql"
+  },
+  "keywords": [
+    "pos",
+    "inventory-management",
+    "ai-recommendations",
+    "demand-forecasting",
+    "nestjs",
+    "react",
+    "fastapi"
+  ],
+  "author": "Engineering Team",
+  "license": "UNLICENSED"
+}

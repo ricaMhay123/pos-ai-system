@@ -1,0 +1,11 @@
+{
+  "name": "@pos-ai/database",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "migrate": "psql -h localhost -U postgres -d pos_db -f migrations/001_initial_pos_and_inventory_schema.sql",
+    "seed:initial": "psql -h localhost -U postgres -d pos_db -f seeds/001_seed_initial_data.sql",
+    "seed:history": "psql -h localhost -U postgres -d pos_db -f seeds/002_historical_sales_6months.sql",
+    "seed": "npm run seed:initial && npm run seed:history"
+  }
+}

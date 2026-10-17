@@ -1,0 +1,674 @@
+openapi: 3.0.3
+info:
+  title: POS AI Enterprise API
+  description: Core transactional API for Point-of-Sale checkout, multi-location inventory ledger, and AI-driven replenishment forecasting.
+  version: 1.0.0
+  contact:
+    name: POS AI Engineering Architecture Team
+    email: architecture@pos-ai.local
+
+servers:
+  - url: http://localhost:4000/api/v1
+    description: Local Development Gateway
+  - url: https://api.staging.pos-ai.internal/v1
+    description: Staging Environment
+
+tags:
+  - name: Auth
+    description: Authentication & session management (RBAC / JWT)
+  - name: POS Checkout
+    description: High-throughput cashier transaction and checkout operations
+  - name: Catalog
+    description: Product, category, and barcode lookups
+  - name: Inventory
+    description: Real-time stock levels, ledger movement, and manual adjustments
+  - name: AI Recommendations
+    description: Demand forecast outputs, reorder recommendations, and approval workflows
+
+paths:
+  # ==========================================
+  # AUTHENTICATION
+  # ==========================================
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Cashier & User Login
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Successfully authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /auth/me:
+    get:
+      tags: [Auth]
+      summary: Retrieve current authenticated session & permissions
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: User profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  # ==========================================
+  # CATALOG & PRODUCTS
+  # ==========================================
+  /products:
+    get:
+      tags: [Catalog]
+      summary: List products with pagination and category filters
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+        - name: categoryId
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: search
+          in: query
+          description: Search SKU or product name
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Paginated product list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedProductsResponse'
+
+  /products/barcode/{barcode}:
+    get:
+      tags: [Catalog]
+      summary: Fast barcode lookup for POS scanning terminals
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: barcode
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Product details with current store stock level
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductWithStock'
+        '404':
+          description: Barcode not recognized
+
+  # ==========================================
+  # POS CHECKOUT & TRANSACTIONS
+  # ==========================================
+  /pos/checkout:
+    post:
+      tags: [POS Checkout]
+      summary: Process sales checkout transaction
+      description: Atomically completes transaction, decrements inventory, and commits payment records.
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckoutRequest'
+      responses:
+        '201':
+          description: Transaction successfully processed and receipt generated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckoutResponse'
+        '400':
+          description: Invalid payload or validation failure
+        '409':
+          description: Insufficient inventory on one or more items, or duplicate idempotency key
+
+  /pos/transactions/{id}:
+    get:
+      tags: [POS Checkout]
+      summary: Get sales transaction receipt by ID
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionReceipt'
+
+  # ==========================================
+  # INVENTORY MANAGEMENT
+  # ==========================================
+  /inventory/levels:
+    get:
+      tags: [Inventory]
+      summary: Query store stock levels & low stock alerts
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: storeId
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: lowStockOnly
+          in: query
+          schema:
+            type: boolean
+            default: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InventoryStockItem'
+
+  /inventory/adjust:
+    post:
+      tags: [Inventory]
+      summary: Adjust inventory stock balance (loss, restock, manual cycle count)
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventoryAdjustmentRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryAdjustmentResponse'
+
+  # ==========================================
+  # AI RECOMMENDATION ENGINE
+  # ==========================================
+  /recommendations:
+    get:
+      tags: [AI Recommendations]
+      summary: Get AI-generated replenishment recommendations
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: storeId
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: urgency
+          in: query
+          schema:
+            type: string
+            enum: [low, medium, high, critical]
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [pending_review, approved, auto_ordered, dismissed, fulfilled]
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReplenishmentRecommendation'
+
+  /recommendations/{id}/approve:
+    post:
+      tags: [AI Recommendations]
+      summary: Approve recommendation and generate Purchase Order draft
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                approvedQuantity:
+                  type: integer
+                  description: Optional override for recommendation quantity
+                notes:
+                  type: string
+      responses:
+        '200':
+          description: Recommendation approved and PO drafted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReplenishmentRecommendation'
+
+# ==========================================
+# COMPONENTS & SCHEMAS
+# ==========================================
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  responses:
+    UnauthorizedError:
+      description: Authentication credentials missing or expired
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+
+  schemas:
+    ApiError:
+      type: object
+      required: [statusCode, message, timestamp]
+      properties:
+        statusCode:
+          type: integer
+          example: 401
+        message:
+          type: string
+          example: "Invalid or expired JWT token"
+        timestamp:
+          type: string
+          format: date-time
+
+    LoginRequest:
+      type: object
+      required: [username, password]
+      properties:
+        username:
+          type: string
+          example: "cashier_01"
+        password:
+          type: string
+          format: password
+          example: "Password123!"
+
+    AuthResponse:
+      type: object
+      required: [accessToken, refreshToken, user]
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+        expiresIn:
+          type: integer
+          example: 28800
+        user:
+          $ref: '#/components/schemas/UserProfile'
+
+    UserProfile:
+      type: object
+      required: [id, username, email, firstName, lastName, roles]
+      properties:
+        id:
+          type: string
+          format: uuid
+        storeId:
+          type: string
+          format: uuid
+        username:
+          type: string
+        email:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        employeeCode:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+            example: "cashier"
+
+    ProductWithStock:
+      type: object
+      required: [id, sku, barcode, name, retailPrice, taxRate, stockOnHand, stockAvailable]
+      properties:
+        id:
+          type: string
+          format: uuid
+        sku:
+          type: string
+        barcode:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        costPrice:
+          type: number
+          format: float
+        retailPrice:
+          type: number
+          format: float
+        taxRate:
+          type: number
+          format: float
+          example: 0.1200
+          description: Standard Philippine Value-Added Tax (VAT) rate (12%)
+        stockOnHand:
+          type: integer
+          example: 42
+        stockAvailable:
+          type: integer
+          example: 40
+
+    PaginatedProductsResponse:
+      type: object
+      required: [items, total, page, limit, totalPages]
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductWithStock'
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+        totalPages:
+          type: integer
+
+    CheckoutItemInput:
+      type: object
+      required: [productId, quantity, unitPrice]
+      properties:
+        productId:
+          type: string
+          format: uuid
+        quantity:
+          type: integer
+          minimum: 1
+          example: 2
+        unitPrice:
+          type: number
+          format: float
+          example: 4.50
+        discountAmount:
+          type: number
+          format: float
+          default: 0.00
+
+    PaymentRecordInput:
+      type: object
+      required: [method, amount]
+      properties:
+        method:
+          type: string
+          enum: [cash, credit_card, debit_card, digital_wallet, gift_card]
+        amount:
+          type: number
+          format: float
+        gatewayReference:
+          type: string
+        lastFour:
+          type: string
+
+    CheckoutRequest:
+      type: object
+      required: [storeId, items, payments]
+      properties:
+        storeId:
+          type: string
+          format: uuid
+        idempotencyKey:
+          type: string
+          example: "idemp-uuid-9843-2342"
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CheckoutItemInput'
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentRecordInput'
+        metadata:
+          type: object
+          additionalProperties: true
+
+    CheckoutResponse:
+      type: object
+      required: [transactionId, transactionNumber, status, subtotal, tax, discount, total, createdAt]
+      properties:
+        transactionId:
+          type: string
+          format: uuid
+        transactionNumber:
+          type: string
+          example: "TXN-20261017-0012"
+        status:
+          type: string
+          example: "completed"
+        subtotal:
+          type: number
+          format: float
+        tax:
+          type: number
+          format: float
+        discount:
+          type: number
+          format: float
+        total:
+          type: number
+          format: float
+        changeDue:
+          type: number
+          format: float
+          default: 0.00
+        createdAt:
+          type: string
+          format: date-time
+
+    TransactionReceipt:
+      type: object
+      required: [id, transactionNumber, storeName, cashierName, lineItems, total, payments, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        transactionNumber:
+          type: string
+        storeName:
+          type: string
+        cashierName:
+          type: string
+        lineItems:
+          type: array
+          items:
+            type: object
+            properties:
+              productName:
+                type: string
+              sku:
+                type: string
+              quantity:
+                type: integer
+              unitPrice:
+                type: number
+              totalPrice:
+                type: number
+        subtotal:
+          type: number
+        tax:
+          type: number
+        discount:
+          type: number
+        total:
+          type: number
+        payments:
+          type: array
+          items:
+            type: object
+            properties:
+              method:
+                type: string
+              amount:
+                type: number
+        createdAt:
+          type: string
+          format: date-time
+
+    InventoryStockItem:
+      type: object
+      required: [productId, sku, name, quantityOnHand, quantityAvailable, safetyStock]
+      properties:
+        productId:
+          type: string
+          format: uuid
+        sku:
+          type: string
+        name:
+          type: string
+        category:
+          type: string
+        quantityOnHand:
+          type: integer
+        quantityReserved:
+          type: integer
+        quantityAvailable:
+          type: integer
+        safetyStock:
+          type: integer
+        reorderPoint:
+          type: integer
+        leadTimeDays:
+          type: integer
+
+    InventoryAdjustmentRequest:
+      type: object
+      required: [storeId, productId, movementType, quantityDelta, reason]
+      properties:
+        storeId:
+          type: string
+          format: uuid
+        productId:
+          type: string
+          format: uuid
+        movementType:
+          type: string
+          enum: [adjustment_loss, adjustment_found, return_restock, purchase_receipt]
+        quantityDelta:
+          type: integer
+          example: -2
+        reason:
+          type: string
+          example: "Damaged container during shelf stocking"
+
+    InventoryAdjustmentResponse:
+      type: object
+      required: [transactionId, productId, previousBalance, newBalance, movementType, createdAt]
+      properties:
+        transactionId:
+          type: string
+          format: uuid
+        productId:
+          type: string
+          format: uuid
+        previousBalance:
+          type: integer
+        newBalance:
+          type: integer
+        movementType:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    ReplenishmentRecommendation:
+      type: object
+      required: [id, productId, productName, sku, currentStockOnHand, forecastedDemand7d, recommendedOrderQuantity, urgency, confidenceScore, status]
+      properties:
+        id:
+          type: string
+          format: uuid
+        productId:
+          type: string
+          format: uuid
+        productName:
+          type: string
+        sku:
+          type: string
+        currentStockOnHand:
+          type: integer
+        forecastedDemand7d:
+          type: number
+        forecastedDemand14d:
+          type: number
+        recommendedOrderQuantity:
+          type: integer
+        urgency:
+          type: string
+          enum: [low, medium, high, critical]
+        confidenceScore:
+          type: number
+          format: float
+        predictedStockoutDate:
+          type: string
+          format: date
+        estimatedCost:
+          type: number
+          format: float
+        reasoningSummary:
+          type: string
+        status:
+          type: string
+          enum: [pending_review, approved, auto_ordered, dismissed, fulfilled]
+        createdAt:
+          type: string
+          format: date-time

@@ -1,0 +1,133 @@
+version: '3.8'
+
+services:
+  # ==========================================
+  # PostgreSQL Database (with Auto-Migrations)
+  # ==========================================
+  postgres:
+    image: postgres:16-alpine
+    container_name: pos_ai_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DATABASE_USER:-postgres}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-postgres}
+      POSTGRES_DB: ${DATABASE_NAME:-pos_db}
+    ports:
+      - "${DATABASE_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./packages/database/migrations:/docker-entrypoint-initdb.d/01_migrations:ro
+      - ./packages/database/seeds:/docker-entrypoint-initdb.d/02_seeds:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER:-postgres} -d ${DATABASE_NAME:-pos_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - pos-network
+
+  # ==========================================
+  # Redis Cache & Message Broker
+  # ==========================================
+  redis:
+    image: redis:7-alpine
+    container_name: pos_ai_redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - pos-network
+
+  # ==========================================
+  # Backend API Gateway (NestJS)
+  # ==========================================
+  api-gateway:
+    build:
+      context: .
+      dockerfile: apps/api-gateway/Dockerfile
+    container_name: pos_ai_api_gateway
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_USER: ${DATABASE_USER:-postgres}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD:-postgres}
+      DATABASE_NAME: ${DATABASE_NAME:-pos_db}
+      DATABASE_URL: postgresql://${DATABASE_USER:-postgres}:${DATABASE_PASSWORD:-postgres}@postgres:5432/${DATABASE_NAME:-pos_db}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      JWT_SECRET: ${JWT_SECRET:-super_secret_enterprise_pos_jwt_key_2026!}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-8h}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-super_secret_refresh_key_2026!}
+      JWT_REFRESH_EXPIRES_IN: ${JWT_REFRESH_EXPIRES_IN:-7d}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:5173}
+      ML_SERVICE_URL: http://ml-service:8000
+    ports:
+      - "4000:4000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - pos-network
+
+  # ==========================================
+  # AI/ML Demand Forecasting Engine (FastAPI)
+  # ==========================================
+  ml-service:
+    build:
+      context: .
+      dockerfile: apps/ml-service/Dockerfile
+    container_name: pos_ai_ml_service
+    restart: unless-stopped
+    environment:
+      PORT: 8000
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_USER: ${DATABASE_USER:-postgres}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD:-postgres}
+      DATABASE_NAME: ${DATABASE_NAME:-pos_db}
+      DATABASE_URL: postgresql://${DATABASE_USER:-postgres}:${DATABASE_PASSWORD:-postgres}@postgres:5432/${DATABASE_NAME:-pos_db}
+      MODEL_NAME: LightGBM-DemandForecaster-PH
+      MODEL_VERSION: v1.4.0
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - pos-network
+
+  # ==========================================
+  # Frontend Web POS (React / Vite / Nginx)
+  # ==========================================
+  web-pos:
+    build:
+      context: .
+      dockerfile: apps/web-pos/Dockerfile
+    container_name: pos_ai_web_pos
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+    depends_on:
+      - api-gateway
+    networks:
+      - pos-network
+
+networks:
+  pos-network:
+    driver: bridge
+
+volumes:
+  pgdata:
+  redisdata:
