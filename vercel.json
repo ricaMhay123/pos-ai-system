@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "api-gateway": {
+      "root": "apps/api-gateway",
+      "framework": "nestjs"
+    },
+    "ml-service": {
+      "root": "apps/ml-service",
+      "framework": "fastapi"
+    },
+    "web-pos": {
+      "root": "apps/web-pos",
+      "framework": "vite"
+    }
+  }
+}

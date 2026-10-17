@@ -12,6 +12,8 @@ This project is an enterprise Point of Sale (POS) system integrated with an AI-d
 * **Database:** PostgreSQL (with time-series logging for sales transactions)
 * **Infrastructure:** Native Windows Environment, Local PostgreSQL (localhost:5432, user: postgres, db: pos_db), Node.js, Python 3.14 (NO Docker / Docker Compose)
 
+> For detailed technical stack specifications, monorepo directory mapping, and Vercel deployment presets, see [TECH_STACK.md](file:///c:/PROJECTS/POS%20AI/TECH_STACK.md).
+
 ---
 
 ## 18-Week Roadmap & Phase Tracker
