@@ -13,6 +13,7 @@
     "dev:ml": "cd apps/ml-service && uvicorn app.main:app --reload --port 8000",
     "ml:etl": "python apps/ml-service/run_etl.py",
     "build": "npm run build --workspace=@pos-ai/shared-types && npm run build --workspace=@pos-ai/api-gateway && npm run build --workspace=@pos-ai/web-pos",
+    "build:web": "npm run build --workspace=@pos-ai/shared-types && npm run build --workspace=@pos-ai/web-pos",
     "lint": "npm run lint --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
     "db:setup": "node scripts/setup-db.js",
