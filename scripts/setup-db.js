@@ -60,6 +60,13 @@ async function main() {
       console.log(`✓ Migration 001_initial_pos_and_inventory_schema.sql applied successfully.`);
     }
 
+    const migration002File = path.join(__dirname, '..', 'packages', 'database', 'migrations', '002_create_inventory_recommendations.sql');
+    if (fs.existsSync(migration002File)) {
+      const sql = fs.readFileSync(migration002File, 'utf8');
+      await appClient.query(sql);
+      console.log(`✓ Migration 002_create_inventory_recommendations.sql applied successfully.`);
+    }
+
     const seedFile = path.join(__dirname, '..', 'packages', 'database', 'seeds', '001_seed_initial_data.sql');
     if (fs.existsSync(seedFile)) {
       const sql = fs.readFileSync(seedFile, 'utf8');

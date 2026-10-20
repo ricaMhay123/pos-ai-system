@@ -269,6 +269,68 @@ export interface ReplenishmentRecommendation {
   updatedAt: string;
 }
 
+export interface InventoryRecommendation {
+  id: string;
+  forecastRunId?: string;
+  storeId: string;
+  productId: string;
+  productName: string;
+  categoryName?: string;
+  sku: string;
+  currentStockOnHand: number;
+  dailyAvgSales: number;
+  leadTimeDays: number;
+  safetyStock: number;
+  reorderPoint: number;
+  forecastedDemand7d: number;
+  forecastedDemand14d: number;
+  forecastedDemand30d: number;
+  recommendedOrderQuantity: number;
+  urgency: RecommendationUrgency;
+  confidenceScore: number;
+  predictedStockoutDate?: string;
+  estimatedCost: number;
+  reasoningSummary?: string;
+  status: RecommendationStatus;
+  reviewedBy?: string | null;
+  reviewedAt?: string | null;
+  decisionNotes?: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ManagerRecommendationSummary {
+  totalRecommendations: number;
+  lowStockCount: number;
+  criticalCount: number;
+  highCount: number;
+  mediumCount: number;
+  lowCount: number;
+  totalRecommendedUnits: number;
+  totalEstimatedCostPhp: number;
+  totalForecastedRevenue30dPhp: number;
+  topSellingForecastedProducts: Array<{
+    sku: string;
+    productName: string;
+    categoryName: string;
+    forecastedDemand30d: number;
+    forecastedRevenue30dPhp: number;
+    retailPricePhp: number;
+  }>;
+}
+
+export interface CrossSellRecommendation {
+  productId: string;
+  sku: string;
+  productName: string;
+  categoryName: string;
+  retailPrice: number;
+  costPrice?: number;
+  coOccurrenceCount: number;
+  confidenceScore: number;
+  reason: string;
+}
+
 export interface ForecastRun {
   id: string;
   storeId?: string;

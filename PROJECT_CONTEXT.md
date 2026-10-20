@@ -22,9 +22,10 @@ This project is an enterprise Point of Sale (POS) system integrated with an AI-d
 | :--- | :--- | :--- | :--- | :--- |
 | **Phase 1** | **Requirements & System Design** | DB schema design, API mapping, UI wireframing, data audit, and seed generation | Weeks 1–3 | **Completed** |
 | **Phase 2** | **Core Transactional MVP** | POS checkout interface, user auth (JWT/RBAC), inventory CRUD APIs | Weeks 4–8 | **Completed** |
-| **Phase 3** | **Data Pipeline & AI Integration** | ETL pipelines, sales forecasting models, Recommendation Dashboard UI | Weeks 9–14 | **In Progress** |
-| **Phase 4** | **Testing & QA** | Load testing POS, ML model validation (MAPE/Precision), bug triage | Weeks 15–17 | Pending |
-| **Phase 5** | **Deployment & Training** | Cloud setup, CI/CD, user onboarding and documentation | Week 18 | Pending |
+| **Phase 3** | **Data Pipeline & AI Integration** | ETL pipelines, sales forecasting models, Recommendation Dashboard UI | Weeks 9–14 | **Completed** |
+| **Phase 4** | **Testing & QA** | Load testing POS, ML model validation (MAPE/Precision), bug triage | Weeks 15–17 | **Completed** |
+| **Phase 5** | **Deployment & Training** | Cloud setup, CI/CD, user onboarding and documentation | Week 18 | **Completed** |
+| **Phase A** | **Auth Landing Page & Dual-Role Access** | RBAC login view, quick-fill test credentials, role-based routing (Cashier strictly to POS checkout, Manager to dashboard) | Post-Launch | **Completed** |
 
 ---
 

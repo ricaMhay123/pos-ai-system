@@ -16,6 +16,9 @@
     "build:web": "npm run build --workspace=@pos-ai/shared-types && npm run build --workspace=@pos-ai/web-pos",
     "lint": "npm run lint --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
+    "test:e2e": "node scripts/test_e2e_full.js",
+    "test:load": "node scripts/test_pos_load.js",
+    "test:ml": "python scripts/validate_ml_model.py",
     "db:setup": "node scripts/setup-db.js",
     "db:migrate": "psql -h localhost -U postgres -d pos_db -f packages/database/migrations/001_initial_pos_and_inventory_schema.sql",
     "db:seed": "psql -h localhost -U postgres -d pos_db -f packages/database/seeds/001_seed_initial_data.sql"

@@ -15,7 +15,9 @@ interface PosCheckoutShellProps {
   storeName?: string;
   terminalCode?: string;
   cashierName?: string;
+  cashierRole?: string;
   onToggleAiDashboard?: () => void;
+  onLockTerminal?: () => void;
   pendingRecommendationsCount?: number;
 }
 
@@ -24,7 +26,9 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
   storeName = 'Flagship BGC Terminal - Taguig',
   terminalCode = 'POS-BGC-01',
   cashierName = 'Juan Dela Cruz',
+  cashierRole = 'Cashier (EMP-CSH-003)',
   onToggleAiDashboard,
+  onLockTerminal,
   pendingRecommendationsCount = 0,
 }) => {
   const [products, setProducts] = useState<ProductWithStock[]>(initialProducts);
@@ -206,9 +210,9 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
         storeName={storeName}
         terminalCode={terminalCode}
         cashierName={cashierName}
-        cashierRole="Cashier (EMP-CSH-003)"
+        cashierRole={cashierRole}
         isOnline={true}
-        onLockTerminal={() => showFeedback('info', 'Register Terminal locked')}
+        onLockTerminal={onLockTerminal || (() => showFeedback('info', 'Register Terminal locked'))}
         onToggleAiDashboard={onToggleAiDashboard}
         pendingRecommendationsCount={pendingRecommendationsCount}
       />
@@ -279,6 +283,8 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
           onRemoveItem={handleRemoveItem}
           onClearCart={handleClearCart}
           onProceedToPayment={() => setIsPaymentOpen(true)}
+          allProducts={products}
+          onAddToCart={handleAddToCart}
         />
       </div>
 

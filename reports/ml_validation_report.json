@@ -1,0 +1,2692 @@
+{
+  "timestamp": "2026-10-18T19:08:02.463468",
+  "phase": "4.1: ML Model Validation",
+  "dataset": "jakhoramartdbase.sql / PostgreSQL sales_transactions (181 days)",
+  "holdoutDays": 30,
+  "totalEvaluatedSkus": 63,
+  "overallMetrics": {
+    "meanAbsoluteError": 2.621,
+    "rootMeanSquaredError": 3.252,
+    "dailyMapePercent": 117.75,
+    "dailyWapePercent": 63.83,
+    "dailyAccuracyPercent": 36.17,
+    "toleranceAccuracyPercent": 45.71,
+    "horizonMetrics": {
+      "7d": {
+        "mapePercent": 26.86,
+        "accuracyPercent": 74.1
+      },
+      "14d": {
+        "mapePercent": 19.46,
+        "accuracyPercent": 80.54
+      },
+      "30d": {
+        "mapePercent": 16.95,
+        "accuracyPercent": 83.05
+      }
+    }
+  },
+  "performanceBenchmark": {
+    "avgTrainingTimeMs": 19.16,
+    "avgInferenceTimeMs": 74.69,
+    "p95InferenceTimeMs": 129.98,
+    "totalPipelineSeconds": 9.79,
+    "throughputSkusPerSecond": 6.4
+  },
+  "slaCheck": {
+    "horizon30dMapePass": true,
+    "horizon30dAccuracyPass": true,
+    "horizon14dAccuracyPass": true,
+    "inferenceLatencyPass": true,
+    "totalPipelineTimePass": true,
+    "allSlaPassed": true
+  },
+  "perProductResults": [
+    {
+      "sku": "CAN-555-SRD",
+      "productName": "555 Sardines in Tomato Sauce 155g",
+      "categoryName": "Canned Goods & Instant Meals",
+      "retailPricePhp": 25.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 120.0,
+      "predictedUnitsTotal": 150.1,
+      "mae": 2.22,
+      "rmse": 2.85,
+      "dailyMapePercent": 98.61,
+      "dailyWapePercent": 55.42,
+      "dailyAccuracyPercent": 44.58,
+      "toleranceAccuracyPercent": 50.0,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 31.0,
+          "predicted": 29.7,
+          "mapePercent": 4.32,
+          "accuracyPercent": 95.68
+        },
+        "14d": {
+          "actual": 60.0,
+          "predicted": 68.5,
+          "mapePercent": 14.16,
+          "accuracyPercent": 85.84
+        },
+        "30d": {
+          "actual": 120.0,
+          "predicted": 150.1,
+          "mapePercent": 25.09,
+          "accuracyPercent": 74.91
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 41.3,
+        "inferenceTimeMs": 61.48,
+        "totalTimeMs": 102.78
+      }
+    },
+    {
+      "sku": "CAN-ARG-CRN",
+      "productName": "Argentina Corned Beef 175g",
+      "categoryName": "Canned Goods & Instant Meals",
+      "retailPricePhp": 42.5,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 119.0,
+      "predictedUnitsTotal": 106.4,
+      "mae": 1.82,
+      "rmse": 2.29,
+      "dailyMapePercent": 74.73,
+      "dailyWapePercent": 45.84,
+      "dailyAccuracyPercent": 54.16,
+      "toleranceAccuracyPercent": 63.33,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 32.0,
+          "predicted": 23.0,
+          "mapePercent": 28.23,
+          "accuracyPercent": 71.77
+        },
+        "14d": {
+          "actual": 60.0,
+          "predicted": 46.6,
+          "mapePercent": 22.39,
+          "accuracyPercent": 77.61
+        },
+        "30d": {
+          "actual": 119.0,
+          "predicted": 106.4,
+          "mapePercent": 10.56,
+          "accuracyPercent": 89.44
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 34.34,
+        "inferenceTimeMs": 87.25,
+        "totalTimeMs": 121.59
+      }
+    },
+    {
+      "sku": "BEV-BRB-POW",
+      "productName": "Bear Brand Fortified Powdered Milk 900g",
+      "categoryName": "Beverages",
+      "retailPricePhp": 319.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 139.0,
+      "predictedUnitsTotal": 104.2,
+      "mae": 2.48,
+      "rmse": 3.19,
+      "dailyMapePercent": 81.74,
+      "dailyWapePercent": 53.51,
+      "dailyAccuracyPercent": 46.49,
+      "toleranceAccuracyPercent": 50.0,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 24.0,
+          "predicted": 27.6,
+          "mapePercent": 15.17,
+          "accuracyPercent": 84.83
+        },
+        "14d": {
+          "actual": 63.0,
+          "predicted": 57.0,
+          "mapePercent": 9.58,
+          "accuracyPercent": 90.42
+        },
+        "30d": {
+          "actual": 139.0,
+          "predicted": 104.2,
+          "mapePercent": 25.02,
+          "accuracyPercent": 74.98
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 16.91,
+        "inferenceTimeMs": 74.92,
+        "totalTimeMs": 91.83
+      }
+    },
+    {
+      "sku": "BEV-C2T-APL",
+      "productName": "C2 Cool & Clean Apple Green Tea 500ml",
+      "categoryName": "Beverages",
+      "retailPricePhp": 31.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 121.0,
+      "predictedUnitsTotal": 135.8,
+      "mae": 2.2,
+      "rmse": 2.86,
+      "dailyMapePercent": 96.65,
+      "dailyWapePercent": 54.58,
+      "dailyAccuracyPercent": 45.42,
+      "toleranceAccuracyPercent": 53.33,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 20.0,
+          "predicted": 34.2,
+          "mapePercent": 70.95,
+          "accuracyPercent": 29.05
+        },
+        "14d": {
+          "actual": 50.0,
+          "predicted": 57.9,
+          "mapePercent": 15.83,
+          "accuracyPercent": 84.17
+        },
+        "30d": {
+          "actual": 121.0,
+          "predicted": 135.8,
+          "mapePercent": 12.27,
+          "accuracyPercent": 87.73
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 17.39,
+        "inferenceTimeMs": 97.97,
+        "totalTimeMs": 115.36
+      }
+    },
+    {
+      "sku": "BEV-C2T-009",
+      "productName": "C2 Cool & Clean Green Tea Apple 500ml",
+      "categoryName": "Beverages",
+      "retailPricePhp": 31.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 137,
+      "actualUnitsTotal": 110.0,
+      "predictedUnitsTotal": 125.3,
+      "mae": 2.45,
+      "rmse": 3.06,
+      "dailyMapePercent": 120.17,
+      "dailyWapePercent": 66.79,
+      "dailyAccuracyPercent": 33.21,
+      "toleranceAccuracyPercent": 56.67,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 20.0,
+          "predicted": 24.0,
+          "mapePercent": 19.99,
+          "accuracyPercent": 80.01
+        },
+        "14d": {
+          "actual": 46.0,
+          "predicted": 52.1,
+          "mapePercent": 13.25,
+          "accuracyPercent": 86.75
+        },
+        "30d": {
+          "actual": 110.0,
+          "predicted": 125.3,
+          "mapePercent": 13.9,
+          "accuracyPercent": 86.1
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 29.26,
+        "inferenceTimeMs": 109.26,
+        "totalTimeMs": 138.51
+      }
+    },
+    {
+      "sku": "CAN-TUN-004",
+      "productName": "Century Tuna Flakes in Oil 180g",
+      "categoryName": "Canned Goods & Instant Meals",
+      "retailPricePhp": 46.75,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 164.0,
+      "predictedUnitsTotal": 186.0,
+      "mae": 3.13,
+      "rmse": 3.76,
+      "dailyMapePercent": 142.34,
+      "dailyWapePercent": 57.2,
+      "dailyAccuracyPercent": 42.8,
+      "toleranceAccuracyPercent": 33.33,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 48.0,
+          "predicted": 34.7,
+          "mapePercent": 27.71,
+          "accuracyPercent": 72.29
+        },
+        "14d": {
+          "actual": 86.0,
+          "predicted": 77.6,
+          "mapePercent": 9.75,
+          "accuracyPercent": 90.25
+        },
+        "30d": {
+          "actual": 164.0,
+          "predicted": 186.0,
+          "mapePercent": 13.41,
+          "accuracyPercent": 86.59
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 18.74,
+        "inferenceTimeMs": 100.06,
+        "totalTimeMs": 118.8
+      }
+    },
+    {
+      "sku": "CAN-TUN-OIL",
+      "productName": "Century Tuna Flakes in Oil 180g",
+      "categoryName": "Canned Goods & Instant Meals",
+      "retailPricePhp": 46.75,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 118.0,
+      "predictedUnitsTotal": 130.4,
+      "mae": 2.82,
+      "rmse": 3.5,
+      "dailyMapePercent": 132.65,
+      "dailyWapePercent": 71.59,
+      "dailyAccuracyPercent": 28.41,
+      "toleranceAccuracyPercent": 40.0,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 33.0,
+          "predicted": 30.9,
+          "mapePercent": 6.51,
+          "accuracyPercent": 93.49
+        },
+        "14d": {
+          "actual": 47.0,
+          "predicted": 59.5,
+          "mapePercent": 26.66,
+          "accuracyPercent": 73.34
+        },
+        "30d": {
+          "actual": 118.0,
+          "predicted": 130.4,
+          "mapePercent": 10.48,
+          "accuracyPercent": 89.52
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 17.32,
+        "inferenceTimeMs": 79.51,
+        "totalTimeMs": 96.83
+      }
+    },
+    {
+      "sku": "CAN-TUN-HOT",
+      "productName": "Century Tuna Hot & Spicy 180g",
+      "categoryName": "Canned Goods & Instant Meals",
+      "retailPricePhp": 46.75,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 131.0,
+      "predictedUnitsTotal": 121.2,
+      "mae": 2.42,
+      "rmse": 2.85,
+      "dailyMapePercent": 100.2,
+      "dailyWapePercent": 55.37,
+      "dailyAccuracyPercent": 44.63,
+      "toleranceAccuracyPercent": 50.0,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 37.0,
+          "predicted": 30.9,
+          "mapePercent": 16.58,
+          "accuracyPercent": 83.42
+        },
+        "14d": {
+          "actual": 67.0,
+          "predicted": 55.1,
+          "mapePercent": 17.7,
+          "accuracyPercent": 82.3
+        },
+        "30d": {
+          "actual": 131.0,
+          "predicted": 121.2,
+          "mapePercent": 7.49,
+          "accuracyPercent": 92.51
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 18.57,
+        "inferenceTimeMs": 77.74,
+        "totalTimeMs": 96.31
+      }
+    },
+    {
+      "sku": "SNK-CHI-CRN",
+      "productName": "Chippy Barbecue Flavor 110g",
+      "categoryName": "Snacks & Confectionery",
+      "retailPricePhp": 35.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 126.0,
+      "predictedUnitsTotal": 104.0,
+      "mae": 2.64,
+      "rmse": 3.46,
+      "dailyMapePercent": 100.56,
+      "dailyWapePercent": 62.76,
+      "dailyAccuracyPercent": 37.24,
+      "toleranceAccuracyPercent": 40.0,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 28.0,
+          "predicted": 27.4,
+          "mapePercent": 2.19,
+          "accuracyPercent": 97.81
+        },
+        "14d": {
+          "actual": 47.0,
+          "predicted": 50.0,
+          "mapePercent": 6.42,
+          "accuracyPercent": 93.58
+        },
+        "30d": {
+          "actual": 126.0,
+          "predicted": 104.0,
+          "mapePercent": 17.44,
+          "accuracyPercent": 82.56
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 18.51,
+        "inferenceTimeMs": 71.17,
+        "totalTimeMs": 89.69
+      }
+    },
+    {
+      "sku": "PCR-CLS-RED",
+      "productName": "Close Up Red Hot Gel Toothpaste 145ml",
+      "categoryName": "Personal Care & Household",
+      "retailPricePhp": 118.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 135,
+      "actualUnitsTotal": 102.0,
+      "predictedUnitsTotal": 124.6,
+      "mae": 2.46,
+      "rmse": 2.96,
+      "dailyMapePercent": 137.16,
+      "dailyWapePercent": 72.23,
+      "dailyAccuracyPercent": 27.77,
+      "toleranceAccuracyPercent": 46.67,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 23.0,
+          "predicted": 23.0,
+          "mapePercent": 0.16,
+          "accuracyPercent": 99.84
+        },
+        "14d": {
+          "actual": 36.0,
+          "predicted": 53.5,
+          "mapePercent": 48.48,
+          "accuracyPercent": 51.52
+        },
+        "30d": {
+          "actual": 102.0,
+          "predicted": 124.6,
+          "mapePercent": 22.13,
+          "accuracyPercent": 77.87
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 16.51,
+        "inferenceTimeMs": 80.73,
+        "totalTimeMs": 97.24
+      }
+    },
+    {
+      "sku": "PCR-COL-MNT",
+      "productName": "Colgate Great Regular Flavor 150g",
+      "categoryName": "Personal Care & Household",
+      "retailPricePhp": 112.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 119.0,
+      "predictedUnitsTotal": 161.9,
+      "mae": 3.55,
+      "rmse": 4.07,
+      "dailyMapePercent": 187.44,
+      "dailyWapePercent": 89.57,
+      "dailyAccuracyPercent": 10.43,
+      "toleranceAccuracyPercent": 16.67,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 21.0,
+          "predicted": 29.5,
+          "mapePercent": 40.54,
+          "accuracyPercent": 59.46
+        },
+        "14d": {
+          "actual": 51.0,
+          "predicted": 71.7,
+          "mapePercent": 40.58,
+          "accuracyPercent": 59.42
+        },
+        "30d": {
+          "actual": 119.0,
+          "predicted": 161.9,
+          "mapePercent": 36.04,
+          "accuracyPercent": 63.96
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 34.1,
+        "inferenceTimeMs": 131.15,
+        "totalTimeMs": 165.25
+      }
+    },
+    {
+      "sku": "PCR-COL-013",
+      "productName": "Colgate Total Clean Mint Toothpaste 150g",
+      "categoryName": "Personal Care & Household",
+      "retailPricePhp": 134.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 140.0,
+      "predictedUnitsTotal": 132.4,
+      "mae": 3.01,
+      "rmse": 3.77,
+      "dailyMapePercent": 121.38,
+      "dailyWapePercent": 64.6,
+      "dailyAccuracyPercent": 35.4,
+      "toleranceAccuracyPercent": 46.67,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 31.0,
+          "predicted": 33.4,
+          "mapePercent": 7.62,
+          "accuracyPercent": 92.38
+        },
+        "14d": {
+          "actual": 59.0,
+          "predicted": 63.5,
+          "mapePercent": 7.56,
+          "accuracyPercent": 92.44
+        },
+        "30d": {
+          "actual": 140.0,
+          "predicted": 132.4,
+          "mapePercent": 5.4,
+          "accuracyPercent": 94.6
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 16.24,
+        "inferenceTimeMs": 60.78,
+        "totalTimeMs": 77.03
+      }
+    },
+    {
+      "sku": "PAS-FIE-SAU",
+      "productName": "Del Monte Sweet Style Spaghetti Sauce 1kg",
+      "categoryName": "Rice & Carbs",
+      "retailPricePhp": 94.5,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 111.0,
+      "predictedUnitsTotal": 134.7,
+      "mae": 2.7,
+      "rmse": 3.33,
+      "dailyMapePercent": 152.47,
+      "dailyWapePercent": 73.05,
+      "dailyAccuracyPercent": 26.95,
+      "toleranceAccuracyPercent": 43.33,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 24.0,
+          "predicted": 32.2,
+          "mapePercent": 34.3,
+          "accuracyPercent": 65.7
+        },
+        "14d": {
+          "actual": 53.0,
+          "predicted": 59.5,
+          "mapePercent": 12.35,
+          "accuracyPercent": 87.65
+        },
+        "30d": {
+          "actual": 111.0,
+          "predicted": 134.7,
+          "mapePercent": 21.32,
+          "accuracyPercent": 78.68
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 15.42,
+        "inferenceTimeMs": 56.91,
+        "totalTimeMs": 72.33
+      }
+    },
+    {
+      "sku": "RIC-DIN-5KG",
+      "productName": "Dinorado Fragrant Rice 5kg",
+      "categoryName": "Rice & Carbs",
+      "retailPricePhp": 360.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 135,
+      "actualUnitsTotal": 121.0,
+      "predictedUnitsTotal": 131.7,
+      "mae": 2.07,
+      "rmse": 2.46,
+      "dailyMapePercent": 100.57,
+      "dailyWapePercent": 51.24,
+      "dailyAccuracyPercent": 48.76,
+      "toleranceAccuracyPercent": 56.67,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 27.0,
+          "predicted": 31.4,
+          "mapePercent": 16.31,
+          "accuracyPercent": 83.69
+        },
+        "14d": {
+          "actual": 48.0,
+          "predicted": 57.9,
+          "mapePercent": 20.7,
+          "accuracyPercent": 79.3
+        },
+        "30d": {
+          "actual": 121.0,
+          "predicted": 131.7,
+          "mapePercent": 8.81,
+          "accuracyPercent": 91.19
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 15.58,
+        "inferenceTimeMs": 60.43,
+        "totalTimeMs": 76.01
+      }
+    },
+    {
+      "sku": "RIC-JAS-002",
+      "productName": "Dinorado Jasmine Rice 5kg",
+      "categoryName": "Rice & Carbs",
+      "retailPricePhp": 345.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 138.0,
+      "predictedUnitsTotal": 97.6,
+      "mae": 2.41,
+      "rmse": 3.06,
+      "dailyMapePercent": 67.58,
+      "dailyWapePercent": 52.34,
+      "dailyAccuracyPercent": 47.66,
+      "toleranceAccuracyPercent": 56.67,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 32.0,
+          "predicted": 27.9,
+          "mapePercent": 12.72,
+          "accuracyPercent": 87.28
+        },
+        "14d": {
+          "actual": 56.0,
+          "predicted": 50.3,
+          "mapePercent": 10.12,
+          "accuracyPercent": 89.88
+        },
+        "30d": {
+          "actual": 138.0,
+          "predicted": 97.6,
+          "mapePercent": 29.29,
+          "accuracyPercent": 70.71
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 16.28,
+        "inferenceTimeMs": 59.58,
+        "totalTimeMs": 75.86
+      }
+    },
+    {
+      "sku": "PCR-DWN-FAB",
+      "productName": "Downy Sunrise Fresh Fabric Softener 600ml",
+      "categoryName": "Personal Care & Household",
+      "retailPricePhp": 145.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 135,
+      "actualUnitsTotal": 135.0,
+      "predictedUnitsTotal": 115.9,
+      "mae": 2.53,
+      "rmse": 3.11,
+      "dailyMapePercent": 80.32,
+      "dailyWapePercent": 56.21,
+      "dailyAccuracyPercent": 43.79,
+      "toleranceAccuracyPercent": 40.0,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 46.0,
+          "predicted": 29.2,
+          "mapePercent": 36.51,
+          "accuracyPercent": 63.49
+        },
+        "14d": {
+          "actual": 75.0,
+          "predicted": 50.1,
+          "mapePercent": 33.21,
+          "accuracyPercent": 66.79
+        },
+        "30d": {
+          "actual": 135.0,
+          "predicted": 115.9,
+          "mapePercent": 14.18,
+          "accuracyPercent": 85.82
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 14.39,
+        "inferenceTimeMs": 59.84,
+        "totalTimeMs": 74.23
+      }
+    },
+    {
+      "sku": "PAS-FIE-SPA",
+      "productName": "Fiesta Spaghetti Pasta 900g",
+      "categoryName": "Rice & Carbs",
+      "retailPricePhp": 89.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 105.0,
+      "predictedUnitsTotal": 116.5,
+      "mae": 1.94,
+      "rmse": 2.41,
+      "dailyMapePercent": 116.09,
+      "dailyWapePercent": 55.52,
+      "dailyAccuracyPercent": 44.48,
+      "toleranceAccuracyPercent": 56.67,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 23.0,
+          "predicted": 24.9,
+          "mapePercent": 8.31,
+          "accuracyPercent": 91.69
+        },
+        "14d": {
+          "actual": 49.0,
+          "predicted": 52.6,
+          "mapePercent": 7.25,
+          "accuracyPercent": 92.75
+        },
+        "30d": {
+          "actual": 105.0,
+          "predicted": 116.5,
+          "mapePercent": 10.94,
+          "accuracyPercent": 89.06
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 14.33,
+        "inferenceTimeMs": 57.49,
+        "totalTimeMs": 71.82
+      }
+    },
+    {
+      "sku": "SNK-FUD-CHO",
+      "productName": "Fudgee Barr Chocolate 10s Pack",
+      "categoryName": "Snacks & Confectionery",
+      "retailPricePhp": 79.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 99.0,
+      "predictedUnitsTotal": 129.2,
+      "mae": 1.97,
+      "rmse": 2.48,
+      "dailyMapePercent": 115.05,
+      "dailyWapePercent": 59.78,
+      "dailyAccuracyPercent": 40.22,
+      "toleranceAccuracyPercent": 56.67,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 11.0,
+          "predicted": 28.7,
+          "mapePercent": 160.7,
+          "accuracyPercent": 0.0
+        },
+        "14d": {
+          "actual": 30.0,
+          "predicted": 59.9,
+          "mapePercent": 99.7,
+          "accuracyPercent": 0.3
+        },
+        "30d": {
+          "actual": 99.0,
+          "predicted": 129.2,
+          "mapePercent": 30.49,
+          "accuracyPercent": 69.51
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 13.57,
+        "inferenceTimeMs": 69.26,
+        "totalTimeMs": 82.83
+      }
+    },
+    {
+      "sku": "BEV-GAT-BLU",
+      "productName": "Gatorade Blue Bolt 500ml",
+      "categoryName": "Beverages",
+      "retailPricePhp": 48.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 139.0,
+      "predictedUnitsTotal": 122.5,
+      "mae": 2.4,
+      "rmse": 2.99,
+      "dailyMapePercent": 88.24,
+      "dailyWapePercent": 51.78,
+      "dailyAccuracyPercent": 48.22,
+      "toleranceAccuracyPercent": 50.0,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 43.0,
+          "predicted": 25.1,
+          "mapePercent": 41.57,
+          "accuracyPercent": 58.43
+        },
+        "14d": {
+          "actual": 66.0,
+          "predicted": 53.3,
+          "mapePercent": 19.22,
+          "accuracyPercent": 80.78
+        },
+        "30d": {
+          "actual": 139.0,
+          "predicted": 122.5,
+          "mapePercent": 11.84,
+          "accuracyPercent": 88.16
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 17.03,
+        "inferenceTimeMs": 61.43,
+        "totalTimeMs": 78.46
+      }
+    },
+    {
+      "sku": "SNK-MND-CHO",
+      "productName": "Goya Milk Chocolate Bar 100g",
+      "categoryName": "Snacks & Confectionery",
+      "retailPricePhp": 58.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 97.0,
+      "predictedUnitsTotal": 122.4,
+      "mae": 2.2,
+      "rmse": 2.75,
+      "dailyMapePercent": 120.2,
+      "dailyWapePercent": 68.0,
+      "dailyAccuracyPercent": 32.0,
+      "toleranceAccuracyPercent": 53.33,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 17.0,
+          "predicted": 33.0,
+          "mapePercent": 93.87,
+          "accuracyPercent": 6.13
+        },
+        "14d": {
+          "actual": 35.0,
+          "predicted": 58.2,
+          "mapePercent": 66.33,
+          "accuracyPercent": 33.67
+        },
+        "30d": {
+          "actual": 97.0,
+          "predicted": 122.4,
+          "mapePercent": 26.22,
+          "accuracyPercent": 73.78
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 15.04,
+        "inferenceTimeMs": 61.99,
+        "totalTimeMs": 77.03
+      }
+    },
+    {
+      "sku": "PCR-GRN-ALC",
+      "productName": "Green Cross 70% Isopropyl Alcohol 500ml",
+      "categoryName": "Personal Care & Household",
+      "retailPricePhp": 89.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 125.0,
+      "predictedUnitsTotal": 132.1,
+      "mae": 2.31,
+      "rmse": 2.89,
+      "dailyMapePercent": 109.75,
+      "dailyWapePercent": 55.52,
+      "dailyAccuracyPercent": 44.48,
+      "toleranceAccuracyPercent": 46.67,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 22.0,
+          "predicted": 30.3,
+          "mapePercent": 37.79,
+          "accuracyPercent": 62.21
+        },
+        "14d": {
+          "actual": 55.0,
+          "predicted": 60.5,
+          "mapePercent": 9.95,
+          "accuracyPercent": 90.05
+        },
+        "30d": {
+          "actual": 125.0,
+          "predicted": 132.1,
+          "mapePercent": 5.66,
+          "accuracyPercent": 94.34
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 15.26,
+        "inferenceTimeMs": 56.76,
+        "totalTimeMs": 72.02
+      }
+    },
+    {
+      "sku": "PCR-JOY-LIQ",
+      "productName": "Joy Lemon Dishwashing Liquid 495ml",
+      "categoryName": "Personal Care & Household",
+      "retailPricePhp": 139.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 115.0,
+      "predictedUnitsTotal": 124.6,
+      "mae": 2.48,
+      "rmse": 2.99,
+      "dailyMapePercent": 122.94,
+      "dailyWapePercent": 64.77,
+      "dailyAccuracyPercent": 35.23,
+      "toleranceAccuracyPercent": 40.0,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 32.0,
+          "predicted": 28.9,
+          "mapePercent": 9.75,
+          "accuracyPercent": 90.25
+        },
+        "14d": {
+          "actual": 64.0,
+          "predicted": 55.8,
+          "mapePercent": 12.82,
+          "accuracyPercent": 87.18
+        },
+        "30d": {
+          "actual": 115.0,
+          "predicted": 124.6,
+          "mapePercent": 8.36,
+          "accuracyPercent": 91.64
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 15.93,
+        "inferenceTimeMs": 43.49,
+        "totalTimeMs": 59.42
+      }
+    },
+    {
+      "sku": "SNK-CHN-NUT",
+      "productName": "King Choc-Nut 24s Box",
+      "categoryName": "Snacks & Confectionery",
+      "retailPricePhp": 54.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 135,
+      "actualUnitsTotal": 104.0,
+      "predictedUnitsTotal": 126.7,
+      "mae": 2.2,
+      "rmse": 2.71,
+      "dailyMapePercent": 118.54,
+      "dailyWapePercent": 63.41,
+      "dailyAccuracyPercent": 36.59,
+      "toleranceAccuracyPercent": 50.0,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 18.0,
+          "predicted": 21.2,
+          "mapePercent": 17.77,
+          "accuracyPercent": 82.23
+        },
+        "14d": {
+          "actual": 46.0,
+          "predicted": 44.1,
+          "mapePercent": 4.07,
+          "accuracyPercent": 95.93
+        },
+        "30d": {
+          "actual": 104.0,
+          "predicted": 126.7,
+          "mapePercent": 21.85,
+          "accuracyPercent": 78.15
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 13.42,
+        "inferenceTimeMs": 46.35,
+        "totalTimeMs": 59.78
+      }
+    },
+    {
+      "sku": "BEV-KOP-007",
+      "productName": "Kopiko Blanca 3-in-1 Coffee 30g (10-Sachet Bag)",
+      "categoryName": "Beverages",
+      "retailPricePhp": 85.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 137,
+      "actualUnitsTotal": 115.0,
+      "predictedUnitsTotal": 128.2,
+      "mae": 2.47,
+      "rmse": 3.26,
+      "dailyMapePercent": 129.01,
+      "dailyWapePercent": 64.35,
+      "dailyAccuracyPercent": 35.65,
+      "toleranceAccuracyPercent": 36.67,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 41.0,
+          "predicted": 30.5,
+          "mapePercent": 25.71,
+          "accuracyPercent": 74.29
+        },
+        "14d": {
+          "actual": 64.0,
+          "predicted": 59.2,
+          "mapePercent": 7.57,
+          "accuracyPercent": 92.43
+        },
+        "30d": {
+          "actual": 115.0,
+          "predicted": 128.2,
+          "mapePercent": 11.48,
+          "accuracyPercent": 88.52
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 12.88,
+        "inferenceTimeMs": 49.91,
+        "totalTimeMs": 62.79
+      }
+    },
+    {
+      "sku": "BEV-KOP-BLA",
+      "productName": "Kopiko Blanca 3-in-1 Coffee 30g x 10s",
+      "categoryName": "Beverages",
+      "retailPricePhp": 85.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 123.0,
+      "predictedUnitsTotal": 113.6,
+      "mae": 2.09,
+      "rmse": 2.9,
+      "dailyMapePercent": 65.85,
+      "dailyWapePercent": 50.9,
+      "dailyAccuracyPercent": 49.1,
+      "toleranceAccuracyPercent": 56.67,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 25.0,
+          "predicted": 27.4,
+          "mapePercent": 9.51,
+          "accuracyPercent": 90.49
+        },
+        "14d": {
+          "actual": 46.0,
+          "predicted": 49.1,
+          "mapePercent": 6.76,
+          "accuracyPercent": 93.24
+        },
+        "30d": {
+          "actual": 123.0,
+          "predicted": 113.6,
+          "mapePercent": 7.65,
+          "accuracyPercent": 92.35
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 15.59,
+        "inferenceTimeMs": 134.96,
+        "totalTimeMs": 150.55
+      }
+    },
+    {
+      "sku": "NOD-LKM-BEE",
+      "productName": "Lucky Me! Instant Mami Beef 55g",
+      "categoryName": "Rice & Carbs",
+      "retailPricePhp": 14.5,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 108.0,
+      "predictedUnitsTotal": 135.4,
+      "mae": 3.08,
+      "rmse": 3.86,
+      "dailyMapePercent": 167.92,
+      "dailyWapePercent": 85.46,
+      "dailyAccuracyPercent": 14.54,
+      "toleranceAccuracyPercent": 43.33,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 19.0,
+          "predicted": 29.5,
+          "mapePercent": 55.38,
+          "accuracyPercent": 44.62
+        },
+        "14d": {
+          "actual": 50.0,
+          "predicted": 57.5,
+          "mapePercent": 15.1,
+          "accuracyPercent": 84.9
+        },
+        "30d": {
+          "actual": 108.0,
+          "predicted": 135.4,
+          "mapePercent": 25.37,
+          "accuracyPercent": 74.63
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 24.31,
+        "inferenceTimeMs": 61.72,
+        "totalTimeMs": 86.02
+      }
+    },
+    {
+      "sku": "NOD-LKM-HOT",
+      "productName": "Lucky Me! Pancit Canton Hot Chili 60g",
+      "categoryName": "Rice & Carbs",
+      "retailPricePhp": 15.5,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 114.0,
+      "predictedUnitsTotal": 122.7,
+      "mae": 2.88,
+      "rmse": 3.63,
+      "dailyMapePercent": 127.1,
+      "dailyWapePercent": 75.78,
+      "dailyAccuracyPercent": 24.22,
+      "toleranceAccuracyPercent": 36.67,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 33.0,
+          "predicted": 33.3,
+          "mapePercent": 0.84,
+          "accuracyPercent": 99.16
+        },
+        "14d": {
+          "actual": 58.0,
+          "predicted": 59.8,
+          "mapePercent": 3.18,
+          "accuracyPercent": 96.82
+        },
+        "30d": {
+          "actual": 114.0,
+          "predicted": 122.7,
+          "mapePercent": 7.65,
+          "accuracyPercent": 92.35
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 13.91,
+        "inferenceTimeMs": 52.32,
+        "totalTimeMs": 66.22
+      }
+    },
+    {
+      "sku": "NOD-LKM-KAL",
+      "productName": "Lucky Me! Pancit Canton Kalamansi 60g",
+      "categoryName": "Rice & Carbs",
+      "retailPricePhp": 15.5,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 124.0,
+      "predictedUnitsTotal": 123.1,
+      "mae": 3.27,
+      "rmse": 4.14,
+      "dailyMapePercent": 152.43,
+      "dailyWapePercent": 79.2,
+      "dailyAccuracyPercent": 20.8,
+      "toleranceAccuracyPercent": 36.67,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 34.0,
+          "predicted": 32.0,
+          "mapePercent": 5.96,
+          "accuracyPercent": 94.04
+        },
+        "14d": {
+          "actual": 49.0,
+          "predicted": 53.8,
+          "mapePercent": 9.76,
+          "accuracyPercent": 90.24
+        },
+        "30d": {
+          "actual": 124.0,
+          "predicted": 123.1,
+          "mapePercent": 0.69,
+          "accuracyPercent": 99.31
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 13.27,
+        "inferenceTimeMs": 42.58,
+        "totalTimeMs": 55.85
+      }
+    },
+    {
+      "sku": "NOD-LKM-003",
+      "productName": "Lucky Me! Pancit Canton Kalamansi 60g (Pack of 6)",
+      "categoryName": "Rice & Carbs",
+      "retailPricePhp": 78.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 135,
+      "actualUnitsTotal": 125.0,
+      "predictedUnitsTotal": 136.3,
+      "mae": 2.14,
+      "rmse": 2.58,
+      "dailyMapePercent": 98.58,
+      "dailyWapePercent": 51.31,
+      "dailyAccuracyPercent": 48.69,
+      "toleranceAccuracyPercent": 56.67,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 28.0,
+          "predicted": 28.9,
+          "mapePercent": 3.27,
+          "accuracyPercent": 96.73
+        },
+        "14d": {
+          "actual": 58.0,
+          "predicted": 60.6,
+          "mapePercent": 4.52,
+          "accuracyPercent": 95.48
+        },
+        "30d": {
+          "actual": 125.0,
+          "predicted": 136.3,
+          "mapePercent": 9.04,
+          "accuracyPercent": 90.96
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 16.61,
+        "inferenceTimeMs": 49.72,
+        "totalTimeMs": 66.33
+      }
+    },
+    {
+      "sku": "CAN-MAL-POK",
+      "productName": "Maling Pork Luncheon Meat 397g",
+      "categoryName": "Canned Goods & Instant Meals",
+      "retailPricePhp": 119.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 95.0,
+      "predictedUnitsTotal": 133.2,
+      "mae": 2.42,
+      "rmse": 2.8,
+      "dailyMapePercent": 143.16,
+      "dailyWapePercent": 76.41,
+      "dailyAccuracyPercent": 23.59,
+      "toleranceAccuracyPercent": 43.33,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 33.0,
+          "predicted": 26.7,
+          "mapePercent": 19.15,
+          "accuracyPercent": 80.85
+        },
+        "14d": {
+          "actual": 46.0,
+          "predicted": 57.8,
+          "mapePercent": 25.58,
+          "accuracyPercent": 74.42
+        },
+        "30d": {
+          "actual": 95.0,
+          "predicted": 133.2,
+          "mapePercent": 40.19,
+          "accuracyPercent": 59.81
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 18.7,
+        "inferenceTimeMs": 59.1,
+        "totalTimeMs": 77.8
+      }
+    },
+    {
+      "sku": "CAN-MEG-RED",
+      "productName": "Mega Sardines in Tomato Sauce 155g",
+      "categoryName": "Canned Goods & Instant Meals",
+      "retailPricePhp": 27.5,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 145.0,
+      "predictedUnitsTotal": 112.9,
+      "mae": 2.66,
+      "rmse": 3.3,
+      "dailyMapePercent": 92.85,
+      "dailyWapePercent": 55.07,
+      "dailyAccuracyPercent": 44.93,
+      "toleranceAccuracyPercent": 43.33,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 28.0,
+          "predicted": 23.9,
+          "mapePercent": 14.64,
+          "accuracyPercent": 85.36
+        },
+        "14d": {
+          "actual": 56.0,
+          "predicted": 49.7,
+          "mapePercent": 11.2,
+          "accuracyPercent": 88.8
+        },
+        "30d": {
+          "actual": 145.0,
+          "predicted": 112.9,
+          "mapePercent": 22.14,
+          "accuracyPercent": 77.86
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 15.03,
+        "inferenceTimeMs": 57.43,
+        "totalTimeMs": 72.46
+      }
+    },
+    {
+      "sku": "CAN-SRD-006",
+      "productName": "Mega Sardines in Tomato Sauce with Chili 155g",
+      "categoryName": "Canned Goods & Instant Meals",
+      "retailPricePhp": 27.5,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 141.0,
+      "predictedUnitsTotal": 169.2,
+      "mae": 3.85,
+      "rmse": 4.58,
+      "dailyMapePercent": 179.85,
+      "dailyWapePercent": 81.82,
+      "dailyAccuracyPercent": 18.18,
+      "toleranceAccuracyPercent": 30.0,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 30.0,
+          "predicted": 40.0,
+          "mapePercent": 33.49,
+          "accuracyPercent": 66.51
+        },
+        "14d": {
+          "actual": 68.0,
+          "predicted": 80.4,
+          "mapePercent": 18.2,
+          "accuracyPercent": 81.8
+        },
+        "30d": {
+          "actual": 141.0,
+          "predicted": 169.2,
+          "mapePercent": 19.99,
+          "accuracyPercent": 80.01
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 22.91,
+        "inferenceTimeMs": 56.29,
+        "totalTimeMs": 79.2
+      }
+    },
+    {
+      "sku": "BEV-MIL-POW",
+      "productName": "Milo Choco Malt Powder 1kg",
+      "categoryName": "Beverages",
+      "retailPricePhp": 279.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 131.0,
+      "predictedUnitsTotal": 163.0,
+      "mae": 2.86,
+      "rmse": 3.53,
+      "dailyMapePercent": 126.15,
+      "dailyWapePercent": 65.4,
+      "dailyAccuracyPercent": 34.6,
+      "toleranceAccuracyPercent": 43.33,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 25.0,
+          "predicted": 40.5,
+          "mapePercent": 62.05,
+          "accuracyPercent": 37.95
+        },
+        "14d": {
+          "actual": 62.0,
+          "predicted": 79.1,
+          "mapePercent": 27.59,
+          "accuracyPercent": 72.41
+        },
+        "30d": {
+          "actual": 131.0,
+          "predicted": 163.0,
+          "mapePercent": 24.39,
+          "accuracyPercent": 75.61
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 13.8,
+        "inferenceTimeMs": 53.01,
+        "totalTimeMs": 66.81
+      }
+    },
+    {
+      "sku": "BEV-NAT-WTR",
+      "productName": "Nature Spring Purified Water 1L",
+      "categoryName": "Beverages",
+      "retailPricePhp": 24.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 111.0,
+      "predictedUnitsTotal": 134.0,
+      "mae": 2.88,
+      "rmse": 3.63,
+      "dailyMapePercent": 171.71,
+      "dailyWapePercent": 77.75,
+      "dailyAccuracyPercent": 22.25,
+      "toleranceAccuracyPercent": 43.33,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 39.0,
+          "predicted": 26.4,
+          "mapePercent": 32.29,
+          "accuracyPercent": 67.71
+        },
+        "14d": {
+          "actual": 58.0,
+          "predicted": 58.4,
+          "mapePercent": 0.64,
+          "accuracyPercent": 99.36
+        },
+        "30d": {
+          "actual": 111.0,
+          "predicted": 134.0,
+          "mapePercent": 20.71,
+          "accuracyPercent": 79.29
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 14.7,
+        "inferenceTimeMs": 76.91,
+        "totalTimeMs": 91.61
+      }
+    },
+    {
+      "sku": "BEV-NES-CLS",
+      "productName": "Nescafe Classic Instant Coffee Jar 100g",
+      "categoryName": "Beverages",
+      "retailPricePhp": 169.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 149.0,
+      "predictedUnitsTotal": 120.1,
+      "mae": 2.62,
+      "rmse": 3.34,
+      "dailyMapePercent": 79.21,
+      "dailyWapePercent": 52.82,
+      "dailyAccuracyPercent": 47.18,
+      "toleranceAccuracyPercent": 56.67,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 30.0,
+          "predicted": 27.6,
+          "mapePercent": 8.12,
+          "accuracyPercent": 91.88
+        },
+        "14d": {
+          "actual": 63.0,
+          "predicted": 56.6,
+          "mapePercent": 10.2,
+          "accuracyPercent": 89.8
+        },
+        "30d": {
+          "actual": 149.0,
+          "predicted": 120.1,
+          "mapePercent": 19.36,
+          "accuracyPercent": 80.64
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 13.61,
+        "inferenceTimeMs": 141.19,
+        "totalTimeMs": 154.8
+      }
+    },
+    {
+      "sku": "NOD-NIS-YAK",
+      "productName": "Nissin Yakisoba Spicy Chicken 77g",
+      "categoryName": "Rice & Carbs",
+      "retailPricePhp": 22.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 135.0,
+      "predictedUnitsTotal": 144.3,
+      "mae": 2.95,
+      "rmse": 3.69,
+      "dailyMapePercent": 115.63,
+      "dailyWapePercent": 65.64,
+      "dailyAccuracyPercent": 34.36,
+      "toleranceAccuracyPercent": 36.67,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 29.0,
+          "predicted": 33.1,
+          "mapePercent": 14.25,
+          "accuracyPercent": 85.75
+        },
+        "14d": {
+          "actual": 60.0,
+          "predicted": 63.3,
+          "mapePercent": 5.58,
+          "accuracyPercent": 94.42
+        },
+        "30d": {
+          "actual": 135.0,
+          "predicted": 144.3,
+          "mapePercent": 6.91,
+          "accuracyPercent": 93.09
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 15.68,
+        "inferenceTimeMs": 56.65,
+        "totalTimeMs": 72.33
+      }
+    },
+    {
+      "sku": "SNK-NOV-CHE",
+      "productName": "Nova Multigrain Chips Country Cheddar 78g",
+      "categoryName": "Snacks & Confectionery",
+      "retailPricePhp": 39.5,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 132.0,
+      "predictedUnitsTotal": 116.7,
+      "mae": 2.4,
+      "rmse": 2.87,
+      "dailyMapePercent": 85.56,
+      "dailyWapePercent": 54.55,
+      "dailyAccuracyPercent": 45.45,
+      "toleranceAccuracyPercent": 46.67,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 40.0,
+          "predicted": 24.6,
+          "mapePercent": 38.45,
+          "accuracyPercent": 61.55
+        },
+        "14d": {
+          "actual": 71.0,
+          "predicted": 55.1,
+          "mapePercent": 22.45,
+          "accuracyPercent": 77.55
+        },
+        "30d": {
+          "actual": 132.0,
+          "predicted": 116.7,
+          "mapePercent": 11.63,
+          "accuracyPercent": 88.37
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 15.43,
+        "inferenceTimeMs": 66.73,
+        "totalTimeMs": 82.16
+      }
+    },
+    {
+      "sku": "SNK-OIS-PRW",
+      "productName": "Oishi Prawn Crackers Regular 60g",
+      "categoryName": "Snacks & Confectionery",
+      "retailPricePhp": 22.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 116.0,
+      "predictedUnitsTotal": 120.5,
+      "mae": 2.17,
+      "rmse": 2.66,
+      "dailyMapePercent": 102.71,
+      "dailyWapePercent": 56.09,
+      "dailyAccuracyPercent": 43.91,
+      "toleranceAccuracyPercent": 56.67,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 37.0,
+          "predicted": 29.6,
+          "mapePercent": 19.98,
+          "accuracyPercent": 80.02
+        },
+        "14d": {
+          "actual": 56.0,
+          "predicted": 61.4,
+          "mapePercent": 9.64,
+          "accuracyPercent": 90.36
+        },
+        "30d": {
+          "actual": 116.0,
+          "predicted": 120.5,
+          "mapePercent": 3.84,
+          "accuracyPercent": 96.16
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 21.21,
+        "inferenceTimeMs": 79.34,
+        "totalTimeMs": 100.55
+      }
+    },
+    {
+      "sku": "SNK-OIS-011",
+      "productName": "Oishi Prawn Crackers Spicy 60g",
+      "categoryName": "Snacks & Confectionery",
+      "retailPricePhp": 22.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 128.0,
+      "predictedUnitsTotal": 156.8,
+      "mae": 3.29,
+      "rmse": 4.15,
+      "dailyMapePercent": 157.49,
+      "dailyWapePercent": 77.1,
+      "dailyAccuracyPercent": 22.9,
+      "toleranceAccuracyPercent": 43.33,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 37.0,
+          "predicted": 32.5,
+          "mapePercent": 12.13,
+          "accuracyPercent": 87.87
+        },
+        "14d": {
+          "actual": 68.0,
+          "predicted": 68.9,
+          "mapePercent": 1.26,
+          "accuracyPercent": 98.74
+        },
+        "30d": {
+          "actual": 128.0,
+          "predicted": 156.8,
+          "mapePercent": 22.53,
+          "accuracyPercent": 77.47
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 21.17,
+        "inferenceTimeMs": 73.97,
+        "totalTimeMs": 95.14
+      }
+    },
+    {
+      "sku": "RIC-BRW-2KG",
+      "productName": "Organic Brown Rice 2kg",
+      "categoryName": "Rice & Carbs",
+      "retailPricePhp": 185.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 115.0,
+      "predictedUnitsTotal": 116.4,
+      "mae": 2.74,
+      "rmse": 3.44,
+      "dailyMapePercent": 127.93,
+      "dailyWapePercent": 71.6,
+      "dailyAccuracyPercent": 28.4,
+      "toleranceAccuracyPercent": 46.67,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 30.0,
+          "predicted": 36.7,
+          "mapePercent": 22.3,
+          "accuracyPercent": 77.7
+        },
+        "14d": {
+          "actual": 52.0,
+          "predicted": 60.7,
+          "mapePercent": 16.75,
+          "accuracyPercent": 83.25
+        },
+        "30d": {
+          "actual": 115.0,
+          "predicted": 116.4,
+          "mapePercent": 1.18,
+          "accuracyPercent": 98.82
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 22.72,
+        "inferenceTimeMs": 80.78,
+        "totalTimeMs": 103.5
+      }
+    },
+    {
+      "sku": "PCR-PLM-SHM",
+      "productName": "Palmolive Naturals Shampoo Intensive 180ml",
+      "categoryName": "Personal Care & Household",
+      "retailPricePhp": 109.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 110.0,
+      "predictedUnitsTotal": 120.5,
+      "mae": 2.13,
+      "rmse": 2.58,
+      "dailyMapePercent": 97.94,
+      "dailyWapePercent": 58.18,
+      "dailyAccuracyPercent": 41.82,
+      "toleranceAccuracyPercent": 53.33,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 30.0,
+          "predicted": 33.0,
+          "mapePercent": 10.06,
+          "accuracyPercent": 89.94
+        },
+        "14d": {
+          "actual": 54.0,
+          "predicted": 61.4,
+          "mapePercent": 13.74,
+          "accuracyPercent": 86.26
+        },
+        "30d": {
+          "actual": 110.0,
+          "predicted": 120.5,
+          "mapePercent": 9.5,
+          "accuracyPercent": 90.5
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 20.36,
+        "inferenceTimeMs": 90.29,
+        "totalTimeMs": 110.66
+      }
+    },
+    {
+      "sku": "SNK-PIA-CHE",
+      "productName": "Piattos Cheese Flavor 85g",
+      "categoryName": "Snacks & Confectionery",
+      "retailPricePhp": 38.5,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 105.0,
+      "predictedUnitsTotal": 123.9,
+      "mae": 2.52,
+      "rmse": 3.25,
+      "dailyMapePercent": 115.87,
+      "dailyWapePercent": 72.09,
+      "dailyAccuracyPercent": 27.91,
+      "toleranceAccuracyPercent": 43.33,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 27.0,
+          "predicted": 30.2,
+          "mapePercent": 11.74,
+          "accuracyPercent": 88.26
+        },
+        "14d": {
+          "actual": 50.0,
+          "predicted": 64.3,
+          "mapePercent": 28.52,
+          "accuracyPercent": 71.48
+        },
+        "30d": {
+          "actual": 105.0,
+          "predicted": 123.9,
+          "mapePercent": 17.95,
+          "accuracyPercent": 82.05
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 20.42,
+        "inferenceTimeMs": 119.5,
+        "totalTimeMs": 139.92
+      }
+    },
+    {
+      "sku": "SNK-PIA-010",
+      "productName": "Piattos Cheese Flavored Potato Crisps 85g",
+      "categoryName": "Snacks & Confectionery",
+      "retailPricePhp": 38.5,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 125.0,
+      "predictedUnitsTotal": 127.7,
+      "mae": 2.28,
+      "rmse": 2.83,
+      "dailyMapePercent": 97.85,
+      "dailyWapePercent": 54.79,
+      "dailyAccuracyPercent": 45.21,
+      "toleranceAccuracyPercent": 56.67,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 34.0,
+          "predicted": 31.2,
+          "mapePercent": 8.1,
+          "accuracyPercent": 91.9
+        },
+        "14d": {
+          "actual": 62.0,
+          "predicted": 53.8,
+          "mapePercent": 13.22,
+          "accuracyPercent": 86.78
+        },
+        "30d": {
+          "actual": 125.0,
+          "predicted": 127.7,
+          "mapePercent": 2.17,
+          "accuracyPercent": 97.83
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 28.47,
+        "inferenceTimeMs": 95.65,
+        "totalTimeMs": 124.13
+      }
+    },
+    {
+      "sku": "SNK-PIA-SRM",
+      "productName": "Piattos Sour Cream & Onion 85g",
+      "categoryName": "Snacks & Confectionery",
+      "retailPricePhp": 38.5,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 136.0,
+      "predictedUnitsTotal": 141.0,
+      "mae": 2.49,
+      "rmse": 3.07,
+      "dailyMapePercent": 86.88,
+      "dailyWapePercent": 54.92,
+      "dailyAccuracyPercent": 45.08,
+      "toleranceAccuracyPercent": 50.0,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 39.0,
+          "predicted": 36.8,
+          "mapePercent": 5.7,
+          "accuracyPercent": 94.3
+        },
+        "14d": {
+          "actual": 66.0,
+          "predicted": 69.6,
+          "mapePercent": 5.48,
+          "accuracyPercent": 94.52
+        },
+        "30d": {
+          "actual": 136.0,
+          "predicted": 141.0,
+          "mapePercent": 3.66,
+          "accuracyPercent": 96.34
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 22.52,
+        "inferenceTimeMs": 92.63,
+        "totalTimeMs": 115.15
+      }
+    },
+    {
+      "sku": "CAN-CRN-005",
+      "productName": "Purefoods Corned Beef 210g",
+      "categoryName": "Canned Goods & Instant Meals",
+      "retailPricePhp": 98.5,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 135,
+      "actualUnitsTotal": 162.0,
+      "predictedUnitsTotal": 140.9,
+      "mae": 2.42,
+      "rmse": 3.2,
+      "dailyMapePercent": 73.75,
+      "dailyWapePercent": 44.8,
+      "dailyAccuracyPercent": 55.2,
+      "toleranceAccuracyPercent": 53.33,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 36.0,
+          "predicted": 30.7,
+          "mapePercent": 14.7,
+          "accuracyPercent": 85.3
+        },
+        "14d": {
+          "actual": 73.0,
+          "predicted": 62.1,
+          "mapePercent": 14.95,
+          "accuracyPercent": 85.05
+        },
+        "30d": {
+          "actual": 162.0,
+          "predicted": 140.9,
+          "mapePercent": 13.02,
+          "accuracyPercent": 86.98
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 26.6,
+        "inferenceTimeMs": 99.39,
+        "totalTimeMs": 125.99
+      }
+    },
+    {
+      "sku": "CAN-PUR-CRN",
+      "productName": "Purefoods Corned Beef 210g",
+      "categoryName": "Canned Goods & Instant Meals",
+      "retailPricePhp": 98.5,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 135,
+      "actualUnitsTotal": 118.0,
+      "predictedUnitsTotal": 187.4,
+      "mae": 2.94,
+      "rmse": 3.49,
+      "dailyMapePercent": 163.4,
+      "dailyWapePercent": 74.62,
+      "dailyAccuracyPercent": 25.38,
+      "toleranceAccuracyPercent": 33.33,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 36.0,
+          "predicted": 40.1,
+          "mapePercent": 11.26,
+          "accuracyPercent": 88.74
+        },
+        "14d": {
+          "actual": 69.0,
+          "predicted": 86.6,
+          "mapePercent": 25.52,
+          "accuracyPercent": 74.48
+        },
+        "30d": {
+          "actual": 118.0,
+          "predicted": 187.4,
+          "mapePercent": 58.8,
+          "accuracyPercent": 41.2
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 24.54,
+        "inferenceTimeMs": 97.74,
+        "totalTimeMs": 122.28
+      }
+    },
+    {
+      "sku": "CAN-PUR-LGE",
+      "productName": "Purefoods Corned Beef 380g",
+      "categoryName": "Canned Goods & Instant Meals",
+      "retailPricePhp": 178.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 114.0,
+      "predictedUnitsTotal": 141.5,
+      "mae": 2.58,
+      "rmse": 3.28,
+      "dailyMapePercent": 141.3,
+      "dailyWapePercent": 67.88,
+      "dailyAccuracyPercent": 32.12,
+      "toleranceAccuracyPercent": 43.33,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 26.0,
+          "predicted": 35.2,
+          "mapePercent": 35.4,
+          "accuracyPercent": 64.6
+        },
+        "14d": {
+          "actual": 55.0,
+          "predicted": 64.1,
+          "mapePercent": 16.6,
+          "accuracyPercent": 83.4
+        },
+        "30d": {
+          "actual": 114.0,
+          "predicted": 141.5,
+          "mapePercent": 24.09,
+          "accuracyPercent": 75.91
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 22.06,
+        "inferenceTimeMs": 96.74,
+        "totalTimeMs": 118.8
+      }
+    },
+    {
+      "sku": "SNK-MRR-BIS",
+      "productName": "Rebisco Marie Biscuits 10x25g Pack",
+      "categoryName": "Snacks & Confectionery",
+      "retailPricePhp": 45.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 135,
+      "actualUnitsTotal": 132.0,
+      "predictedUnitsTotal": 119.8,
+      "mae": 2.51,
+      "rmse": 3.23,
+      "dailyMapePercent": 102.32,
+      "dailyWapePercent": 57.13,
+      "dailyAccuracyPercent": 42.87,
+      "toleranceAccuracyPercent": 53.33,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 26.0,
+          "predicted": 24.1,
+          "mapePercent": 7.3,
+          "accuracyPercent": 92.7
+        },
+        "14d": {
+          "actual": 58.0,
+          "predicted": 52.8,
+          "mapePercent": 8.98,
+          "accuracyPercent": 91.02
+        },
+        "30d": {
+          "actual": 132.0,
+          "predicted": 119.8,
+          "mapePercent": 9.24,
+          "accuracyPercent": 90.76
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 26.0,
+        "inferenceTimeMs": 92.37,
+        "totalTimeMs": 118.37
+      }
+    },
+    {
+      "sku": "BEV-RED-HRS",
+      "productName": "Red Horse Beer Extra Strong 500ml Can",
+      "categoryName": "Beverages",
+      "retailPricePhp": 78.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 131.0,
+      "predictedUnitsTotal": 128.3,
+      "mae": 2.73,
+      "rmse": 3.23,
+      "dailyMapePercent": 136.89,
+      "dailyWapePercent": 62.49,
+      "dailyAccuracyPercent": 37.51,
+      "toleranceAccuracyPercent": 33.33,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 34.0,
+          "predicted": 25.9,
+          "mapePercent": 23.88,
+          "accuracyPercent": 76.12
+        },
+        "14d": {
+          "actual": 68.0,
+          "predicted": 54.7,
+          "mapePercent": 19.57,
+          "accuracyPercent": 80.43
+        },
+        "30d": {
+          "actual": 131.0,
+          "predicted": 128.3,
+          "mapePercent": 2.09,
+          "accuracyPercent": 97.91
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 23.9,
+        "inferenceTimeMs": 103.09,
+        "totalTimeMs": 126.99
+      }
+    },
+    {
+      "sku": "PCR-SFG-PNK",
+      "productName": "Safeguard Floral Pink Soap 130g",
+      "categoryName": "Personal Care & Household",
+      "retailPricePhp": 48.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 113.0,
+      "predictedUnitsTotal": 163.3,
+      "mae": 3.5,
+      "rmse": 3.95,
+      "dailyMapePercent": 158.12,
+      "dailyWapePercent": 92.89,
+      "dailyAccuracyPercent": 7.11,
+      "toleranceAccuracyPercent": 23.33,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 23.0,
+          "predicted": 36.5,
+          "mapePercent": 58.57,
+          "accuracyPercent": 41.43
+        },
+        "14d": {
+          "actual": 52.0,
+          "predicted": 73.2,
+          "mapePercent": 40.74,
+          "accuracyPercent": 59.26
+        },
+        "30d": {
+          "actual": 113.0,
+          "predicted": 163.3,
+          "mapePercent": 44.56,
+          "accuracyPercent": 55.44
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 21.24,
+        "inferenceTimeMs": 85.68,
+        "totalTimeMs": 106.92
+      }
+    },
+    {
+      "sku": "PCR-SFG-012",
+      "productName": "Safeguard Pure White Family Soap Bar 130g",
+      "categoryName": "Personal Care & Household",
+      "retailPricePhp": 48.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 135,
+      "actualUnitsTotal": 126.0,
+      "predictedUnitsTotal": 111.4,
+      "mae": 2.51,
+      "rmse": 3.03,
+      "dailyMapePercent": 90.88,
+      "dailyWapePercent": 59.7,
+      "dailyAccuracyPercent": 40.3,
+      "toleranceAccuracyPercent": 46.67,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 19.0,
+          "predicted": 23.6,
+          "mapePercent": 23.95,
+          "accuracyPercent": 76.05
+        },
+        "14d": {
+          "actual": 56.0,
+          "predicted": 50.5,
+          "mapePercent": 9.75,
+          "accuracyPercent": 90.25
+        },
+        "30d": {
+          "actual": 126.0,
+          "predicted": 111.4,
+          "mapePercent": 11.58,
+          "accuracyPercent": 88.42
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 20.59,
+        "inferenceTimeMs": 83.89,
+        "totalTimeMs": 104.49
+      }
+    },
+    {
+      "sku": "PCR-SFG-WHT",
+      "productName": "Safeguard Pure White Soap 130g",
+      "categoryName": "Personal Care & Household",
+      "retailPricePhp": 48.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 133.0,
+      "predictedUnitsTotal": 200.4,
+      "mae": 3.03,
+      "rmse": 3.35,
+      "dailyMapePercent": 138.4,
+      "dailyWapePercent": 68.24,
+      "dailyAccuracyPercent": 31.76,
+      "toleranceAccuracyPercent": 30.0,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 25.0,
+          "predicted": 42.2,
+          "mapePercent": 68.61,
+          "accuracyPercent": 31.39
+        },
+        "14d": {
+          "actual": 61.0,
+          "predicted": 93.9,
+          "mapePercent": 53.9,
+          "accuracyPercent": 46.1
+        },
+        "30d": {
+          "actual": 133.0,
+          "predicted": 200.4,
+          "mapePercent": 50.68,
+          "accuracyPercent": 49.32
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 23.18,
+        "inferenceTimeMs": 84.83,
+        "totalTimeMs": 108.02
+      }
+    },
+    {
+      "sku": "CAN-SAN-CAL",
+      "productName": "San Marino Corned Tuna 180g",
+      "categoryName": "Canned Goods & Instant Meals",
+      "retailPricePhp": 49.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 135,
+      "actualUnitsTotal": 132.0,
+      "predictedUnitsTotal": 101.3,
+      "mae": 2.42,
+      "rmse": 3.29,
+      "dailyMapePercent": 69.87,
+      "dailyWapePercent": 54.92,
+      "dailyAccuracyPercent": 45.08,
+      "toleranceAccuracyPercent": 60.0,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 26.0,
+          "predicted": 30.8,
+          "mapePercent": 18.5,
+          "accuracyPercent": 81.5
+        },
+        "14d": {
+          "actual": 57.0,
+          "predicted": 46.6,
+          "mapePercent": 18.27,
+          "accuracyPercent": 81.73
+        },
+        "30d": {
+          "actual": 132.0,
+          "predicted": 101.3,
+          "mapePercent": 23.24,
+          "accuracyPercent": 76.76
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 20.56,
+        "inferenceTimeMs": 149.9,
+        "totalTimeMs": 170.46
+      }
+    },
+    {
+      "sku": "BEV-SMB-LIG",
+      "productName": "San Mig Light 330ml Can",
+      "categoryName": "Beverages",
+      "retailPricePhp": 58.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 167.0,
+      "predictedUnitsTotal": 118.7,
+      "mae": 2.97,
+      "rmse": 3.73,
+      "dailyMapePercent": 67.43,
+      "dailyWapePercent": 53.3,
+      "dailyAccuracyPercent": 46.7,
+      "toleranceAccuracyPercent": 43.33,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 44.0,
+          "predicted": 27.4,
+          "mapePercent": 37.69,
+          "accuracyPercent": 62.31
+        },
+        "14d": {
+          "actual": 86.0,
+          "predicted": 60.0,
+          "mapePercent": 30.22,
+          "accuracyPercent": 69.78
+        },
+        "30d": {
+          "actual": 167.0,
+          "predicted": 118.7,
+          "mapePercent": 28.9,
+          "accuracyPercent": 71.1
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 22.66,
+        "inferenceTimeMs": 85.27,
+        "totalTimeMs": 107.93
+      }
+    },
+    {
+      "sku": "BEV-SMB-PIL",
+      "productName": "San Miguel Pale Pilsen 330ml Can",
+      "categoryName": "Beverages",
+      "retailPricePhp": 58.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 128.0,
+      "predictedUnitsTotal": 147.3,
+      "mae": 2.65,
+      "rmse": 3.38,
+      "dailyMapePercent": 138.15,
+      "dailyWapePercent": 62.09,
+      "dailyAccuracyPercent": 37.91,
+      "toleranceAccuracyPercent": 43.33,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 31.0,
+          "predicted": 32.4,
+          "mapePercent": 4.5,
+          "accuracyPercent": 95.5
+        },
+        "14d": {
+          "actual": 65.0,
+          "predicted": 67.1,
+          "mapePercent": 3.21,
+          "accuracyPercent": 96.79
+        },
+        "30d": {
+          "actual": 128.0,
+          "predicted": 147.3,
+          "mapePercent": 15.1,
+          "accuracyPercent": 84.9
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 22.33,
+        "inferenceTimeMs": 76.3,
+        "totalTimeMs": 98.63
+      }
+    },
+    {
+      "sku": "BEV-SMB-008",
+      "productName": "San Miguel Pale Pilsen 330ml Can",
+      "categoryName": "Beverages",
+      "retailPricePhp": 58.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 137,
+      "actualUnitsTotal": 117.0,
+      "predictedUnitsTotal": 165.2,
+      "mae": 3.35,
+      "rmse": 3.89,
+      "dailyMapePercent": 187.01,
+      "dailyWapePercent": 86.01,
+      "dailyAccuracyPercent": 13.99,
+      "toleranceAccuracyPercent": 33.33,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 29.0,
+          "predicted": 32.9,
+          "mapePercent": 13.32,
+          "accuracyPercent": 86.68
+        },
+        "14d": {
+          "actual": 54.0,
+          "predicted": 76.5,
+          "mapePercent": 41.7,
+          "accuracyPercent": 58.3
+        },
+        "30d": {
+          "actual": 117.0,
+          "predicted": 165.2,
+          "mapePercent": 41.24,
+          "accuracyPercent": 58.76
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 18.01,
+        "inferenceTimeMs": 51.07,
+        "totalTimeMs": 69.08
+      }
+    },
+    {
+      "sku": "RIC-SIN-5KG",
+      "productName": "Sinandomeng Rice 5kg",
+      "categoryName": "Rice & Carbs",
+      "retailPricePhp": 285.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 114.0,
+      "predictedUnitsTotal": 150.2,
+      "mae": 2.89,
+      "rmse": 3.66,
+      "dailyMapePercent": 163.86,
+      "dailyWapePercent": 76.14,
+      "dailyAccuracyPercent": 23.86,
+      "toleranceAccuracyPercent": 40.0,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 25.0,
+          "predicted": 32.5,
+          "mapePercent": 29.97,
+          "accuracyPercent": 70.03
+        },
+        "14d": {
+          "actual": 52.0,
+          "predicted": 68.1,
+          "mapePercent": 31.01,
+          "accuracyPercent": 68.99
+        },
+        "30d": {
+          "actual": 114.0,
+          "predicted": 150.2,
+          "mapePercent": 31.76,
+          "accuracyPercent": 68.24
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 15.58,
+        "inferenceTimeMs": 52.18,
+        "totalTimeMs": 67.76
+      }
+    },
+    {
+      "sku": "RIC-SIN-001",
+      "productName": "Sinandomeng Special Rice 5kg",
+      "categoryName": "Rice & Carbs",
+      "retailPricePhp": 285.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 137,
+      "actualUnitsTotal": 122.0,
+      "predictedUnitsTotal": 114.6,
+      "mae": 2.71,
+      "rmse": 3.62,
+      "dailyMapePercent": 114.18,
+      "dailyWapePercent": 66.58,
+      "dailyAccuracyPercent": 33.42,
+      "toleranceAccuracyPercent": 50.0,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 44.0,
+          "predicted": 24.2,
+          "mapePercent": 44.98,
+          "accuracyPercent": 55.02
+        },
+        "14d": {
+          "actual": 70.0,
+          "predicted": 53.8,
+          "mapePercent": 23.12,
+          "accuracyPercent": 76.88
+        },
+        "30d": {
+          "actual": 122.0,
+          "predicted": 114.6,
+          "mapePercent": 6.1,
+          "accuracyPercent": 93.9
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 14.7,
+        "inferenceTimeMs": 45.82,
+        "totalTimeMs": 60.52
+      }
+    },
+    {
+      "sku": "SNK-SKY-FLK",
+      "productName": "SkyFlakes Crackers Tub 800g",
+      "categoryName": "Snacks & Confectionery",
+      "retailPricePhp": 219.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 142.0,
+      "predictedUnitsTotal": 146.6,
+      "mae": 2.51,
+      "rmse": 3.18,
+      "dailyMapePercent": 87.84,
+      "dailyWapePercent": 53.03,
+      "dailyAccuracyPercent": 46.97,
+      "toleranceAccuracyPercent": 46.67,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 24.0,
+          "predicted": 31.4,
+          "mapePercent": 30.83,
+          "accuracyPercent": 69.17
+        },
+        "14d": {
+          "actual": 58.0,
+          "predicted": 64.1,
+          "mapePercent": 10.52,
+          "accuracyPercent": 89.48
+        },
+        "30d": {
+          "actual": 142.0,
+          "predicted": 146.6,
+          "mapePercent": 3.27,
+          "accuracyPercent": 96.73
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 15.38,
+        "inferenceTimeMs": 50.76,
+        "totalTimeMs": 66.14
+      }
+    },
+    {
+      "sku": "CAN-SPM-LUN",
+      "productName": "SPAM Luncheon Meat Classic 340g",
+      "categoryName": "Canned Goods & Instant Meals",
+      "retailPricePhp": 235.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 124.0,
+      "predictedUnitsTotal": 123.4,
+      "mae": 2.59,
+      "rmse": 3.18,
+      "dailyMapePercent": 120.37,
+      "dailyWapePercent": 62.55,
+      "dailyAccuracyPercent": 37.45,
+      "toleranceAccuracyPercent": 46.67,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 32.0,
+          "predicted": 32.3,
+          "mapePercent": 0.99,
+          "accuracyPercent": 99.01
+        },
+        "14d": {
+          "actual": 53.0,
+          "predicted": 53.9,
+          "mapePercent": 1.64,
+          "accuracyPercent": 98.36
+        },
+        "30d": {
+          "actual": 124.0,
+          "predicted": 123.4,
+          "mapePercent": 0.48,
+          "accuracyPercent": 99.52
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 15.25,
+        "inferenceTimeMs": 47.01,
+        "totalTimeMs": 62.26
+      }
+    },
+    {
+      "sku": "PCR-SUN-SHM",
+      "productName": "Sunsilk Smooth & Manageable 180ml",
+      "categoryName": "Personal Care & Household",
+      "retailPricePhp": 112.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 125.0,
+      "predictedUnitsTotal": 116.1,
+      "mae": 2.97,
+      "rmse": 3.61,
+      "dailyMapePercent": 131.78,
+      "dailyWapePercent": 71.22,
+      "dailyAccuracyPercent": 28.78,
+      "toleranceAccuracyPercent": 43.33,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 17.0,
+          "predicted": 31.6,
+          "mapePercent": 85.69,
+          "accuracyPercent": 14.31
+        },
+        "14d": {
+          "actual": 45.0,
+          "predicted": 60.7,
+          "mapePercent": 34.95,
+          "accuracyPercent": 65.05
+        },
+        "30d": {
+          "actual": 125.0,
+          "predicted": 116.1,
+          "mapePercent": 7.13,
+          "accuracyPercent": 92.87
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 16.38,
+        "inferenceTimeMs": 55.62,
+        "totalTimeMs": 72.01
+      }
+    },
+    {
+      "sku": "PCR-SRF-POW",
+      "productName": "Surf Blossom Fresh Powder Detergent 800g",
+      "categoryName": "Personal Care & Household",
+      "retailPricePhp": 105.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 123.0,
+      "predictedUnitsTotal": 113.7,
+      "mae": 2.93,
+      "rmse": 3.69,
+      "dailyMapePercent": 129.43,
+      "dailyWapePercent": 71.37,
+      "dailyAccuracyPercent": 28.63,
+      "toleranceAccuracyPercent": 43.33,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 19.0,
+          "predicted": 26.8,
+          "mapePercent": 40.96,
+          "accuracyPercent": 59.04
+        },
+        "14d": {
+          "actual": 36.0,
+          "predicted": 50.0,
+          "mapePercent": 38.88,
+          "accuracyPercent": 61.12
+        },
+        "30d": {
+          "actual": 123.0,
+          "predicted": 113.7,
+          "mapePercent": 7.57,
+          "accuracyPercent": 92.43
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 14.75,
+        "inferenceTimeMs": 47.79,
+        "totalTimeMs": 62.54
+      }
+    },
+    {
+      "sku": "RIC-JAS-5KG",
+      "productName": "Thai Jasmine Rice 5kg",
+      "categoryName": "Rice & Carbs",
+      "retailPricePhp": 475.0,
+      "algorithm": "LightGBM",
+      "holdoutDays": 30,
+      "trainingSamples": 136,
+      "actualUnitsTotal": 130.0,
+      "predictedUnitsTotal": 146.8,
+      "mae": 2.34,
+      "rmse": 3.0,
+      "dailyMapePercent": 96.48,
+      "dailyWapePercent": 53.99,
+      "dailyAccuracyPercent": 46.01,
+      "toleranceAccuracyPercent": 56.67,
+      "horizonMetrics": {
+        "7d": {
+          "actual": 29.0,
+          "predicted": 34.3,
+          "mapePercent": 18.32,
+          "accuracyPercent": 81.68
+        },
+        "14d": {
+          "actual": 62.0,
+          "predicted": 72.9,
+          "mapePercent": 17.61,
+          "accuracyPercent": 82.39
+        },
+        "30d": {
+          "actual": 130.0,
+          "predicted": 146.8,
+          "mapePercent": 12.93,
+          "accuracyPercent": 87.07
+        }
+      },
+      "performance": {
+        "trainingTimeMs": 14.5,
+        "inferenceTimeMs": 43.9,
+        "totalTimeMs": 58.4
+      }
+    }
+  ]
+}

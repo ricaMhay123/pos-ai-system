@@ -7,5 +7,6 @@ export * from './CartItemRow';
 export * from './CartTotals';
 export * from './CartTicket';
 export * from './PaymentPadModal';
+export * from './SmartCrossSellWidget';
 export * from './PosCheckoutShell';
 export * from '../../utils/formatters';

@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-10-18T13:20:56.023Z",
+  "testsPassed": 14,
+  "testsFailed": 0,
+  "steps": {
+    "1.1 Unauthenticated requests rejected with 401 Unauthorized": {
+      "passed": true,
+      "details": "Status: 401"
+    },
+    "1.2 Invalid credentials rejected with 401 Unauthorized": {
+      "passed": true,
+      "details": "Status: 401"
+    },
+    "1.3 Cashier login succeeds with JWT and \"cashier\" role": {
+      "passed": true,
+      "details": "Roles: [cashier]"
+    },
+    "1.4 Store Manager login succeeds with \"store_manager\" & \"inventory_manager\" roles": {
+      "passed": true,
+      "details": "Roles: [store_manager]"
+    },
+    "1.5 Admin profile session retrieved (/api/v1/auth/me)": {
+      "passed": true,
+      "details": "User: Jose Rizal (EMP-ADM-001)"
+    },
+    "2.1 Top 3 Frequently Bought Together recommendations returned for cart items": {
+      "passed": true,
+      "details": "Top 1: Palmolive Naturals Shampoo Intensive 180ml (₱109) with 35 historical pairings"
+    },
+    "2.2 Cashier checkout processes with atomic DB transaction & 12% VAT": {
+      "passed": true,
+      "details": "Txn: TXN-PH-20261018-3898 | Total: ₱503 | 12% VAT: ₱53.89"
+    },
+    "2.3 Transaction receipt retrieval by ID (/api/v1/pos/transactions/:id)": {
+      "passed": true,
+      "details": "Status: completed | Line items: loaded"
+    },
+    "2.4 Double-entry inventory ledger audit trail recorded in PostgreSQL": {
+      "passed": true,
+      "details": "Ledger entries logged: 2 rows"
+    },
+    "3.1 Manager fetches AI inventory recommendations list (/api/v1/recommendations)": {
+      "passed": true,
+      "details": "Loaded: 63 replenishment recommendations"
+    },
+    "3.2 Manager fetches executive forecast summary (/api/v1/recommendations/summary)": {
+      "passed": true,
+      "details": "Low stock: 3 | Forecasted 30d Revenue: ₱812,601.26"
+    },
+    "3.3 Manager approves replenishment recommendation (/api/v1/recommendations/:id/approve)": {
+      "passed": true,
+      "details": "Recommendation RIC-SIN-001 status: approved"
+    },
+    "3.4 Approval persists in PostgreSQL inventory_recommendations table": {
+      "passed": true,
+      "details": "DB Status: approved"
+    },
+    "4.1 Republic Act 9994 Senior Citizen / PWD 20% discount & VAT-Exemption applied": {
+      "passed": true,
+      "details": "Gross: ₱570 | VAT: ₱0 | Discount: ₱101.79 | Net Total: ₱407.14"
+    }
+  }
+}

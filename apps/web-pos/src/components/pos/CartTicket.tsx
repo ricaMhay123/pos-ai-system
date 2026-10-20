@@ -2,7 +2,9 @@ import React from 'react';
 import { Trash2, Receipt, PackageOpen } from 'lucide-react';
 import { CartItemRow, PosCartLineItem } from './CartItemRow';
 import { CartTotals } from './CartTotals';
+import { SmartCrossSellWidget } from './SmartCrossSellWidget';
 import { calculatePhTicketTotals } from '../../utils/formatters';
+import type { ProductWithStock } from '@pos-ai/shared-types';
 
 interface CartTicketProps {
   items: PosCartLineItem[];
@@ -13,6 +15,8 @@ interface CartTicketProps {
   onRemoveItem: (productId: string) => void;
   onClearCart: () => void;
   onProceedToPayment: () => void;
+  allProducts?: ProductWithStock[];
+  onAddToCart?: (product: ProductWithStock) => void;
 }
 
 export const CartTicket: React.FC<CartTicketProps> = ({
@@ -24,6 +28,8 @@ export const CartTicket: React.FC<CartTicketProps> = ({
   onRemoveItem,
   onClearCart,
   onProceedToPayment,
+  allProducts = [],
+  onAddToCart,
 }) => {
   const calculation = calculatePhTicketTotals(
     items.map((i) => ({
@@ -94,6 +100,17 @@ export const CartTicket: React.FC<CartTicketProps> = ({
           ))
         )}
       </div>
+
+      {/* Smart Cross-Sell Recommendations */}
+      {onAddToCart && (
+        <div className="py-2">
+          <SmartCrossSellWidget
+            cartProductIds={items.map((i) => i.product.id)}
+            allProducts={allProducts}
+            onAddToCart={onAddToCart}
+          />
+        </div>
+      )}
 
       {/* Ticket Totals & Checkout Trigger */}
       <CartTotals
