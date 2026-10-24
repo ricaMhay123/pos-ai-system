@@ -15,6 +15,7 @@ import {
   ArrowUpDown,
 } from 'lucide-react';
 import { ReceiptModal } from './ReceiptModal';
+import { getTransactionStore } from './PosCheckoutShell';
 import { formatPhp } from '../../utils/formatters';
 import type {
   TransactionHistoryItem,
@@ -212,8 +213,9 @@ export const TransactionHistoryPanel: React.FC<TransactionHistoryPanelProps> = (
       // API not available, use local seed data
     }
 
-    // Fallback to local seed data with client-side filtering
-    let filtered = [...SEED_TRANSACTIONS];
+    // Fallback to local seed data merged with any transactions completed this session
+    const sessionTxns = getTransactionStore();
+    let filtered = [...sessionTxns, ...SEED_TRANSACTIONS];
 
     // Cashier only sees recent 7 days
     if (userRole === 'cashier') {

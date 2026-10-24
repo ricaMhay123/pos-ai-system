@@ -6,11 +6,26 @@ import { ProductCatalogGrid } from './ProductCatalogGrid';
 import { CartTicket } from './CartTicket';
 import { PaymentPadModal } from './PaymentPadModal';
 import { TransactionHistoryPanel } from './TransactionHistoryPanel';
+import { PostPaymentReceiptModal, PostPaymentReceiptData } from './PostPaymentReceiptModal';
 import { PosCartLineItem } from './CartItemRow';
-import { CheckCircle2, AlertCircle, History } from 'lucide-react';
+import { CheckCircle2, AlertCircle } from 'lucide-react';
 import { calculatePhTicketTotals, formatPhp } from '../../utils/formatters';
-import type { ProductWithStock, PaymentMethod } from '@pos-ai/shared-types';
+import type { ProductWithStock, PaymentMethod, TransactionHistoryItem } from '@pos-ai/shared-types';
 
+// ─── Module-level transaction store for real-time history sync ─────────────
+// This lives outside the component so it persists across re-renders and is
+// immediately visible when the Transaction History panel opens.
+let _transactionStore: TransactionHistoryItem[] = [];
+
+export function getTransactionStore(): TransactionHistoryItem[] {
+  return _transactionStore;
+}
+
+export function prependTransaction(txn: TransactionHistoryItem): void {
+  _transactionStore = [txn, ..._transactionStore];
+}
+
+// ─── Props ─────────────────────────────────────────────────────────────────
 interface PosCheckoutShellProps {
   initialProducts: ProductWithStock[];
   storeName?: string;
@@ -25,7 +40,7 @@ interface PosCheckoutShellProps {
 
 export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
   initialProducts,
-  storeName = 'Flagship BGC Terminal - Taguig',
+  storeName = 'Meme Mart - Flagship BGC Terminal - Taguig',
   terminalCode = 'POS-BGC-01',
   cashierName = 'Juan Dela Cruz',
   cashierRole = 'Cashier (EMP-CSH-003)',
@@ -47,22 +62,23 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
   } | null>(null);
   const [showTransactionHistory, setShowTransactionHistory] = useState(false);
 
-  // Derive categories from product list
+  // ─── Post-payment receipt state ──────────────────────────────────────────
+  const [receiptData, setReceiptData] = useState<PostPaymentReceiptData | null>(null);
+  const [isReceiptOpen, setIsReceiptOpen] = useState(false);
+
+  // ─── Categories derived from product list ────────────────────────────────
   const categoryOptions: CategoryOption[] = useMemo(() => {
     const map = new Map<string, number>();
     products.forEach((p) => {
       const cat = p.categoryName || 'Other';
       map.set(cat, (map.get(cat) || 0) + 1);
     });
-
     const opts: CategoryOption[] = [{ id: 'all', name: 'All Items', count: products.length }];
-    map.forEach((count, name) => {
-      opts.push({ id: name, name, count });
-    });
+    map.forEach((count, name) => { opts.push({ id: name, name, count }); });
     return opts;
   }, [products]);
 
-  // Filter products by category and search/barcode query
+  // ─── Filter products by category and search/barcode ─────────────────────
   const filteredProducts = useMemo(() => {
     return products.filter((p) => {
       const q = searchQuery.toLowerCase().trim();
@@ -71,15 +87,12 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
         p.name.toLowerCase().includes(q) ||
         p.sku.toLowerCase().includes(q) ||
         (p.barcode && p.barcode.includes(q));
-
-      const matchesCat =
-        selectedCategoryId === 'all' || p.categoryName === selectedCategoryId;
-
+      const matchesCat = selectedCategoryId === 'all' || p.categoryName === selectedCategoryId;
       return matchesSearch && matchesCat;
     });
   }, [products, searchQuery, selectedCategoryId]);
 
-  // Philippine Ticket Calculations (Gross, 12% VAT, Senior/PWD 20% discount, Net Total)
+  // ─── Philippine ticket calculations ──────────────────────────────────────
   const calculation = useMemo(() => {
     return calculatePhTicketTotals(
       cartItems.map((i) => ({
@@ -91,13 +104,12 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
     );
   }, [cartItems, isSeniorOrPwd]);
 
-  // Cart Handlers
+  // ─── Cart Handlers ────────────────────────────────────────────────────────
   const handleAddToCart = (product: ProductWithStock) => {
     if (product.stockOnHand <= 0) {
       showFeedback('warning', `${product.name} is out of stock!`);
       return;
     }
-
     setCartItems((prev) => {
       const existing = prev.find((i) => i.product.id === product.id);
       if (existing) {
@@ -141,12 +153,11 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
     showFeedback('info', 'Ticket cleared');
   };
 
-  // Barcode Scanning Handler
+  // ─── Barcode Scanning Handler ─────────────────────────────────────────────
   const handleBarcodeScan = (barcode: string) => {
     const found = products.find(
       (p) => p.barcode === barcode || p.sku.toLowerCase() === barcode.toLowerCase(),
     );
-
     if (found) {
       handleAddToCart(found);
       setSearchQuery('');
@@ -156,38 +167,127 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
     }
   };
 
-  // Checkout Payment Confirmation
+  // ─── Payment Confirmation ─────────────────────────────────────────────────
   const handleConfirmPayment = (method: PaymentMethod, amountTendered: number) => {
     setIsProcessingPayment(true);
 
-    setTimeout(() => {
-      const txnNumber = `TXN-PH-${Math.floor(100000 + Math.random() * 900000)}`;
+    // Snapshot cart and totals before clearing
+    const snapshotCart = [...cartItems];
+    const snapshotCalc = { ...calculation };
+    const snapshotSenior = isSeniorOrPwd;
 
-      // Deduct inventory locally
+    setTimeout(() => {
+      const now = new Date().toISOString();
+      const txnNumber = `TXN-PH-${new Date()
+        .toISOString()
+        .slice(0, 10)
+        .replace(/-/g, '')}-${Math.floor(1000 + Math.random() * 9000)}`;
+
+      const changeDue = method === 'cash'
+        ? Math.max(0, amountTendered - snapshotCalc.totalAmountDue)
+        : 0;
+
+      // ── Build the PostPaymentReceiptData ───────────────────────────────
+      const lineItems = snapshotCart.map((item) => ({
+        productName: item.product.name,
+        sku: item.product.sku,
+        quantity: item.quantity,
+        unitPrice: item.product.retailPrice,
+        totalPrice: +(item.product.retailPrice * item.quantity).toFixed(2),
+        taxRate: item.product.taxRate,
+      }));
+
+      const newReceipt: PostPaymentReceiptData = {
+        transactionNumber: txnNumber,
+        createdAt: now,
+        cashierName,
+        storeName,
+        terminalCode,
+        lineItems,
+        grossSubtotal: snapshotCalc.grossSubtotal,
+        vatAmount: snapshotCalc.vatAmount,
+        discountAmount: snapshotCalc.discountAmount,
+        totalAmountDue: snapshotCalc.totalAmountDue,
+        paymentMethod: method,
+        amountTendered,
+        changeDue,
+        isSeniorOrPwd: snapshotSenior,
+      };
+
+      // ── Build TransactionHistoryItem for real-time history sync ────────
+      const historyItem: TransactionHistoryItem = {
+        id: crypto.randomUUID ? crypto.randomUUID() : `local-${Date.now()}`,
+        transactionNumber: txnNumber,
+        status: 'completed',
+        subtotal: snapshotCalc.grossSubtotal,
+        tax: snapshotCalc.vatAmount,
+        discount: snapshotCalc.discountAmount,
+        total: snapshotCalc.totalAmountDue,
+        cashierName,
+        cashierId: 'local-cashier',
+        storeName,
+        storeId: 'local-store',
+        lineItems: lineItems.map((li) => ({
+          productName: li.productName,
+          sku: li.sku,
+          quantity: li.quantity,
+          unitPrice: li.unitPrice,
+          totalPrice: li.totalPrice,
+          taxRate: li.taxRate,
+          discountAmount: 0,
+        })),
+        payments: [{ method, amount: amountTendered, status: 'captured' }],
+        createdAt: now,
+      };
+
+      // ── Persist to module-level store (real-time history) ─────────────
+      prependTransaction(historyItem);
+
+      // ── Also attempt to POST to API Gateway ──────────────────────────
+      fetch('http://localhost:4000/api/v1/pos/transactions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(historyItem),
+      }).catch(() => {/* silently ignore – API offline */});
+
+      // ── Deduct inventory locally ───────────────────────────────────────
       setProducts((prev) =>
         prev.map((prod) => {
-          const inCart = cartItems.find((c) => c.product.id === prod.id);
+          const inCart = snapshotCart.find((c) => c.product.id === prod.id);
           if (inCart) {
             const newOnHand = Math.max(0, prod.stockOnHand - inCart.quantity);
-            return {
-              ...prod,
-              stockOnHand: newOnHand,
-              stockAvailable: newOnHand,
-            };
+            return { ...prod, stockOnHand: newOnHand, stockAvailable: newOnHand };
           }
           return prod;
         }),
       );
 
+      // ── Clear cart and close payment modal ────────────────────────────
       setIsProcessingPayment(false);
       setIsPaymentOpen(false);
       setCartItems([]);
       setIsSeniorOrPwd(false);
-      showFeedback(
-        'success',
-        `Sale ${txnNumber} authorized! Total ${formatPhp(calculation.totalAmountDue)} settled via ${method}.`,
-      );
+
+      // ── Open post-payment receipt modal ───────────────────────────────
+      setReceiptData(newReceipt);
+      setIsReceiptOpen(true);
     }, 700);
+  };
+
+  // ─── Receipt dismiss: immediately ready for next customer ─────────────────
+  const handleReceiptSkip = () => {
+    setIsReceiptOpen(false);
+    setReceiptData(null);
+    showFeedback('success', 'Cart cleared — ready for next customer!');
+  };
+
+  const handleReceiptPrint = () => {
+    // Print is triggered inside modal via window.open; we just close after a delay
+    setTimeout(() => {
+      setIsReceiptOpen(false);
+      setReceiptData(null);
+      showFeedback('success', 'Receipt sent to printer — ready for next customer!');
+    }, 800);
   };
 
   const showFeedback = (type: 'success' | 'warning' | 'info', text: string) => {
@@ -195,7 +295,7 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
     setTimeout(() => setFeedbackMessage(null), 3500);
   };
 
-  // Global Keyboard Shortcuts (F4 to pay)
+  // ─── Global Keyboard Shortcuts (F4 to pay) ───────────────────────────────
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'F4' && cartItems.length > 0 && !isPaymentOpen) {
@@ -207,7 +307,7 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [cartItems.length, isPaymentOpen]);
 
-  // If Transaction History is active, show it full-screen within the shell
+  // ─── Transaction History view ─────────────────────────────────────────────
   if (showTransactionHistory) {
     return (
       <div id="pos-checkout-shell" className="flex flex-col h-screen bg-slate-950 text-slate-100 overflow-hidden">
@@ -221,7 +321,7 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
 
   return (
     <div id="pos-checkout-shell" className="flex flex-col h-screen bg-slate-950 text-slate-100 overflow-hidden">
-      {/* 1. Low-level Top Header */}
+      {/* 1. Top Header */}
       <PosHeader
         storeName={storeName}
         terminalCode={terminalCode}
@@ -234,7 +334,7 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
         pendingRecommendationsCount={pendingRecommendationsCount}
       />
 
-      {/* Temporary Feedback Notification Toast */}
+      {/* Feedback Notification Toast */}
       {feedbackMessage && (
         <div
           id="pos-feedback-toast"
@@ -257,12 +357,11 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
 
       {/* 2. Main Body Split Screen */}
       <div className="flex-1 flex overflow-hidden">
-        {/* Left Section: Scanner + Category Filters + Catalog Grid */}
+        {/* Left: Scanner + Category Filters + Catalog Grid */}
         <section
           id="pos-catalog-section"
           className="flex-1 flex flex-col p-6 overflow-hidden border-r border-slate-800"
         >
-          {/* Barcode Search Bar */}
           <div className="mb-4">
             <BarcodeScannerBar
               value={searchQuery}
@@ -271,8 +370,6 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
               placeholder="Scan Philippine EAN-13 barcode (e.g. 480001660101) or search product..."
             />
           </div>
-
-          {/* Category Filter Pills */}
           <div className="mb-4">
             <CategoryPills
               categories={categoryOptions}
@@ -280,8 +377,6 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
               onSelectCategory={setSelectedCategoryId}
             />
           </div>
-
-          {/* Product Catalog Grid */}
           <div className="flex-1 overflow-y-auto">
             <ProductCatalogGrid
               products={filteredProducts}
@@ -290,7 +385,7 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
           </div>
         </section>
 
-        {/* Right Section: Ticket & Totals with Senior Citizen / PWD Support */}
+        {/* Right: Cart Ticket & Totals */}
         <CartTicket
           items={cartItems}
           ticketNumber="TICK-PH-001"
@@ -305,13 +400,21 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
         />
       </div>
 
-      {/* 3. Payment Pad Modal with GCash/Maya & Philippine Banknotes */}
+      {/* 3. Payment Pad Modal */}
       <PaymentPadModal
         isOpen={isPaymentOpen}
         totalAmount={calculation.totalAmountDue}
         onClose={() => setIsPaymentOpen(false)}
         onConfirmPayment={handleConfirmPayment}
         isProcessing={isProcessingPayment}
+      />
+
+      {/* 4. Post-Payment Meme Mart Receipt Modal */}
+      <PostPaymentReceiptModal
+        isOpen={isReceiptOpen}
+        receipt={receiptData}
+        onPrint={handleReceiptPrint}
+        onSkip={handleReceiptSkip}
       />
     </div>
   );

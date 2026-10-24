@@ -10,6 +10,7 @@ export * from './PaymentPadModal';
 export * from './SmartCrossSellWidget';
 export * from './PosCheckoutShell';
 export * from './ReceiptModal';
+export * from './PostPaymentReceiptModal';
 export * from './TransactionHistoryPanel';
 export * from '../../utils/formatters';
 
