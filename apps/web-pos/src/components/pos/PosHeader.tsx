@@ -1,5 +1,5 @@
 import React from 'react';
-import { Store, User, Wifi, Lock, ShieldCheck, Clock } from 'lucide-react';
+import { Store, User, Wifi, Lock, ShieldCheck, Clock, History } from 'lucide-react';
 
 interface PosHeaderProps {
   storeName?: string;
@@ -9,6 +9,7 @@ interface PosHeaderProps {
   isOnline?: boolean;
   onLockTerminal?: () => void;
   onToggleAiDashboard?: () => void;
+  onToggleTransactionHistory?: () => void;
   activeView?: 'pos' | 'ai';
   pendingRecommendationsCount?: number;
 }
@@ -21,6 +22,7 @@ export const PosHeader: React.FC<PosHeaderProps> = ({
   isOnline = true,
   onLockTerminal,
   onToggleAiDashboard,
+  onToggleTransactionHistory,
   activeView = 'pos',
   pendingRecommendationsCount = 0,
 }) => {
@@ -83,6 +85,19 @@ export const PosHeader: React.FC<PosHeaderProps> = ({
                 {pendingRecommendationsCount}
               </span>
             )}
+          </button>
+        )}
+
+        {/* Transaction History Button */}
+        {onToggleTransactionHistory && (
+          <button
+            id="btn-toggle-transaction-history"
+            type="button"
+            onClick={onToggleTransactionHistory}
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold border transition bg-slate-800/80 text-violet-300 hover:text-violet-200 border-slate-700 hover:bg-slate-800"
+          >
+            <History className="w-3.5 h-3.5" />
+            <span>History</span>
           </button>
         )}
 

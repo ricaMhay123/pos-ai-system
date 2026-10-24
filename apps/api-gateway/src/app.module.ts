@@ -5,6 +5,7 @@ import { CatalogModule } from './modules/catalog/catalog.module';
 import { CheckoutModule } from './modules/checkout/checkout.module';
 import { InventoryModule } from './modules/inventory/inventory.module';
 import { RecommendationsModule } from './modules/recommendations/recommendations.module';
+import { TransactionsModule } from './modules/transactions/transactions.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { RecommendationsModule } from './modules/recommendations/recommendations
     CheckoutModule,
     InventoryModule,
     RecommendationsModule,
+    TransactionsModule,
   ],
 })
 export class AppModule {}

@@ -21,6 +21,7 @@ out/
 coverage/
 *.egg-info/
 .eggs/
+*.tsbuildinfo
 
 # Environment variables & secrets
 .env

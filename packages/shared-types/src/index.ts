@@ -350,6 +350,56 @@ export interface ForecastRun {
   createdAt: string;
 }
 
+// --- Transaction History Module ---
+export interface TransactionHistoryQuery {
+  search?: string;          // Transaction ID / transaction_number search
+  dateFrom?: string;        // ISO date string (inclusive)
+  dateTo?: string;          // ISO date string (inclusive)
+  cashierName?: string;     // Partial match on cashier full name
+  status?: TransactionStatus;
+  page?: number;
+  limit?: number;
+  sortBy?: 'created_at' | 'total_amount' | 'transaction_number';
+  sortOrder?: 'asc' | 'desc';
+}
+
+export interface TransactionHistoryItem {
+  id: string;
+  transactionNumber: string;
+  status: TransactionStatus;
+  subtotal: number;
+  tax: number;
+  discount: number;
+  total: number;
+  cashierName: string;
+  cashierId: string;
+  storeName: string;
+  storeId: string;
+  lineItems: Array<{
+    productName: string;
+    sku: string;
+    quantity: number;
+    unitPrice: number;
+    totalPrice: number;
+    taxRate: number;
+    discountAmount: number;
+  }>;
+  payments: Array<{
+    method: PaymentMethod;
+    amount: number;
+    status: string;
+  }>;
+  createdAt: string;
+}
+
+export interface TransactionHistoryResponse {
+  items: TransactionHistoryItem[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
 // --- Generic API Response Wrappers ---
 export interface ApiResponse<T> {
   success: boolean;

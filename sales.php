@@ -158,7 +158,9 @@ function formatPhp($amount) {
         </div>
 
         <!-- Links, Role Scope & Logout -->
-        <div class="flex items-center gap-2">
+            <a href="sales_history.php" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-violet-600/20 hover:bg-violet-600/30 text-violet-300 border border-violet-500/40 transition flex items-center gap-1.5">
+                📜 History
+            </a>
             <?php if (!$isCashier): ?>
                 <a href="dashboard.php" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/40 transition flex items-center gap-1.5">
                     📊 Manager Dashboard

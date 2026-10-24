@@ -376,6 +376,7 @@ export default function App() {
         terminalCode={currentUser.terminalCode}
         cashierName={currentUser.name}
         cashierRole="Cashier (EMP-CSH-01)"
+        userRole={currentUser.role}
         onToggleAiDashboard={undefined}
         onLockTerminal={() => setCurrentUser(null)}
         pendingRecommendationsCount={pendingCount}
@@ -395,6 +396,7 @@ export default function App() {
             ? 'Cashier (EMP-CSH-01)'
             : 'Store Manager (EMP-MGR-01)'
         }
+        userRole={currentUser.role}
         onToggleAiDashboard={
           currentUser.role === 'cashier' ? undefined : () => setActiveTab('ai')
         }

@@ -5,8 +5,9 @@ import { CategoryPills, CategoryOption } from './CategoryPills';
 import { ProductCatalogGrid } from './ProductCatalogGrid';
 import { CartTicket } from './CartTicket';
 import { PaymentPadModal } from './PaymentPadModal';
+import { TransactionHistoryPanel } from './TransactionHistoryPanel';
 import { PosCartLineItem } from './CartItemRow';
-import { CheckCircle2, AlertCircle } from 'lucide-react';
+import { CheckCircle2, AlertCircle, History } from 'lucide-react';
 import { calculatePhTicketTotals, formatPhp } from '../../utils/formatters';
 import type { ProductWithStock, PaymentMethod } from '@pos-ai/shared-types';
 
@@ -16,6 +17,7 @@ interface PosCheckoutShellProps {
   terminalCode?: string;
   cashierName?: string;
   cashierRole?: string;
+  userRole?: 'cashier' | 'store_manager' | 'admin';
   onToggleAiDashboard?: () => void;
   onLockTerminal?: () => void;
   pendingRecommendationsCount?: number;
@@ -27,6 +29,7 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
   terminalCode = 'POS-BGC-01',
   cashierName = 'Juan Dela Cruz',
   cashierRole = 'Cashier (EMP-CSH-003)',
+  userRole = 'cashier',
   onToggleAiDashboard,
   onLockTerminal,
   pendingRecommendationsCount = 0,
@@ -42,6 +45,7 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
     type: 'success' | 'warning' | 'info';
     text: string;
   } | null>(null);
+  const [showTransactionHistory, setShowTransactionHistory] = useState(false);
 
   // Derive categories from product list
   const categoryOptions: CategoryOption[] = useMemo(() => {
@@ -203,6 +207,18 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [cartItems.length, isPaymentOpen]);
 
+  // If Transaction History is active, show it full-screen within the shell
+  if (showTransactionHistory) {
+    return (
+      <div id="pos-checkout-shell" className="flex flex-col h-screen bg-slate-950 text-slate-100 overflow-hidden">
+        <TransactionHistoryPanel
+          userRole={userRole}
+          onClose={() => setShowTransactionHistory(false)}
+        />
+      </div>
+    );
+  }
+
   return (
     <div id="pos-checkout-shell" className="flex flex-col h-screen bg-slate-950 text-slate-100 overflow-hidden">
       {/* 1. Low-level Top Header */}
@@ -214,6 +230,7 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
         isOnline={true}
         onLockTerminal={onLockTerminal || (() => showFeedback('info', 'Register Terminal locked'))}
         onToggleAiDashboard={onToggleAiDashboard}
+        onToggleTransactionHistory={() => setShowTransactionHistory(true)}
         pendingRecommendationsCount={pendingRecommendationsCount}
       />
 
