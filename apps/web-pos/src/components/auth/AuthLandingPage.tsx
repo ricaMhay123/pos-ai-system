@@ -30,11 +30,8 @@ export const AuthLandingPage: React.FC<AuthLandingPageProps> = ({ onLogin }) => 
   const executeLogin = async (u: string, p: string) => {
     setIsLoading(true);
     setErrorMessage(null);
-
-    // Short simulated authentication delay
     await new Promise((resolve) => setTimeout(resolve, 200));
 
-    // Authenticate credentials against default test accounts or gateway
     if (u === 'manager' && p === 'manager123') {
       onLogin({
         id: '20000000-0000-0000-0000-000000000010',
@@ -65,63 +62,119 @@ export const AuthLandingPage: React.FC<AuthLandingPageProps> = ({ onLogin }) => 
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-indigo-500 selection:text-white font-sans relative">
-      {/* Ambient background glow */}
-      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-b from-indigo-600/15 via-emerald-500/10 to-transparent blur-3xl pointer-events-none -z-10" />
+    <div
+      className="min-h-screen flex flex-col selection:text-white font-sans relative"
+      style={{
+        backgroundColor: 'var(--at-neutral)',
+        color: 'var(--at-text-on-neutral)',
+        /* @ts-ignore */
+        '--tw-selection-color': 'var(--at-accent)',
+      }}
+    >
+      {/* Ambient warm glow */}
+      <div
+        className="fixed top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] blur-3xl pointer-events-none -z-10"
+        style={{
+          background: 'radial-gradient(ellipse at center, rgba(227,154,75,0.18) 0%, rgba(184,84,63,0.10) 50%, transparent 80%)',
+        }}
+      />
 
-      {/* Header Bar */}
-      <header className="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md px-6 py-4 flex items-center justify-between shrink-0">
+      {/* Header Bar – Accent dark bg */}
+      <header
+        className="border-b px-6 py-4 flex items-center justify-between shrink-0 backdrop-blur-md"
+        style={{
+          backgroundColor: 'var(--at-accent)',
+          borderColor: 'var(--at-accent-light)',
+        }}
+      >
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-indigo-500/25">
-            <Sparkles className="w-4 h-4 text-white" />
+          {/* Logo badge – Primary amber bg, CRITICAL: dark Accent text */}
+          <div
+            className="w-9 h-9 rounded-xl flex items-center justify-center shadow-lg"
+            style={{ backgroundColor: 'var(--at-primary)', color: 'var(--at-text-on-primary)' }}
+          >
+            <Sparkles className="w-4 h-4" />
           </div>
           <div>
-            <span className="text-sm font-extrabold tracking-tight text-white">POS AI</span>
-            <p className="text-[11px] text-slate-400 leading-tight">
+            <span className="text-sm font-extrabold tracking-tight" style={{ color: 'var(--at-neutral)' }}>
+              POS AI
+            </span>
+            <p className="text-[11px] leading-tight" style={{ color: 'var(--at-neutral-muted)' }}>
               Enterprise Point-of-Sale &amp; AI Inventory Intelligence
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-2 font-mono text-slate-400 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-lg text-xs">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+        <div
+          className="flex items-center gap-2 font-mono px-3 py-1.5 rounded-lg text-xs border"
+          style={{
+            backgroundColor: 'var(--at-accent-muted)',
+            borderColor: 'var(--at-accent-light)',
+            color: 'var(--at-neutral)',
+          }}
+        >
+          <span
+            className="w-2 h-2 rounded-full animate-pulse"
+            style={{ backgroundColor: 'var(--at-primary)' }}
+          />
           <span>RBAC Active</span>
         </div>
       </header>
 
-      {/* Main — centered login card */}
+      {/* Main – centered login card */}
       <main className="flex-1 flex items-center justify-center p-6">
         <div className="w-full max-w-sm space-y-5">
 
           {/* Title */}
           <div className="text-center">
-            <h2 className="text-2xl font-extrabold text-white tracking-tight">
+            <h2
+              className="text-2xl font-extrabold tracking-tight"
+              style={{ color: 'var(--at-accent)' }}
+            >
               Sign In to Your Workspace
             </h2>
           </div>
 
           {/* Error Message */}
           {errorMessage && (
-            <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-sm flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 shrink-0 text-rose-400 mt-0.5" />
+            <div
+              className="p-4 rounded-xl border text-sm flex items-start gap-3"
+              style={{
+                /* Secondary rust-red bg → Neutral text (WCAG safe) */
+                backgroundColor: 'rgba(184,84,63,0.10)',
+                borderColor: 'rgba(184,84,63,0.30)',
+                color: 'var(--at-secondary)',
+              }}
+            >
+              <AlertTriangle className="w-5 h-5 shrink-0 mt-0.5" />
               <div>
                 <p className="font-semibold">Authentication Error</p>
-                <p className="text-xs text-rose-200 mt-0.5">{errorMessage}</p>
+                <p className="text-xs mt-0.5" style={{ color: 'var(--at-secondary)' }}>
+                  {errorMessage}
+                </p>
               </div>
             </div>
           )}
 
           {/* Login Card */}
           <div
-            className="bg-slate-900/90 border border-slate-800 rounded-2xl p-8 backdrop-blur-xl shadow-2xl"
-            style={{ boxShadow: '0 0 60px -12px rgba(99,102,241,0.20)' }}
+            className="rounded-2xl p-8 shadow-2xl border backdrop-blur-xl"
+            style={{
+              backgroundColor: 'var(--at-neutral-dark)',
+              borderColor: 'var(--at-neutral-muted)',
+              boxShadow: '0 0 60px -12px rgba(227,154,75,0.18)',
+            }}
           >
             <form onSubmit={handleSubmit} className="space-y-5">
+              {/* Username field */}
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
+                <label
+                  className="block text-xs font-semibold mb-1.5 uppercase tracking-wider"
+                  style={{ color: 'var(--at-accent)' }}
+                >
                   Username
                 </label>
                 <div className="relative">
-                  <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
+                  <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center" style={{ color: 'var(--at-accent-light)' }}>
                     <User className="w-4 h-4" />
                   </span>
                   <input
@@ -132,17 +185,34 @@ export const AuthLandingPage: React.FC<AuthLandingPageProps> = ({ onLogin }) => 
                     placeholder="Enter username"
                     required
                     autoFocus
-                    className="w-full bg-slate-950 border border-slate-700/80 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 font-mono transition"
+                    className="w-full border rounded-xl pl-10 pr-4 py-2.5 text-sm font-mono transition focus:outline-none"
+                    style={{
+                      backgroundColor: 'var(--at-neutral)',
+                      borderColor: 'var(--at-neutral-muted)',
+                      color: 'var(--at-accent)',
+                    }}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = 'var(--at-primary)';
+                      e.currentTarget.style.boxShadow = '0 0 0 3px rgba(227,154,75,0.18)';
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = 'var(--at-neutral-muted)';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
                   />
                 </div>
               </div>
 
+              {/* Password field */}
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">
+                <label
+                  className="block text-xs font-semibold mb-1.5 uppercase tracking-wider"
+                  style={{ color: 'var(--at-accent)' }}
+                >
                   Password
                 </label>
                 <div className="relative">
-                  <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
+                  <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center" style={{ color: 'var(--at-accent-light)' }}>
                     <Lock className="w-4 h-4" />
                   </span>
                   <input
@@ -152,24 +222,46 @@ export const AuthLandingPage: React.FC<AuthLandingPageProps> = ({ onLogin }) => 
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Enter password"
                     required
-                    className="w-full bg-slate-950 border border-slate-700/80 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 font-mono transition"
+                    className="w-full border rounded-xl pl-10 pr-4 py-2.5 text-sm font-mono transition focus:outline-none"
+                    style={{
+                      backgroundColor: 'var(--at-neutral)',
+                      borderColor: 'var(--at-neutral-muted)',
+                      color: 'var(--at-accent)',
+                    }}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderColor = 'var(--at-primary)';
+                      e.currentTarget.style.boxShadow = '0 0 0 3px rgba(227,154,75,0.18)';
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderColor = 'var(--at-neutral-muted)';
+                      e.currentTarget.style.boxShadow = 'none';
+                    }}
                   />
                 </div>
               </div>
 
+              {/* Sign In Button – Secondary rust-red → Neutral text */}
               <button
                 type="submit"
                 id="btn-login-submit"
                 disabled={isLoading}
-                className="w-full bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-600 text-white font-semibold py-2.5 px-4 rounded-xl shadow-lg shadow-indigo-600/30 transition transform active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-50"
+                className="w-full font-semibold py-2.5 px-4 rounded-xl shadow-lg transition transform active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-50"
+                style={{
+                  background: 'linear-gradient(135deg, var(--at-secondary) 0%, #a34535 100%)',
+                  color: 'var(--at-text-on-secondary)',
+                  boxShadow: '0 4px 14px -2px rgba(184,84,63,0.35)',
+                }}
               >
                 <span>{isLoading ? 'Verifying...' : 'Sign In'}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
               <div className="text-center pt-1">
-                <span className="text-[11px] text-slate-500 flex items-center justify-center gap-1.5">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                <span
+                  className="text-[11px] flex items-center justify-center gap-1.5"
+                  style={{ color: 'var(--at-accent-light)' }}
+                >
+                  <ShieldCheck className="w-3.5 h-3.5" style={{ color: 'var(--at-primary)' }} />
                   RBAC Protected &bull; Multi-Store Architecture
                 </span>
               </div>
@@ -179,7 +271,14 @@ export const AuthLandingPage: React.FC<AuthLandingPageProps> = ({ onLogin }) => 
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-slate-900 bg-slate-950/80 px-6 py-4 text-center text-xs text-slate-500 shrink-0">
+      <footer
+        className="border-t px-6 py-4 text-center text-xs shrink-0"
+        style={{
+          borderColor: 'var(--at-neutral-muted)',
+          color: 'var(--at-accent-light)',
+          backgroundColor: 'var(--at-neutral-dark)',
+        }}
+      >
         <p>POS AI &bull; Philippine Retail FMCG Architecture &bull; 12% VAT Localization</p>
       </footer>
     </div>

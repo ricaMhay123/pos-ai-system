@@ -45,18 +45,38 @@ export const CartTicket: React.FC<CartTicketProps> = ({
   return (
     <aside
       id="pos-cart-panel"
-      className="w-96 lg:w-[420px] flex flex-col bg-slate-900 border-l border-slate-800 shrink-0 h-full min-h-0 select-none overflow-hidden"
+      className="w-96 lg:w-[420px] flex flex-col shrink-0 h-full min-h-0 select-none overflow-hidden border-l"
+      style={{
+        backgroundColor: 'var(--at-accent)',
+        borderColor: 'var(--at-accent-light)',
+      }}
     >
-      {/* ── Ticket Header (fixed height) ──────────────────────────── */}
-      <div className="shrink-0 flex items-center justify-between px-6 py-4 border-b border-slate-800">
+      {/* ── Ticket Header ──────────────────────────────────────────── */}
+      <div
+        className="shrink-0 flex items-center justify-between px-6 py-4 border-b"
+        style={{ borderColor: 'var(--at-accent-light)' }}
+      >
         <div className="flex items-center gap-2.5 min-w-0">
-          <div className="w-8 h-8 rounded-lg bg-indigo-600/10 text-indigo-400 flex items-center justify-center shrink-0">
+          <div
+            className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
+            style={{ backgroundColor: 'var(--at-accent-muted)', color: 'var(--at-primary)' }}
+          >
             <Receipt className="w-4 h-4" />
           </div>
           <div className="min-w-0">
-            <h2 className="text-sm font-bold text-white flex items-center gap-2 flex-wrap">
+            <h2
+              className="text-sm font-bold flex items-center gap-2 flex-wrap"
+              style={{ color: 'var(--at-neutral)' }}
+            >
               Current Ticket
-              <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700 whitespace-nowrap">
+              <span
+                className="text-[10px] font-mono font-medium px-2 py-0.5 rounded border whitespace-nowrap"
+                style={{
+                  backgroundColor: 'var(--at-accent-muted)',
+                  color: 'var(--at-neutral-muted)',
+                  borderColor: 'var(--at-accent-light)',
+                }}
+              >
                 {ticketNumber}
               </span>
             </h2>
@@ -69,7 +89,14 @@ export const CartTicket: React.FC<CartTicketProps> = ({
             type="button"
             onClick={onClearCart}
             title="Clear all ticket items"
-            className="shrink-0 ml-2 flex items-center gap-1 text-[11px] font-semibold text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 px-2 py-1 rounded transition"
+            className="shrink-0 ml-2 flex items-center gap-1 text-[11px] font-semibold px-2 py-1 rounded transition"
+            style={{ color: 'var(--at-secondary)', backgroundColor: 'transparent' }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'rgba(184,84,63,0.15)';
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'transparent';
+            }}
           >
             <Trash2 className="w-3.5 h-3.5" />
             <span>Clear</span>
@@ -77,15 +104,23 @@ export const CartTicket: React.FC<CartTicketProps> = ({
         )}
       </div>
 
-      {/* ── Scrollable Cart Items (flex-1 + min-h-0 so it shrinks) ── */}
+      {/* ── Scrollable Cart Items ──────────────────────────────────── */}
       <div className="flex-1 min-h-0 overflow-y-auto px-6 py-3 space-y-2.5 pr-5">
         {items.length === 0 ? (
-          <div className="h-full flex flex-col items-center justify-center text-center p-6 text-slate-500">
-            <div className="w-14 h-14 rounded-2xl bg-slate-800/40 border border-slate-800 flex items-center justify-center mb-3">
-              <PackageOpen className="w-7 h-7 text-slate-600" />
+          <div className="h-full flex flex-col items-center justify-center text-center p-6">
+            <div
+              className="w-14 h-14 rounded-2xl border flex items-center justify-center mb-3"
+              style={{
+                backgroundColor: 'var(--at-accent-muted)',
+                borderColor: 'var(--at-accent-light)',
+              }}
+            >
+              <PackageOpen className="w-7 h-7" style={{ color: 'var(--at-accent-light)' }} />
             </div>
-            <h3 className="text-sm font-semibold text-slate-300">Ticket is empty</h3>
-            <p className="text-xs text-slate-500 max-w-[200px] mt-1 leading-relaxed">
+            <h3 className="text-sm font-semibold" style={{ color: 'var(--at-neutral)' }}>
+              Ticket is empty
+            </h3>
+            <p className="text-xs max-w-[200px] mt-1 leading-relaxed" style={{ color: 'var(--at-neutral-muted)' }}>
               Scan barcode or select Philippine retail items to begin.
             </p>
           </div>
@@ -101,9 +136,12 @@ export const CartTicket: React.FC<CartTicketProps> = ({
         )}
       </div>
 
-      {/* ── Smart Cross-Sell (capped height, will not push totals away) */}
+      {/* ── Smart Cross-Sell (capped height) ──────────────────────── */}
       {onAddToCart && items.length > 0 && (
-        <div className="shrink-0 px-6 py-2 max-h-[120px] overflow-hidden border-t border-slate-800/60">
+        <div
+          className="shrink-0 px-6 py-2 max-h-[120px] overflow-hidden border-t"
+          style={{ borderColor: 'var(--at-accent-light)' }}
+        >
           <SmartCrossSellWidget
             cartProductIds={items.map((i) => i.product.id)}
             allProducts={allProducts}
@@ -112,7 +150,7 @@ export const CartTicket: React.FC<CartTicketProps> = ({
         </div>
       )}
 
-      {/* ── Totals + Charge button (always visible, never scrolled away) */}
+      {/* ── Totals + Charge button (always visible) ────────────────── */}
       <div className="shrink-0 px-6 pb-5 pt-1">
         <CartTotals
           subtotal={calculation.grossSubtotal}

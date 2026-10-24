@@ -1,25 +1,77 @@
+/* ── Google Fonts – Inter (UI) + JetBrains Mono (numerics) ─────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ── Amber Twilight CSS Design Tokens ───────────────────────────────────── */
+:root {
+  --at-primary:        #E39A4B;   /* Warm Amber   — badges, highlights     */
+  --at-secondary:      #B8543F;   /* Rust Red     — alerts, secondary btn   */
+  --at-accent:         #3D2545;   /* Deep Purple  — navbars, dark bg cards  */
+  --at-neutral:        #F8EBD9;   /* Warm Cream   — main page background    */
+  --at-accent-light:   #5a3868;   /* Lighter accent for borders/hover       */
+  --at-accent-muted:   #2a1a30;   /* Deepest accent shade                   */
+  --at-primary-muted:  #f0b87a;   /* Amber hover tint                       */
+  --at-neutral-dark:   #eddcbf;   /* Slightly darker cream — card surfaces  */
+  --at-neutral-muted:  #d4c4a8;   /* Muted cream — placeholder/disabled     */
+  --at-text-on-neutral:#3D2545;   /* Body text on cream bg (Accent)         */
+  --at-text-on-accent: #F8EBD9;   /* Text on dark Accent bg (Neutral)       */
+  --at-text-on-secondary: #F8EBD9;/* Text on Rust Red                       */
+  /* CRITICAL: on Primary (#E39A4B) always use Accent for text              */
+  --at-text-on-primary:#3D2545;   /* Dark text on Warm Amber (WCAG AA safe) */
+}
+
 @layer base {
   body {
-    @apply min-h-screen bg-slate-950 text-slate-100;
+    background-color: var(--at-neutral);
+    color: var(--at-text-on-neutral);
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    @apply antialiased;
   }
 }
 
-/* Custom scrollbars */
+/* ── Amber Twilight Scrollbars ──────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: var(--at-neutral-dark);
 }
 ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: var(--at-accent-light);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: var(--at-primary);
+}
+
+/* ── Utility: Amber Twilight component helpers ──────────────────────────── */
+@layer components {
+  /* Accent background panels – navbars, sidebars, modals */
+  .at-panel-dark {
+    background-color: var(--at-accent);
+    color: var(--at-text-on-accent);
+    border-color: var(--at-accent-light);
+  }
+
+  /* Neutral surface – main content area, cards on light bg */
+  .at-surface {
+    background-color: var(--at-neutral-dark);
+    color: var(--at-text-on-neutral);
+  }
+
+  /* Primary badge – always dark text for contrast */
+  .at-badge-primary {
+    background-color: var(--at-primary);
+    color: var(--at-text-on-primary);
+  }
+
+  /* Secondary alert/button */
+  .at-badge-secondary {
+    background-color: var(--at-secondary);
+    color: var(--at-text-on-secondary);
+  }
 }

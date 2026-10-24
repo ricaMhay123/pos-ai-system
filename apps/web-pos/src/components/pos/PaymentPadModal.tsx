@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
   CreditCard,
   Banknote,
-  Smartphone,
   CheckCircle2,
   X,
   ShieldCheck,
@@ -78,13 +77,13 @@ export const PaymentPadModal: React.FC<PaymentPadModalProps> = ({
     >
       <div
         id="payment-modal-panel"
-        className="w-full max-w-xl rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl overflow-hidden flex flex-col"
+        className="w-full max-w-xl rounded-2xl bg-at-accent border border-at-accent-light shadow-2xl overflow-hidden flex flex-col text-at-neutral"
       >
         {/* Modal Header */}
-        <div className="flex items-center justify-between p-5 border-b border-slate-800 bg-slate-900/80">
+        <div className="flex items-center justify-between p-5 border-b border-at-accent-light bg-at-accent-muted/80">
           <div className="flex items-center gap-2">
-            <h3 className="text-base font-bold text-white">Philippine POS Checkout Tender</h3>
-            <span className="text-xs px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 font-mono">
+            <h3 className="text-base font-bold text-at-neutral">Philippine POS Checkout Tender</h3>
+            <span className="text-xs px-2 py-0.5 rounded bg-at-primary text-at-accent font-mono font-bold">
               PHP (₱)
             </span>
           </div>
@@ -92,7 +91,7 @@ export const PaymentPadModal: React.FC<PaymentPadModalProps> = ({
             id="btn-close-payment-modal"
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition"
+            className="p-1.5 rounded-lg text-at-neutral/70 hover:text-white hover:bg-at-accent-light transition"
           >
             <X className="w-5 h-5" />
           </button>
@@ -101,18 +100,18 @@ export const PaymentPadModal: React.FC<PaymentPadModalProps> = ({
         {/* Modal Body */}
         <div className="p-6 space-y-5">
           {/* Total Due Banner */}
-          <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+          <div className="p-4 rounded-xl bg-at-accent-muted border border-at-accent-light flex items-center justify-between">
+            <span className="text-xs font-semibold text-at-neutral/70 uppercase tracking-wider">
               Total Amount Due
             </span>
-            <span className="text-3xl font-extrabold text-white font-mono">
+            <span className="text-3xl font-extrabold text-at-primary font-mono">
               {formatPhp(totalAmount)}
             </span>
           </div>
 
           {/* Payment Method Selector (Philippine Standard) */}
           <div>
-            <label className="block text-xs font-semibold text-slate-400 mb-2">
+            <label className="block text-xs font-semibold text-at-neutral/70 mb-2">
               Select Payment Channel
             </label>
             <div className="grid grid-cols-3 gap-2.5">
@@ -125,13 +124,13 @@ export const PaymentPadModal: React.FC<PaymentPadModalProps> = ({
                 }}
                 className={`flex flex-col items-center justify-center p-3 rounded-xl border font-medium text-xs transition ${
                   selectedMethod === 'digital_wallet'
-                    ? 'bg-indigo-600/15 border-indigo-500 text-indigo-300 ring-2 ring-indigo-500/20'
-                    : 'bg-slate-800/60 border-slate-700/80 text-slate-400 hover:text-slate-200'
+                    ? 'bg-at-primary border-at-primary text-at-accent ring-2 ring-at-primary/30 font-bold'
+                    : 'bg-at-accent-muted/80 border-at-accent-light text-at-neutral/80 hover:text-at-neutral hover:bg-at-accent-light/40'
                 }`}
               >
-                <QrCode className="w-5 h-5 mb-1.5 text-sky-400" />
+                <QrCode className="w-5 h-5 mb-1.5" />
                 <span className="font-semibold">GCash / Maya</span>
-                <span className="text-[10px] text-slate-500 mt-0.5">QR Ph Dynamic</span>
+                <span className="text-[10px] opacity-80 mt-0.5">QR Ph Dynamic</span>
               </button>
 
               <button
@@ -140,13 +139,13 @@ export const PaymentPadModal: React.FC<PaymentPadModalProps> = ({
                 onClick={() => setSelectedMethod('cash')}
                 className={`flex flex-col items-center justify-center p-3 rounded-xl border font-medium text-xs transition ${
                   selectedMethod === 'cash'
-                    ? 'bg-indigo-600/15 border-indigo-500 text-indigo-300 ring-2 ring-indigo-500/20'
-                    : 'bg-slate-800/60 border-slate-700/80 text-slate-400 hover:text-slate-200'
+                    ? 'bg-at-primary border-at-primary text-at-accent ring-2 ring-at-primary/30 font-bold'
+                    : 'bg-at-accent-muted/80 border-at-accent-light text-at-neutral/80 hover:text-at-neutral hover:bg-at-accent-light/40'
                 }`}
               >
-                <Banknote className="w-5 h-5 mb-1.5 text-emerald-400" />
+                <Banknote className="w-5 h-5 mb-1.5" />
                 <span className="font-semibold">Cash (PHP)</span>
-                <span className="text-[10px] text-slate-500 mt-0.5">Philippine Peso</span>
+                <span className="text-[10px] opacity-80 mt-0.5">Philippine Peso</span>
               </button>
 
               <button
@@ -158,29 +157,29 @@ export const PaymentPadModal: React.FC<PaymentPadModalProps> = ({
                 }}
                 className={`flex flex-col items-center justify-center p-3 rounded-xl border font-medium text-xs transition ${
                   selectedMethod === 'credit_card'
-                    ? 'bg-indigo-600/15 border-indigo-500 text-indigo-300 ring-2 ring-indigo-500/20'
-                    : 'bg-slate-800/60 border-slate-700/80 text-slate-400 hover:text-slate-200'
+                    ? 'bg-at-primary border-at-primary text-at-accent ring-2 ring-at-primary/30 font-bold'
+                    : 'bg-at-accent-muted/80 border-at-accent-light text-at-neutral/80 hover:text-at-neutral hover:bg-at-accent-light/40'
                 }`}
               >
-                <CreditCard className="w-5 h-5 mb-1.5 text-indigo-400" />
+                <CreditCard className="w-5 h-5 mb-1.5" />
                 <span className="font-semibold">BancNet / Card</span>
-                <span className="text-[10px] text-slate-500 mt-0.5">EMV Chip / Tap</span>
+                <span className="text-[10px] opacity-80 mt-0.5">EMV Chip / Tap</span>
               </button>
             </div>
           </div>
 
           {/* Cash Numpad & Fast Tender Controls (Philippine Banknotes: ₱50, ₱100, ₱500, ₱1,000) */}
           {selectedMethod === 'cash' && (
-            <div className="space-y-4 pt-2 border-t border-slate-800">
+            <div className="space-y-4 pt-2 border-t border-at-accent-light">
               <div>
-                <label className="block text-xs font-semibold text-slate-400 mb-2">
+                <label className="block text-xs font-semibold text-at-neutral/70 mb-2">
                   Philippine Currency Presets
                 </label>
                 <div className="grid grid-cols-5 gap-2">
                   <button
                     type="button"
                     onClick={() => handleQuickCash(totalAmount)}
-                    className="py-2.5 px-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-semibold font-mono"
+                    className="py-2.5 px-1 rounded-lg bg-at-accent-muted hover:bg-at-accent-light border border-at-accent-light text-at-neutral text-xs font-semibold font-mono"
                   >
                     Exact
                   </button>
@@ -189,7 +188,7 @@ export const PaymentPadModal: React.FC<PaymentPadModalProps> = ({
                       key={bill}
                       type="button"
                       onClick={() => handleQuickCash(bill)}
-                      className="py-2.5 px-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-semibold font-mono"
+                      className="py-2.5 px-1 rounded-lg bg-at-accent-muted hover:bg-at-accent-light border border-at-accent-light text-at-neutral text-xs font-semibold font-mono"
                     >
                       ₱{bill}
                     </button>
@@ -199,22 +198,22 @@ export const PaymentPadModal: React.FC<PaymentPadModalProps> = ({
 
               {/* Amount Tendered Input & Change Output */}
               <div className="grid grid-cols-2 gap-4">
-                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                  <span className="text-[10px] uppercase font-bold text-slate-400">
+                <div className="p-3 rounded-xl bg-at-accent-muted border border-at-accent-light">
+                  <span className="text-[10px] uppercase font-bold text-at-neutral/70">
                     Amount Tendered
                   </span>
-                  <div className="text-xl font-mono font-bold text-white mt-0.5">
+                  <div className="text-xl font-mono font-bold text-at-neutral mt-0.5">
                     {formatPhp(tenderedAmount)}
                   </div>
                 </div>
 
-                <div className="p-3 rounded-xl bg-slate-950 border border-slate-800">
-                  <span className="text-[10px] uppercase font-bold text-slate-400">
+                <div className="p-3 rounded-xl bg-at-accent-muted border border-at-accent-light">
+                  <span className="text-[10px] uppercase font-bold text-at-neutral/70">
                     Change Due
                   </span>
                   <div
                     className={`text-xl font-mono font-bold mt-0.5 ${
-                      changeDue > 0 ? 'text-emerald-400' : 'text-slate-500'
+                      changeDue > 0 ? 'text-at-primary' : 'text-at-neutral/50'
                     }`}
                   >
                     {formatPhp(changeDue)}
@@ -229,7 +228,7 @@ export const PaymentPadModal: React.FC<PaymentPadModalProps> = ({
                     key={key}
                     type="button"
                     onClick={() => (key === 'DEL' ? handleBackspace() : handleNumpadPress(key))}
-                    className="py-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-sm font-bold font-mono text-white transition active:scale-95"
+                    className="py-3 rounded-xl bg-at-accent-muted/90 hover:bg-at-accent-light border border-at-accent-light text-sm font-bold font-mono text-at-neutral transition active:scale-95"
                   >
                     {key}
                   </button>
@@ -240,9 +239,9 @@ export const PaymentPadModal: React.FC<PaymentPadModalProps> = ({
         </div>
 
         {/* Modal Footer / Complete Action */}
-        <div className="p-5 border-t border-slate-800 bg-slate-900 flex items-center justify-between">
-          <div className="flex items-center gap-1.5 text-xs text-slate-400">
-            <ShieldCheck className="w-4 h-4 text-emerald-400" />
+        <div className="p-5 border-t border-at-accent-light bg-at-accent-muted flex items-center justify-between">
+          <div className="flex items-center gap-1.5 text-xs text-at-neutral/70">
+            <ShieldCheck className="w-4 h-4 text-at-primary" />
             <span>BIR Compliant • Cash Register Machine (CRM)</span>
           </div>
 
@@ -252,7 +251,7 @@ export const PaymentPadModal: React.FC<PaymentPadModalProps> = ({
               type="button"
               onClick={onClose}
               disabled={isProcessing}
-              className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold border border-slate-700 transition"
+              className="px-4 py-2.5 rounded-xl bg-at-accent-muted hover:bg-at-accent-light text-at-neutral text-xs font-semibold border border-at-accent-light transition"
             >
               Cancel (Esc)
             </button>
@@ -262,11 +261,11 @@ export const PaymentPadModal: React.FC<PaymentPadModalProps> = ({
               type="button"
               disabled={!isSufficient || isProcessing}
               onClick={() => onConfirmPayment(selectedMethod, tenderedAmount)}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 text-white text-xs font-bold shadow-lg shadow-indigo-600/30 transition active:scale-95"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-at-secondary hover:opacity-95 disabled:opacity-40 text-at-neutral text-xs font-bold shadow-lg shadow-at-secondary/30 transition active:scale-95"
             >
               {isProcessing ? (
                 <>
-                  <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <div className="w-3.5 h-3.5 border-2 border-at-neutral/30 border-t-at-neutral rounded-full animate-spin" />
                   <span>Processing Payment...</span>
                 </>
               ) : (

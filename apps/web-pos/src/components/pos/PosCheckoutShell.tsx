@@ -310,7 +310,11 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
   // ─── Transaction History view ─────────────────────────────────────────────
   if (showTransactionHistory) {
     return (
-      <div id="pos-checkout-shell" className="flex flex-col h-screen bg-slate-950 text-slate-100 overflow-hidden">
+      <div
+        id="pos-checkout-shell"
+        className="flex flex-col h-screen overflow-hidden"
+        style={{ backgroundColor: 'var(--at-neutral)', color: 'var(--at-text-on-neutral)' }}
+      >
         <TransactionHistoryPanel
           userRole={userRole}
           onClose={() => setShowTransactionHistory(false)}
@@ -320,7 +324,11 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
   }
 
   return (
-    <div id="pos-checkout-shell" className="flex flex-col h-screen bg-slate-950 text-slate-100 overflow-hidden">
+    <div
+      id="pos-checkout-shell"
+      className="flex flex-col h-screen overflow-hidden"
+      style={{ backgroundColor: 'var(--at-neutral)', color: 'var(--at-text-on-neutral)' }}
+    >
       {/* 1. Top Header */}
       <PosHeader
         storeName={storeName}
@@ -334,22 +342,37 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
         pendingRecommendationsCount={pendingRecommendationsCount}
       />
 
-      {/* Feedback Notification Toast */}
+      {/* Feedback Notification Toast — Amber Twilight */}
       {feedbackMessage && (
         <div
           id="pos-feedback-toast"
-          className={`absolute top-20 right-6 z-40 flex items-center gap-2.5 px-4 py-2.5 rounded-xl border shadow-xl text-xs font-semibold backdrop-blur animate-in slide-in-from-top-2 duration-200 ${
-            feedbackMessage.type === 'success'
-              ? 'bg-emerald-950/90 border-emerald-500/40 text-emerald-300'
-              : feedbackMessage.type === 'warning'
-              ? 'bg-amber-950/90 border-amber-500/40 text-amber-300'
-              : 'bg-indigo-950/90 border-indigo-500/40 text-indigo-300'
-          }`}
+          className="absolute top-20 right-6 z-40 flex items-center gap-2.5 px-4 py-2.5 rounded-xl border shadow-xl text-xs font-semibold backdrop-blur animate-in slide-in-from-top-2 duration-200"
+          style={{
+            /* success  → Accent bg, Neutral text
+               warning  → Secondary bg, Neutral text (WCAG safe)
+               info     → Primary bg, Accent text (CRITICAL: no white on amber!) */
+            backgroundColor:
+              feedbackMessage.type === 'success'
+                ? 'var(--at-accent)'
+                : feedbackMessage.type === 'warning'
+                ? 'var(--at-secondary)'
+                : 'var(--at-primary)',
+            color:
+              feedbackMessage.type === 'info'
+                ? 'var(--at-text-on-primary)'   // dark accent on amber
+                : 'var(--at-text-on-accent)',    // neutral cream on dark
+            borderColor:
+              feedbackMessage.type === 'success'
+                ? 'var(--at-accent-light)'
+                : feedbackMessage.type === 'warning'
+                ? 'rgba(184,84,63,0.5)'
+                : 'var(--at-primary-muted)',
+          }}
         >
           {feedbackMessage.type === 'success' ? (
-            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+            <CheckCircle2 className="w-4 h-4" style={{ color: 'var(--at-primary)' }} />
           ) : (
-            <AlertCircle className="w-4 h-4 text-amber-400" />
+            <AlertCircle className="w-4 h-4" />
           )}
           <span>{feedbackMessage.text}</span>
         </div>
@@ -360,7 +383,8 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
         {/* Left: Scanner + Category Filters + Catalog Grid */}
         <section
           id="pos-catalog-section"
-          className="flex-1 flex flex-col p-6 overflow-hidden border-r border-slate-800"
+          className="flex-1 flex flex-col p-6 overflow-hidden border-r"
+          style={{ borderColor: 'var(--at-neutral-muted)' }}
         >
           <div className="mb-4">
             <BarcodeScannerBar

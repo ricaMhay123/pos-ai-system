@@ -27,21 +27,27 @@ export const CartItemRow: React.FC<CartItemRowProps> = ({
   return (
     <div
       id={`cart-row-${item.product.sku}`}
-      className="group relative p-3 rounded-xl bg-slate-800/50 hover:bg-slate-800/80 border border-slate-700/60 hover:border-slate-700 transition flex items-center justify-between gap-3 select-none"
+      className="group relative p-3 rounded-xl border transition flex items-center justify-between gap-3 select-none"
+      style={{
+        backgroundColor: 'var(--at-accent-muted)',
+        borderColor: 'var(--at-accent-light)',
+      }}
     >
       {/* Product Title and Unit Pricing */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <span className="font-mono text-[10px] text-slate-400">{item.product.sku}</span>
-          <span className="text-[10px] text-slate-500 font-mono">
+          <span className="font-mono text-[10px]" style={{ color: 'var(--at-neutral-muted)' }}>
+            {item.product.sku}
+          </span>
+          <span className="text-[10px] font-mono" style={{ color: 'var(--at-primary)' }}>
             {formatPhp(item.product.retailPrice)}/ea
           </span>
         </div>
-        <div className="font-medium text-xs text-slate-100 truncate mt-0.5">
+        <div className="font-medium text-xs truncate mt-0.5" style={{ color: 'var(--at-neutral)' }}>
           {item.product.name}
         </div>
         {lineDiscount > 0 && (
-          <div className="text-[10px] text-emerald-400 font-mono mt-0.5">
+          <div className="text-[10px] font-mono mt-0.5" style={{ color: 'var(--at-primary)' }}>
             -{formatPhp(lineDiscount)} discount applied
           </div>
         )}
@@ -49,19 +55,29 @@ export const CartItemRow: React.FC<CartItemRowProps> = ({
 
       {/* Quantity Stepper & Total */}
       <div className="flex items-center gap-3 shrink-0">
-        <div className="flex items-center bg-slate-900 border border-slate-700/80 rounded-lg p-0.5">
+        <div
+          className="flex items-center rounded-lg p-0.5 border"
+          style={{
+            backgroundColor: 'var(--at-accent)',
+            borderColor: 'var(--at-accent-light)',
+          }}
+        >
           <button
             id={`btn-qty-minus-${item.product.sku}`}
             type="button"
             onClick={() => onUpdateQuantity(item.product.id, -1)}
             aria-label="Decrease quantity"
-            className="w-6 h-6 rounded flex items-center justify-center text-slate-400 hover:text-rose-400 hover:bg-slate-800 transition"
+            className="w-6 h-6 rounded flex items-center justify-center transition"
+            style={{ color: 'var(--at-neutral-muted)' }}
+            onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = 'var(--at-secondary)')}
+            onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = 'var(--at-neutral-muted)')}
           >
             <Minus className="w-3 h-3" />
           </button>
           <span
             id={`qty-val-${item.product.sku}`}
-            className="w-7 text-center font-mono font-bold text-xs text-white"
+            className="w-7 text-center font-mono font-bold text-xs"
+            style={{ color: 'var(--at-neutral)' }}
           >
             {item.quantity}
           </span>
@@ -70,7 +86,10 @@ export const CartItemRow: React.FC<CartItemRowProps> = ({
             type="button"
             onClick={() => onUpdateQuantity(item.product.id, 1)}
             aria-label="Increase quantity"
-            className="w-6 h-6 rounded flex items-center justify-center text-slate-400 hover:text-emerald-400 hover:bg-slate-800 transition"
+            className="w-6 h-6 rounded flex items-center justify-center transition"
+            style={{ color: 'var(--at-neutral-muted)' }}
+            onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = 'var(--at-primary)')}
+            onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = 'var(--at-neutral-muted)')}
           >
             <Plus className="w-3 h-3" />
           </button>
@@ -78,7 +97,7 @@ export const CartItemRow: React.FC<CartItemRowProps> = ({
 
         {/* Line Total */}
         <div className="w-20 text-right">
-          <span className="font-mono font-bold text-xs text-white">
+          <span className="font-mono font-bold text-xs" style={{ color: 'var(--at-neutral)' }}>
             {formatPhp(lineTotal)}
           </span>
         </div>
@@ -89,7 +108,10 @@ export const CartItemRow: React.FC<CartItemRowProps> = ({
           type="button"
           onClick={() => onRemoveItem(item.product.id)}
           aria-label="Remove item"
-          className="text-slate-500 hover:text-rose-400 p-1 rounded transition opacity-50 group-hover:opacity-100"
+          className="p-1 rounded transition opacity-50 group-hover:opacity-100"
+          style={{ color: 'var(--at-neutral-muted)' }}
+          onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = 'var(--at-secondary)')}
+          onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = 'var(--at-neutral-muted)')}
         >
           <Trash2 className="w-3.5 h-3.5" />
         </button>

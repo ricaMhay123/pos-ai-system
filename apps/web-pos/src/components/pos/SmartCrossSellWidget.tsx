@@ -133,22 +133,22 @@ export const SmartCrossSellWidget: React.FC<SmartCrossSellWidgetProps> = ({
   return (
     <div
       id="smart-cross-sell-widget"
-      className={`rounded-xl border border-indigo-500/30 bg-gradient-to-br from-indigo-950/40 via-slate-900/90 to-purple-950/30 p-3.5 backdrop-blur shadow-lg ${className}`}
+      className={`rounded-xl border border-at-accent-light bg-at-accent-muted/90 p-3.5 backdrop-blur shadow-lg ${className}`}
     >
       {/* Header */}
-      <div className="flex items-center justify-between pb-2 mb-2 border-b border-indigo-500/20">
+      <div className="flex items-center justify-between pb-2 mb-2 border-b border-at-accent-light/50">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-md bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
-            <Sparkles className="w-3.5 h-3.5 text-indigo-300 animate-pulse" />
+          <div className="w-6 h-6 rounded-md bg-at-primary/20 text-at-primary flex items-center justify-center">
+            <Sparkles className="w-3.5 h-3.5 animate-pulse" />
           </div>
           <div>
-            <h3 className="text-xs font-bold text-white flex items-center gap-1.5">
+            <h3 className="text-xs font-bold text-at-neutral flex items-center gap-1.5">
               Smart Cross-Sell
-              <span className="text-[9px] font-semibold uppercase px-1.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+              <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-full bg-at-primary text-at-accent border border-at-primary-muted">
                 Top 3 Co-occurrences
               </span>
             </h3>
-            <p className="text-[10px] text-slate-400">
+            <p className="text-[10px] text-at-neutral/70">
               {cartProductIds.length > 0
                 ? 'Frequently bought together with current ticket'
                 : 'Top impulse Philippine grocery pairings'}
@@ -157,7 +157,7 @@ export const SmartCrossSellWidget: React.FC<SmartCrossSellWidgetProps> = ({
         </div>
 
         {isLoading && (
-          <Loader2 className="w-3.5 h-3.5 text-indigo-400 animate-spin" />
+          <Loader2 className="w-3.5 h-3.5 text-at-primary animate-spin" />
         )}
       </div>
 
@@ -168,22 +168,22 @@ export const SmartCrossSellWidget: React.FC<SmartCrossSellWidgetProps> = ({
           return (
             <div
               key={rec.productId}
-              className="group flex items-center justify-between gap-2.5 p-2 rounded-lg bg-slate-900/80 border border-slate-800 hover:border-indigo-500/40 transition-all duration-150"
+              className="group flex items-center justify-between gap-2.5 p-2 rounded-lg bg-at-accent/80 border border-at-accent-light hover:border-at-primary/60 transition-all duration-150"
             >
               <div className="flex items-center gap-2 min-w-0">
-                <div className="w-7 h-7 rounded bg-slate-800 flex items-center justify-center text-slate-400 shrink-0 group-hover:text-indigo-400 group-hover:bg-indigo-950/50 transition">
+                <div className="w-7 h-7 rounded bg-at-accent-muted flex items-center justify-center text-at-neutral/70 shrink-0 group-hover:text-at-primary group-hover:bg-at-accent-light transition">
                   <ShoppingBag className="w-3.5 h-3.5" />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-xs font-medium text-slate-200 truncate group-hover:text-white transition">
+                  <p className="text-xs font-medium text-at-neutral truncate group-hover:text-white transition">
                     {rec.productName}
                   </p>
-                  <div className="flex items-center gap-1.5 text-[10px] text-slate-400 mt-0.5">
-                    <span className="font-semibold text-emerald-400">
+                  <div className="flex items-center gap-1.5 text-[10px] text-at-neutral/70 mt-0.5">
+                    <span className="font-semibold text-at-primary font-mono">
                       {formatPhp(rec.retailPrice)}
                     </span>
-                    <span className="text-slate-600">•</span>
-                    <span className="text-indigo-300/80 font-mono text-[9px]">
+                    <span className="text-at-accent-light">•</span>
+                    <span className="text-at-neutral/60 font-mono text-[9px]">
                       {rec.coOccurrenceCount > 0
                         ? `${rec.coOccurrenceCount}x paired`
                         : `${Math.round(rec.confidenceScore * 100)}% match`}
@@ -196,10 +196,10 @@ export const SmartCrossSellWidget: React.FC<SmartCrossSellWidgetProps> = ({
                 type="button"
                 onClick={() => handleAddRecommendation(rec)}
                 title={`Add ${rec.productName} to ticket`}
-                className={`shrink-0 flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-semibold transition-all duration-200 ${
+                className={`shrink-0 flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-semibold transition-all duration-200 active:scale-95 ${
                   isAdded
                     ? 'bg-emerald-600 text-white'
-                    : 'bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600 hover:text-white border border-indigo-500/30 hover:border-indigo-500'
+                    : 'bg-at-primary text-at-accent hover:bg-at-primary-muted font-bold shadow-sm'
                 }`}
               >
                 {isAdded ? (

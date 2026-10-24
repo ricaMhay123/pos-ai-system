@@ -1,5 +1,5 @@
 import React from 'react';
-import { Store, User, Wifi, Lock, ShieldCheck, Clock, History, LayoutDashboard } from 'lucide-react';
+import { Store, User, Wifi, Lock, Clock, History, LayoutDashboard } from 'lucide-react';
 
 interface PosHeaderProps {
   storeName?: string;
@@ -38,22 +38,45 @@ export const PosHeader: React.FC<PosHeaderProps> = ({
   return (
     <header
       id="pos-header"
-      className="h-16 border-b border-slate-800 bg-slate-900/95 backdrop-blur-md px-6 flex items-center justify-between shrink-0 select-none"
+      className="h-16 border-b shrink-0 select-none flex items-center justify-between px-6"
+      style={{
+        backgroundColor: 'var(--at-accent)',
+        borderColor: 'var(--at-accent-light)',
+        color: 'var(--at-text-on-accent)',
+      }}
     >
       {/* Left: Terminal & Store Context */}
       <div className="flex items-center gap-5">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-indigo-500/25">
-            <Store className="w-5 h-5 text-white" />
+          {/* Store icon badge – Primary amber bg, dark text on it */}
+          <div
+            className="w-9 h-9 rounded-xl flex items-center justify-center shadow-lg"
+            style={{ backgroundColor: 'var(--at-primary)', color: 'var(--at-text-on-primary)' }}
+          >
+            <Store className="w-5 h-5" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-sm font-bold tracking-tight text-white">{storeName}</h1>
-              <span className="text-[11px] px-2 py-0.5 rounded-full bg-slate-800 text-indigo-400 border border-slate-700 font-mono font-medium">
+              <h1
+                className="text-sm font-bold tracking-tight"
+                style={{ color: 'var(--at-neutral)' }}
+              >
+                {storeName}
+              </h1>
+              <span
+                className="text-[11px] px-2 py-0.5 rounded-full font-mono font-medium border"
+                style={{
+                  backgroundColor: 'var(--at-accent-muted)',
+                  color: 'var(--at-primary)',
+                  borderColor: 'var(--at-accent-light)',
+                }}
+              >
                 {terminalCode}
               </span>
             </div>
-            <p className="text-[11px] text-slate-400">Enterprise Point-of-Sale System</p>
+            <p className="text-[11px]" style={{ color: 'var(--at-neutral-muted)' }}>
+              Enterprise Point-of-Sale System
+            </p>
           </div>
         </div>
       </div>
@@ -61,28 +84,47 @@ export const PosHeader: React.FC<PosHeaderProps> = ({
       {/* Right: Cashier, Network status, Clock, Lock action */}
       <div className="flex items-center gap-4 text-xs">
         {/* Clock */}
-        <div className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700 text-slate-300 font-mono">
-          <Clock className="w-3.5 h-3.5 text-indigo-400" />
+        <div
+          className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border font-mono"
+          style={{
+            backgroundColor: 'var(--at-accent-muted)',
+            borderColor: 'var(--at-accent-light)',
+            color: 'var(--at-neutral)',
+          }}
+        >
+          <Clock className="w-3.5 h-3.5" style={{ color: 'var(--at-primary)' }} />
           <span>{currentTime}</span>
         </div>
 
-        {/* Manager Dashboard Button (Only visible for Manager role) */}
+        {/* Manager Dashboard Button */}
         {onToggleAiDashboard && (
           <button
             id="btn-toggle-ai-dashboard"
             type="button"
             onClick={onToggleAiDashboard}
             title="Open Manager Dashboard (/dashboard)"
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold border transition ${
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold border transition active:scale-95"
+            style={
               activeView === 'ai'
-                ? 'bg-indigo-600 text-white border-indigo-500 shadow-md shadow-indigo-600/30'
-                : 'bg-indigo-950/40 text-indigo-300 hover:text-indigo-200 border-indigo-700/50 hover:bg-indigo-900/50'
-            }`}
+                ? {
+                    backgroundColor: 'var(--at-secondary)',
+                    color: 'var(--at-text-on-secondary)',
+                    borderColor: 'var(--at-secondary)',
+                  }
+                : {
+                    backgroundColor: 'var(--at-accent-muted)',
+                    color: 'var(--at-primary-muted)',
+                    borderColor: 'var(--at-accent-light)',
+                  }
+            }
           >
-            <LayoutDashboard className="w-3.5 h-3.5 text-indigo-400" />
+            <LayoutDashboard className="w-3.5 h-3.5" />
             <span>Manager Dashboard</span>
             {pendingRecommendationsCount > 0 && (
-              <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-rose-500 text-white font-mono font-bold">
+              <span
+                className="text-[10px] px-1.5 rounded-full font-mono font-bold"
+                style={{ backgroundColor: 'var(--at-secondary)', color: 'var(--at-text-on-secondary)' }}
+              >
                 {pendingRecommendationsCount}
               </span>
             )}
@@ -95,38 +137,62 @@ export const PosHeader: React.FC<PosHeaderProps> = ({
             id="btn-toggle-transaction-history"
             type="button"
             onClick={onToggleTransactionHistory}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold border transition bg-slate-800/80 text-violet-300 hover:text-violet-200 border-slate-700 hover:bg-slate-800"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold border transition active:scale-95"
+            style={{
+              backgroundColor: 'var(--at-accent-muted)',
+              color: 'var(--at-neutral)',
+              borderColor: 'var(--at-accent-light)',
+            }}
           >
-            <History className="w-3.5 h-3.5" />
+            <History className="w-3.5 h-3.5" style={{ color: 'var(--at-primary)' }} />
             <span>History</span>
           </button>
         )}
 
         {/* Cashier Badge */}
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700 text-slate-200">
-          <User className="w-3.5 h-3.5 text-emerald-400" />
+        <div
+          className="flex items-center gap-2 px-3 py-1.5 rounded-lg border"
+          style={{
+            backgroundColor: 'var(--at-accent-muted)',
+            borderColor: 'var(--at-accent-light)',
+            color: 'var(--at-neutral)',
+          }}
+        >
+          <User className="w-3.5 h-3.5" style={{ color: 'var(--at-primary)' }} />
           <div>
             <span className="font-semibold">{cashierName}</span>
-            <span className="text-[10px] text-slate-400 ml-1">({cashierRole})</span>
+            <span className="text-[10px] ml-1" style={{ color: 'var(--at-neutral-muted)' }}>
+              ({cashierRole})
+            </span>
           </div>
         </div>
 
         {/* Sync Status */}
         <div
           id="network-sync-status"
-          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700 text-emerald-400 font-medium"
+          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border font-medium"
+          style={{
+            backgroundColor: 'var(--at-accent-muted)',
+            borderColor: 'var(--at-accent-light)',
+            color: isOnline ? '#6ee7b7' : 'var(--at-neutral-muted)',
+          }}
         >
           <Wifi className="w-3.5 h-3.5 animate-pulse" />
           <span>{isOnline ? 'Online / Synced' : 'Offline Mode'}</span>
         </div>
 
-        {/* Lock Terminal Action */}
+        {/* Lock Terminal */}
         {onLockTerminal && (
           <button
             id="btn-lock-terminal"
             onClick={onLockTerminal}
             title="Lock Cashier Terminal"
-            className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition"
+            className="p-2 rounded-lg border transition"
+            style={{
+              backgroundColor: 'var(--at-accent-muted)',
+              borderColor: 'var(--at-accent-light)',
+              color: 'var(--at-neutral)',
+            }}
           >
             <Lock className="w-4 h-4" />
           </button>
