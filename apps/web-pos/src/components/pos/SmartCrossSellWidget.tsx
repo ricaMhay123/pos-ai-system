@@ -133,22 +133,24 @@ export const SmartCrossSellWidget: React.FC<SmartCrossSellWidgetProps> = ({
   return (
     <div
       id="smart-cross-sell-widget"
-      className={`rounded-xl border border-at-accent-light bg-at-accent-muted/90 p-3.5 backdrop-blur shadow-lg ${className}`}
+      className={`rounded-xl border border-at-accent-light bg-at-accent-muted/90 p-3 backdrop-blur shadow-lg ${className}`}
     >
       {/* Header */}
       <div className="flex items-center justify-between pb-2 mb-2 border-b border-at-accent-light/50">
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-md bg-at-primary/20 text-at-primary flex items-center justify-center">
+        <div className="flex items-center gap-2 min-w-0">
+          <div className="w-6 h-6 rounded-md bg-at-primary/20 text-at-primary flex items-center justify-center shrink-0">
             <Sparkles className="w-3.5 h-3.5 animate-pulse" />
           </div>
-          <div>
-            <h3 className="text-xs font-bold text-at-neutral flex items-center gap-1.5">
-              Smart Cross-Sell
-              <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-full bg-at-primary text-at-accent border border-at-primary-muted">
+          <div className="min-w-0">
+            <div className="flex items-center gap-1.5 flex-wrap">
+              <h3 className="text-xs font-bold text-at-neutral leading-tight">
+                Smart Cross-Sell
+              </h3>
+              <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-full bg-at-primary text-at-accent border border-at-primary-muted shrink-0">
                 Top 3 Co-occurrences
               </span>
-            </h3>
-            <p className="text-[10px] text-at-neutral/70">
+            </div>
+            <p className="text-[10px] text-at-neutral/70 truncate mt-0.5">
               {cartProductIds.length > 0
                 ? 'Frequently bought together with current ticket'
                 : 'Top impulse Philippine grocery pairings'}
@@ -157,33 +159,36 @@ export const SmartCrossSellWidget: React.FC<SmartCrossSellWidgetProps> = ({
         </div>
 
         {isLoading && (
-          <Loader2 className="w-3.5 h-3.5 text-at-primary animate-spin" />
+          <Loader2 className="w-3.5 h-3.5 text-at-primary animate-spin shrink-0 ml-1" />
         )}
       </div>
 
-      {/* Recommendations Cards */}
-      <div className="space-y-2">
-        {recommendations.map((rec) => {
+      {/* Recommendations Cards List (capped height with smooth internal scrolling) */}
+      <div className="space-y-1.5 overflow-y-auto max-h-52 pr-1 select-none">
+        {recommendations.slice(0, 3).map((rec) => {
           const isAdded = addedItemIds.has(rec.productId);
           return (
             <div
               key={rec.productId}
-              className="group flex items-center justify-between gap-2.5 p-2 rounded-lg bg-at-accent/80 border border-at-accent-light hover:border-at-primary/60 transition-all duration-150"
+              className="flex-shrink-0 min-h-0 group flex items-center justify-between gap-2 p-2 rounded-lg bg-at-accent/80 border border-at-accent-light hover:border-at-primary/60 transition-all duration-150"
             >
-              <div className="flex items-center gap-2 min-w-0">
+              <div className="flex items-center gap-2 min-w-0 flex-1">
                 <div className="w-7 h-7 rounded bg-at-accent-muted flex items-center justify-center text-at-neutral/70 shrink-0 group-hover:text-at-primary group-hover:bg-at-accent-light transition">
                   <ShoppingBag className="w-3.5 h-3.5" />
                 </div>
-                <div className="min-w-0">
-                  <p className="text-xs font-medium text-at-neutral truncate group-hover:text-white transition">
+                <div className="min-w-0 flex-1">
+                  <p
+                    className="text-xs font-semibold text-at-neutral truncate group-hover:text-white transition leading-tight"
+                    title={rec.productName}
+                  >
                     {rec.productName}
                   </p>
-                  <div className="flex items-center gap-1.5 text-[10px] text-at-neutral/70 mt-0.5">
-                    <span className="font-semibold text-at-primary font-mono">
+                  <div className="flex items-center gap-1.5 text-[10px] text-at-neutral/70 mt-0.5 flex-wrap">
+                    <span className="font-bold text-at-primary font-mono">
                       {formatPhp(rec.retailPrice)}
                     </span>
                     <span className="text-at-accent-light">•</span>
-                    <span className="text-at-neutral/60 font-mono text-[9px]">
+                    <span className="text-at-neutral/70 font-mono text-[9px] bg-at-accent-muted px-1.5 py-0.5 rounded border border-at-accent-light/40 whitespace-nowrap">
                       {rec.coOccurrenceCount > 0
                         ? `${rec.coOccurrenceCount}x paired`
                         : `${Math.round(rec.confidenceScore * 100)}% match`}
@@ -194,23 +199,24 @@ export const SmartCrossSellWidget: React.FC<SmartCrossSellWidgetProps> = ({
 
               <button
                 type="button"
+                id={`btn-add-cross-sell-${rec.sku}`}
                 onClick={() => handleAddRecommendation(rec)}
                 title={`Add ${rec.productName} to ticket`}
-                className={`shrink-0 flex items-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-semibold transition-all duration-200 active:scale-95 ${
+                className={`shrink-0 flex items-center justify-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-bold transition-all duration-200 active:scale-95 whitespace-nowrap ${
                   isAdded
-                    ? 'bg-emerald-600 text-white'
-                    : 'bg-at-primary text-at-accent hover:bg-at-primary-muted font-bold shadow-sm'
+                    ? 'bg-emerald-600 text-white shadow-sm'
+                    : 'bg-at-primary text-at-accent hover:bg-at-primary-muted shadow-sm'
                 }`}
               >
                 {isAdded ? (
                   <>
-                    <Check className="w-3.5 h-3.5" />
+                    <Check className="w-3.5 h-3.5 shrink-0" />
                     <span className="text-[11px]">Added</span>
                   </>
                 ) : (
                   <>
-                    <Plus className="w-3.5 h-3.5" />
-                    <span className="text-[11px]">Add</span>
+                    <Plus className="w-3.5 h-3.5 shrink-0" />
+                    <span className="text-[11px]">+ Add</span>
                   </>
                 )}
               </button>

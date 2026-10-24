@@ -301,15 +301,15 @@ function formatPhp($amount) {
             </div>
 
             <!-- AI Smart Cross-Sell Recommendation Widget -->
-            <div id="cross-sell-section" class="py-2 shrink-0">
+            <div id="cross-sell-section" class="py-2 shrink-0 min-h-0">
                 <div class="rounded-xl border border-indigo-500/30 bg-gradient-to-br from-indigo-950/40 via-slate-900/90 to-purple-950/30 p-3 shadow-lg">
                     <div class="flex items-center justify-between pb-2 mb-2 border-b border-indigo-500/20">
                         <div class="flex items-center gap-2">
                             <span class="text-sm animate-pulse">✨</span>
                             <div>
-                                <h3 class="text-xs font-bold text-white flex items-center gap-1.5">
+                                <h3 class="text-xs font-bold text-white flex items-center gap-1.5 flex-wrap">
                                     AI Cashier Smart Cross-Sell
-                                    <span class="text-[9px] font-semibold uppercase px-1.5 py-0.2 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                                    <span class="text-[9px] font-semibold uppercase px-1.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shrink-0">
                                         Top 3 Co-occurrences
                                     </span>
                                 </h3>
@@ -322,7 +322,7 @@ function formatPhp($amount) {
                     </div>
 
                     <!-- Top 3 Recommendation Cards -->
-                    <div id="cross-sell-items" class="space-y-1.5">
+                    <div id="cross-sell-items" class="space-y-1.5 overflow-y-auto max-h-52 pr-1 select-none">
                         <!-- Populated dynamically via JS -->
                     </div>
                 </div>
@@ -740,13 +740,13 @@ function formatPhp($amount) {
             let html = '';
             recommendations.slice(0, 3).forEach(rec => {
                 html += `
-                    <div class="flex items-center justify-between gap-2 p-1.5 rounded-lg bg-slate-900/90 border border-slate-800 hover:border-indigo-500/40 transition">
+                    <div class="flex-shrink-0 min-h-0 flex items-center justify-between gap-2 p-1.5 rounded-lg bg-slate-900/90 border border-slate-800 hover:border-indigo-500/40 transition">
                         <div class="min-w-0 flex-1">
-                            <p class="text-xs font-medium text-slate-200 truncate">${rec.productName}</p>
-                            <div class="flex items-center gap-1.5 text-[10px] mt-0.5">
+                            <p class="text-xs font-medium text-slate-200 truncate" title="${rec.productName}">${rec.productName}</p>
+                            <div class="flex items-center gap-1.5 text-[10px] mt-0.5 flex-wrap">
                                 <span class="font-bold text-emerald-400 font-mono">₱${Number(rec.retailPrice).toFixed(2)}</span>
                                 <span class="text-slate-600">•</span>
-                                <span class="text-indigo-300 font-mono text-[9px] bg-indigo-950/60 px-1 rounded border border-indigo-500/20">
+                                <span class="text-indigo-300 font-mono text-[9px] bg-indigo-950/60 px-1.5 py-0.5 rounded border border-indigo-500/20 whitespace-nowrap">
                                     ⚡ ${rec.coOccurrenceCount > 0 ? rec.coOccurrenceCount + 'x paired' : Math.round(rec.confidenceScore * 100) + '% match'}
                                 </span>
                             </div>
@@ -755,7 +755,7 @@ function formatPhp($amount) {
                             type="button" 
                             onclick="addRecommendedProduct('${rec.productId}', '${rec.sku}')"
                             title="Add ${rec.productName} to ticket"
-                            class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-indigo-600/30 text-indigo-300 hover:bg-indigo-600 hover:text-white border border-indigo-500/40 transition shrink-0"
+                            class="px-2.5 py-1 rounded-md text-[11px] font-bold bg-indigo-600/30 text-indigo-300 hover:bg-indigo-600 hover:text-white border border-indigo-500/40 transition shrink-0 whitespace-nowrap active:scale-95"
                         >
                             + Add
                         </button>

@@ -136,10 +136,10 @@ export const CartTicket: React.FC<CartTicketProps> = ({
         )}
       </div>
 
-      {/* ── Smart Cross-Sell (capped height) ──────────────────────── */}
+      {/* ── Smart Cross-Sell ───────────────────────────────────────── */}
       {onAddToCart && items.length > 0 && (
         <div
-          className="shrink-0 px-6 py-2 max-h-[120px] overflow-hidden border-t"
+          className="shrink-0 px-6 py-2.5 border-t min-h-0"
           style={{ borderColor: 'var(--at-accent-light)' }}
         >
           <SmartCrossSellWidget
