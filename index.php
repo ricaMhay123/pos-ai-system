@@ -147,7 +147,7 @@ else:
                 exit;
             }
         } else {
-            $errorMessage = 'Invalid username or password. Please verify your credentials or use the quick-fill buttons below.';
+            $errorMessage = 'Invalid username or password. Please check your credentials and try again.';
         }
     }
 }
@@ -171,15 +171,7 @@ else:
             font-family: 'JetBrains Mono', monospace;
         }
         .glow-card {
-            box-shadow: 0 0 50px -12px rgba(99, 102, 241, 0.18);
-        }
-        .manager-glow:hover {
-            border-color: rgba(99, 102, 241, 0.8);
-            box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.35);
-        }
-        .cashier-glow:hover {
-            border-color: rgba(16, 185, 129, 0.8);
-            box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.35);
+            box-shadow: 0 0 60px -12px rgba(99, 102, 241, 0.20);
         }
     </style>
 </head>
@@ -211,19 +203,13 @@ else:
 
     <!-- Main Container -->
     <main class="flex-1 flex items-center justify-center p-6 md:p-12">
-        <div class="w-full max-w-4xl space-y-8">
+        <div class="w-full max-w-sm space-y-6">
 
-            <!-- Title & Subtitle -->
-            <div class="text-center space-y-2">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 text-xs font-semibold">
-                    <span>Phase A: Dual-Role Authentication & Access Control</span>
-                </div>
-                <h1 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
-                    Sign In to POS AI Terminal
+            <!-- Title -->
+            <div class="text-center space-y-1">
+                <h1 class="text-2xl font-extrabold text-white tracking-tight">
+                    Sign In to Your Workspace
                 </h1>
-                <p class="text-sm text-slate-400 max-w-lg mx-auto">
-                    Select your operational role below or use the quick-fill credentials to access role-specific workflows.
-                </p>
             </div>
 
             <!-- Alerts Banner -->
@@ -248,10 +234,7 @@ else:
                 </div>
             <?php endif; ?>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                
-                <!-- Left Column: Primary Login Card (5 cols) -->
-                <div class="lg:col-span-5 bg-slate-900/90 border border-slate-800 rounded-2xl p-6 md:p-8 glow-card backdrop-blur-xl">
+            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-8 glow-card backdrop-blur-xl">
                     <form method="POST" action="index.php" id="loginForm" class="space-y-5">
                         
                         <div>
@@ -318,137 +301,7 @@ else:
                         </div>
                     </form>
                 </div>
-
-                <!-- Right Column: Dual-Role Quick-Fill Cards & Visibility (7 cols) -->
-                <div class="lg:col-span-7 space-y-4">
-                    
-                    <div class="flex items-center justify-between pb-1">
-                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">
-                            Available Demo Accounts & RBAC Scopes
-                        </span>
-                        <span class="text-[11px] text-indigo-400 font-medium">Click any card to auto-fill</span>
-                    </div>
-
-                    <!-- Role Card 1: Store Manager -->
-                    <div 
-                        onclick="fillCredentials('manager', 'manager123', 'Store Manager')"
-                        class="group cursor-pointer bg-slate-900/80 hover:bg-slate-900 border border-indigo-500/30 hover:border-indigo-500/80 rounded-2xl p-5 transition duration-200 manager-glow relative overflow-hidden"
-                    >
-                        <div class="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-bl-full pointer-events-none transition group-hover:scale-125"></div>
-                        <div class="flex items-start justify-between gap-4">
-                            <div class="flex items-start gap-4">
-                                <div class="w-11 h-11 rounded-xl bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center text-indigo-400 group-hover:scale-105 transition shrink-0">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                                    </svg>
-                                </div>
-                                <div class="space-y-1">
-                                    <div class="flex items-center gap-2">
-                                        <h3 class="text-base font-bold text-white group-hover:text-indigo-300 transition">Store Manager</h3>
-                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-                                            Redirects to dashboard.php
-                                        </span>
-                                    </div>
-                                    <p class="text-xs text-slate-400 leading-relaxed">
-                                        Full management privileges: AI stock replenishment approval, LightGBM demand forecasts, catalog edits, and sales analytics.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Credentials Display Strip -->
-                        <div class="mt-4 pt-3.5 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-3">
-                            <div class="flex items-center gap-3 text-xs">
-                                <div class="bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">
-                                    <span class="text-slate-500 text-[11px]">Username:</span>
-                                    <span class="font-mono text-indigo-300 font-semibold ml-1">manager</span>
-                                </div>
-                                <div class="bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">
-                                    <span class="text-slate-500 text-[11px]">Password:</span>
-                                    <span class="font-mono text-indigo-300 font-semibold ml-1">manager123</span>
-                                </div>
-                            </div>
-                            <button 
-                                type="button" 
-                                onclick="event.stopPropagation(); autoLogin('manager', 'manager123');" 
-                                class="text-xs font-semibold px-3 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center gap-1 shadow-sm shadow-indigo-600/40"
-                            >
-                                <span>Quick Login</span>
-                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Role Card 2: Cashier -->
-                    <div 
-                        onclick="fillCredentials('cashier', 'cashier123', 'POS Cashier')"
-                        class="group cursor-pointer bg-slate-900/80 hover:bg-slate-900 border border-emerald-500/30 hover:border-emerald-500/80 rounded-2xl p-5 transition duration-200 cashier-glow relative overflow-hidden"
-                    >
-                        <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-bl-full pointer-events-none transition group-hover:scale-125"></div>
-                        <div class="flex items-start justify-between gap-4">
-                            <div class="flex items-start gap-4">
-                                <div class="w-11 h-11 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition shrink-0">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                                    </svg>
-                                </div>
-                                <div class="space-y-1">
-                                    <div class="flex items-center gap-2">
-                                        <h3 class="text-base font-bold text-white group-hover:text-emerald-300 transition">POS Cashier</h3>
-                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                                            Strictly POS Checkout (sales.php)
-                                        </span>
-                                    </div>
-                                    <p class="text-xs text-slate-400 leading-relaxed">
-                                        Operator permissions: Rapid barcode scanning, cart adjustments, Senior/PWD 20% discounts, cash & GCash/Maya tender, and live AI cross-sell suggestions.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Credentials Display Strip -->
-                        <div class="mt-4 pt-3.5 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-3">
-                            <div class="flex items-center gap-3 text-xs">
-                                <div class="bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">
-                                    <span class="text-slate-500 text-[11px]">Username:</span>
-                                    <span class="font-mono text-emerald-300 font-semibold ml-1">cashier</span>
-                                </div>
-                                <div class="bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">
-                                    <span class="text-slate-500 text-[11px]">Password:</span>
-                                    <span class="font-mono text-emerald-300 font-semibold ml-1">cashier123</span>
-                                </div>
-                            </div>
-                            <button 
-                                type="button" 
-                                onclick="event.stopPropagation(); autoLogin('cashier', 'cashier123');" 
-                                class="text-xs font-semibold px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white transition flex items-center gap-1 shadow-sm shadow-emerald-600/40"
-                            >
-                                <span>Quick Login</span>
-                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Role Restrictions Security Callout -->
-                    <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 flex items-center justify-between text-xs text-slate-400">
-                        <div class="flex items-center gap-2">
-                            <svg class="w-4 h-4 text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-                            </svg>
-                            <span>RBAC Policy: Cashier accounts cannot view inventory approvals or reports.</span>
-                        </div>
-                        <span class="text-[11px] font-mono text-slate-500">RBAC Active</span>
-                    </div>
-
-                </div>
-
             </div>
-
-        </div>
     </main>
 
     <!-- Footer -->
@@ -457,17 +310,11 @@ else:
     </footer>
 
     <script>
-        function fillCredentials(username, password, roleName) {
-            document.getElementById('usernameInput').value = username;
-            document.getElementById('passwordInput').value = password;
-            document.getElementById('usernameInput').focus();
-        }
-
-        function autoLogin(username, password) {
-            document.getElementById('usernameInput').value = username;
-            document.getElementById('passwordInput').value = password;
-            document.getElementById('loginForm').submit();
-        }
+        // Auto-focus username field on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            const u = document.getElementById('usernameInput');
+            if (u && !u.value) u.focus();
+        });
     </script>
 </body>
 </html>
