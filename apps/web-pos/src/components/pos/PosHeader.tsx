@@ -1,5 +1,5 @@
 import React from 'react';
-import { Store, User, Wifi, Lock, ShieldCheck, Clock, History } from 'lucide-react';
+import { Store, User, Wifi, Lock, ShieldCheck, Clock, History, LayoutDashboard } from 'lucide-react';
 
 interface PosHeaderProps {
   storeName?: string;
@@ -66,20 +66,21 @@ export const PosHeader: React.FC<PosHeaderProps> = ({
           <span>{currentTime}</span>
         </div>
 
-        {/* AI Dashboard Button */}
+        {/* Manager Dashboard Button (Only visible for Manager role) */}
         {onToggleAiDashboard && (
           <button
             id="btn-toggle-ai-dashboard"
             type="button"
             onClick={onToggleAiDashboard}
+            title="Open Manager Dashboard (/dashboard)"
             className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold border transition ${
               activeView === 'ai'
                 ? 'bg-indigo-600 text-white border-indigo-500 shadow-md shadow-indigo-600/30'
-                : 'bg-slate-800/80 text-amber-300 hover:text-amber-200 border-slate-700 hover:bg-slate-800'
+                : 'bg-indigo-950/40 text-indigo-300 hover:text-indigo-200 border-indigo-700/50 hover:bg-indigo-900/50'
             }`}
           >
-            <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-            <span>AI Replenishment</span>
+            <LayoutDashboard className="w-3.5 h-3.5 text-indigo-400" />
+            <span>Manager Dashboard</span>
             {pendingRecommendationsCount > 0 && (
               <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-rose-500 text-white font-mono font-bold">
                 {pendingRecommendationsCount}

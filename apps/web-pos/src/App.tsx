@@ -14,6 +14,7 @@ import {
   X,
   ExternalLink,
   LogOut,
+  LayoutDashboard,
 } from 'lucide-react';
 import { PosCheckoutShell } from './components/pos';
 import { AuthLandingPage, type AuthUser } from './components/auth/AuthLandingPage';
@@ -226,9 +227,40 @@ const INITIAL_RECOMMENDATIONS: InventoryRecommendation[] = [
   },
 ];
 
+const isDashboardPath = (): boolean => {
+  if (typeof window === 'undefined') return false;
+  const p = window.location.pathname.toLowerCase();
+  return p === '/dashboard' || p === '/dashboard.php';
+};
+
 export default function App() {
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(null);
-  const [activeTab, setActiveTab] = useState<'pos' | 'ai'>('pos');
+  const [activeTab, setActiveTab] = useState<'pos' | 'ai'>(() =>
+    isDashboardPath() ? 'ai' : 'pos',
+  );
+  const [rbacNotice, setRbacNotice] = useState<string | null>(null);
+
+  const navigateToTab = (tab: 'pos' | 'ai') => {
+    if (tab === 'ai') {
+      if (currentUser?.role === 'cashier') {
+        setRbacNotice(
+          'Access Restricted: Cashier accounts are strictly confined to POS checkout and cannot access the Manager Dashboard.',
+        );
+        setActiveTab('pos');
+        if (isDashboardPath()) {
+          window.history.replaceState(null, '', '/');
+        }
+        return;
+      }
+      setActiveTab('ai');
+      window.history.pushState(null, '', '/dashboard');
+    } else {
+      setActiveTab('pos');
+      if (isDashboardPath()) {
+        window.history.pushState(null, '', '/');
+      }
+    }
+  };
   const [products] = useState<ProductWithStock[]>(INITIAL_PH_PRODUCTS);
   const [recommendations, setRecommendations] = useState<InventoryRecommendation[]>(INITIAL_RECOMMENDATIONS);
   const [summary, setSummary] = useState<ManagerRecommendationSummary | null>(null);
@@ -263,6 +295,48 @@ export default function App() {
   useEffect(() => {
     fetchLiveData();
   }, []);
+
+  // Sync state with browser navigation (popstate: back/forward buttons)
+  useEffect(() => {
+    const handleLocationChange = () => {
+      const isDash = isDashboardPath();
+      if (currentUser) {
+        if (currentUser.role === 'cashier') {
+          setActiveTab('pos');
+          if (isDash) {
+            window.history.replaceState(null, '', '/');
+            setRbacNotice(
+              'Access Restricted: Cashier accounts are strictly confined to POS checkout and cannot access the Manager Dashboard.',
+            );
+          }
+        } else {
+          setActiveTab(isDash ? 'ai' : 'pos');
+        }
+      }
+    };
+
+    window.addEventListener('popstate', handleLocationChange);
+    return () => window.removeEventListener('popstate', handleLocationChange);
+  }, [currentUser]);
+
+  // Strict Cashier RBAC check when currentUser or activeTab changes
+  useEffect(() => {
+    if (currentUser) {
+      if (currentUser.role === 'cashier') {
+        if (isDashboardPath() || activeTab === 'ai') {
+          setActiveTab('pos');
+          window.history.replaceState(null, '', '/');
+          setRbacNotice(
+            'Access Restricted: Cashier accounts are strictly confined to POS checkout and cannot access the Manager Dashboard.',
+          );
+        }
+      } else if (currentUser.role === 'store_manager' || currentUser.role === 'admin') {
+        if (isDashboardPath() && activeTab !== 'ai') {
+          setActiveTab('ai');
+        }
+      }
+    }
+  }, [currentUser, activeTab]);
 
   const approveRecommendation = async (id: string) => {
     try {
@@ -361,7 +435,18 @@ export default function App() {
       <AuthLandingPage
         onLogin={(user) => {
           setCurrentUser(user);
-          setActiveTab(user.role === 'cashier' ? 'pos' : 'ai');
+          if (user.role === 'cashier') {
+            setActiveTab('pos');
+            if (isDashboardPath()) {
+              window.history.replaceState(null, '', '/');
+              setRbacNotice(
+                'Access Restricted: Cashier accounts are strictly confined to POS checkout and cannot access the Manager Dashboard.',
+              );
+            }
+          } else {
+            setActiveTab('ai');
+            window.history.replaceState(null, '', '/dashboard');
+          }
         }}
       />
     );
@@ -370,39 +455,67 @@ export default function App() {
   // 2. Strict Cashier RBAC Restriction: Cashiers cannot access AI Management Dashboard
   if (currentUser.role === 'cashier' && activeTab === 'ai') {
     return (
-      <PosCheckoutShell
-        initialProducts={products}
-        storeName={currentUser.storeName}
-        terminalCode={currentUser.terminalCode}
-        cashierName={currentUser.name}
-        cashierRole="Cashier (EMP-CSH-01)"
-        userRole={currentUser.role}
-        onToggleAiDashboard={undefined}
-        onLockTerminal={() => setCurrentUser(null)}
-        pendingRecommendationsCount={pendingCount}
-      />
+      <div className="relative h-screen">
+        {rbacNotice && (
+          <div className="fixed top-4 right-4 z-50 flex items-center gap-2.5 px-4 py-2.5 rounded-xl border border-amber-500/40 bg-amber-950/95 text-amber-200 text-xs font-semibold shadow-xl backdrop-blur animate-in fade-in duration-200">
+            <ShieldAlert className="w-4 h-4 text-amber-400 shrink-0" />
+            <span>{rbacNotice}</span>
+            <button
+              onClick={() => setRbacNotice(null)}
+              className="ml-2 text-amber-400 hover:text-white"
+            >
+              &times;
+            </button>
+          </div>
+        )}
+        <PosCheckoutShell
+          initialProducts={products}
+          storeName={currentUser.storeName}
+          terminalCode={currentUser.terminalCode}
+          cashierName={currentUser.name}
+          cashierRole="Cashier (EMP-CSH-01)"
+          userRole={currentUser.role}
+          onToggleAiDashboard={undefined}
+          onLockTerminal={() => setCurrentUser(null)}
+          pendingRecommendationsCount={pendingCount}
+        />
+      </div>
     );
   }
 
   if (activeTab === 'pos') {
     return (
-      <PosCheckoutShell
-        initialProducts={products}
-        storeName={currentUser.storeName}
-        terminalCode={currentUser.terminalCode}
-        cashierName={currentUser.name}
-        cashierRole={
-          currentUser.role === 'cashier'
-            ? 'Cashier (EMP-CSH-01)'
-            : 'Store Manager (EMP-MGR-01)'
-        }
-        userRole={currentUser.role}
-        onToggleAiDashboard={
-          currentUser.role === 'cashier' ? undefined : () => setActiveTab('ai')
-        }
-        onLockTerminal={() => setCurrentUser(null)}
-        pendingRecommendationsCount={pendingCount}
-      />
+      <div className="relative h-screen">
+        {rbacNotice && (
+          <div className="fixed top-4 right-4 z-50 flex items-center gap-2.5 px-4 py-2.5 rounded-xl border border-amber-500/40 bg-amber-950/95 text-amber-200 text-xs font-semibold shadow-xl backdrop-blur animate-in fade-in duration-200">
+            <ShieldAlert className="w-4 h-4 text-amber-400 shrink-0" />
+            <span>{rbacNotice}</span>
+            <button
+              onClick={() => setRbacNotice(null)}
+              className="ml-2 text-amber-400 hover:text-white"
+            >
+              &times;
+            </button>
+          </div>
+        )}
+        <PosCheckoutShell
+          initialProducts={products}
+          storeName={currentUser.storeName}
+          terminalCode={currentUser.terminalCode}
+          cashierName={currentUser.name}
+          cashierRole={
+            currentUser.role === 'cashier'
+              ? 'Cashier (EMP-CSH-01)'
+              : 'Store Manager (EMP-MGR-01)'
+          }
+          userRole={currentUser.role}
+          onToggleAiDashboard={
+            currentUser.role === 'cashier' ? undefined : () => navigateToTab('ai')
+          }
+          onLockTerminal={() => setCurrentUser(null)}
+          pendingRecommendationsCount={pendingCount}
+        />
+      </div>
     );
   }
 
@@ -413,7 +526,7 @@ export default function App() {
       <header className="h-16 border-b border-slate-800 bg-slate-900/90 backdrop-blur px-6 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-4">
           <button
-            onClick={() => setActiveTab('pos')}
+            onClick={() => navigateToTab('pos')}
             className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold border border-slate-700 transition"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
@@ -452,15 +565,14 @@ export default function App() {
             <LogOut className="w-3.5 h-3.5" />
             <span>Sign Out</span>
           </button>
-          <a
-            href="/dashboard.php"
-            target="_blank"
-            rel="noreferrer"
-            className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium border border-slate-700 transition"
+          <button
+            onClick={() => navigateToTab('ai')}
+            title="Manager Dashboard Route: /dashboard"
+            className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 text-xs font-medium border border-indigo-500/40 transition"
           >
-            <ExternalLink className="w-3.5 h-3.5" />
-            <span>dashboard.php</span>
-          </a>
+            <LayoutDashboard className="w-3.5 h-3.5 text-indigo-400" />
+            <span>/dashboard</span>
+          </button>
           <button
             onClick={fetchLiveData}
             disabled={isLoading}

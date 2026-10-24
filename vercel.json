@@ -60,6 +60,10 @@
       "destination": "/api/:path*"
     },
     {
+      "source": "/dashboard",
+      "destination": "/index.html"
+    },
+    {
       "source": "/dashboard.php",
       "destination": "/index.html"
     },
