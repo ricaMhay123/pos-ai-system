@@ -45,18 +45,18 @@ export const CartTicket: React.FC<CartTicketProps> = ({
   return (
     <aside
       id="pos-cart-panel"
-      className="w-96 lg:w-[420px] flex flex-col bg-slate-900 border-l border-slate-800 p-6 shrink-0 h-full select-none"
+      className="w-96 lg:w-[420px] flex flex-col bg-slate-900 border-l border-slate-800 shrink-0 h-full min-h-0 select-none overflow-hidden"
     >
-      {/* Ticket Header */}
-      <div className="flex items-center justify-between pb-4 border-b border-slate-800">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-indigo-600/10 text-indigo-400 flex items-center justify-center">
+      {/* ── Ticket Header (fixed height) ──────────────────────────── */}
+      <div className="shrink-0 flex items-center justify-between px-6 py-4 border-b border-slate-800">
+        <div className="flex items-center gap-2.5 min-w-0">
+          <div className="w-8 h-8 rounded-lg bg-indigo-600/10 text-indigo-400 flex items-center justify-center shrink-0">
             <Receipt className="w-4 h-4" />
           </div>
-          <div>
-            <h2 className="text-sm font-bold text-white flex items-center gap-2">
+          <div className="min-w-0">
+            <h2 className="text-sm font-bold text-white flex items-center gap-2 flex-wrap">
               Current Ticket
-              <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">
+              <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700 whitespace-nowrap">
                 {ticketNumber}
               </span>
             </h2>
@@ -69,7 +69,7 @@ export const CartTicket: React.FC<CartTicketProps> = ({
             type="button"
             onClick={onClearCart}
             title="Clear all ticket items"
-            className="flex items-center gap-1 text-[11px] font-semibold text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 px-2 py-1 rounded transition"
+            className="shrink-0 ml-2 flex items-center gap-1 text-[11px] font-semibold text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 px-2 py-1 rounded transition"
           >
             <Trash2 className="w-3.5 h-3.5" />
             <span>Clear</span>
@@ -77,8 +77,8 @@ export const CartTicket: React.FC<CartTicketProps> = ({
         )}
       </div>
 
-      {/* Ticket Body / Items */}
-      <div className="flex-1 overflow-y-auto py-4 space-y-2.5 pr-1">
+      {/* ── Scrollable Cart Items (flex-1 + min-h-0 so it shrinks) ── */}
+      <div className="flex-1 min-h-0 overflow-y-auto px-6 py-3 space-y-2.5 pr-5">
         {items.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-center p-6 text-slate-500">
             <div className="w-14 h-14 rounded-2xl bg-slate-800/40 border border-slate-800 flex items-center justify-center mb-3">
@@ -101,9 +101,9 @@ export const CartTicket: React.FC<CartTicketProps> = ({
         )}
       </div>
 
-      {/* Smart Cross-Sell Recommendations */}
-      {onAddToCart && (
-        <div className="py-2">
+      {/* ── Smart Cross-Sell (capped height, will not push totals away) */}
+      {onAddToCart && items.length > 0 && (
+        <div className="shrink-0 px-6 py-2 max-h-[120px] overflow-hidden border-t border-slate-800/60">
           <SmartCrossSellWidget
             cartProductIds={items.map((i) => i.product.id)}
             allProducts={allProducts}
@@ -112,18 +112,20 @@ export const CartTicket: React.FC<CartTicketProps> = ({
         </div>
       )}
 
-      {/* Ticket Totals & Checkout Trigger */}
-      <CartTotals
-        subtotal={calculation.grossSubtotal}
-        tax={calculation.vatAmount}
-        discount={calculation.discountAmount}
-        total={calculation.totalAmountDue}
-        itemCount={totalCount}
-        isSeniorOrPwd={isSeniorOrPwd}
-        onToggleSeniorPwd={onToggleSeniorPwd}
-        onProceedToPayment={onProceedToPayment}
-        disabled={items.length === 0}
-      />
+      {/* ── Totals + Charge button (always visible, never scrolled away) */}
+      <div className="shrink-0 px-6 pb-5 pt-1">
+        <CartTotals
+          subtotal={calculation.grossSubtotal}
+          tax={calculation.vatAmount}
+          discount={calculation.discountAmount}
+          total={calculation.totalAmountDue}
+          itemCount={totalCount}
+          isSeniorOrPwd={isSeniorOrPwd}
+          onToggleSeniorPwd={onToggleSeniorPwd}
+          onProceedToPayment={onProceedToPayment}
+          disabled={items.length === 0}
+        />
+      </div>
     </aside>
   );
 };
