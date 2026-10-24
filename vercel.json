@@ -4,10 +4,107 @@
   "buildCommand": "npm run build:web",
   "outputDirectory": "apps/web-pos/dist",
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/dashboard.php",
+      "destination": "/dashboard",
+      "permanent": false
+    },
+    {
+      "source": "/sales.php",
+      "destination": "/sales",
+      "permanent": false
+    },
+    {
+      "source": "/sales_history.php",
+      "destination": "/sales-history",
+      "permanent": false
+    },
+    {
+      "source": "/index.php",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/reports.php",
+      "destination": "/api/reports",
+      "permanent": false
+    },
+    {
+      "source": "/logout.php",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/api/(.*)\\.php",
+      "destination": "/api/$1",
+      "permanent": false
+    },
+    {
+      "source": "/(.*)\\.php",
+      "destination": "/$1",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/api/(.*)\\.php",
+      "destination": "/api/$1"
+    },
+    {
+      "source": "/reports.php",
+      "destination": "/api/reports"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
+    },
+    {
+      "source": "/dashboard.php",
       "destination": "/index.html"
+    },
+    {
+      "source": "/sales.php",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/sales_history.php",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/index.php",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/(.*)\\.php",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/:path*",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Credentials",
+          "value": "true"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET,OPTIONS,PATCH,DELETE,POST,PUT"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization"
+        }
+      ]
     }
   ]
 }
