@@ -67,6 +67,20 @@ async function main() {
       console.log(`✓ Migration 002_create_inventory_recommendations.sql applied successfully.`);
     }
 
+    const migration003File = path.join(__dirname, '..', 'packages', 'database', 'migrations', '003_create_stock_adjustments.sql');
+    if (fs.existsSync(migration003File)) {
+      const sql = fs.readFileSync(migration003File, 'utf8');
+      await appClient.query(sql);
+      console.log(`✓ Migration 003_create_stock_adjustments.sql applied successfully.`);
+    }
+
+    const migration004File = path.join(__dirname, '..', 'packages', 'database', 'migrations', '004_expand_ph_fmcg_catalog.sql');
+    if (fs.existsSync(migration004File)) {
+      const sql = fs.readFileSync(migration004File, 'utf8');
+      await appClient.query(sql);
+      console.log(`✓ Migration 004_expand_ph_fmcg_catalog.sql applied successfully.`);
+    }
+
     const seedFile = path.join(__dirname, '..', 'packages', 'database', 'seeds', '001_seed_initial_data.sql');
     if (fs.existsSync(seedFile)) {
       const sql = fs.readFileSync(seedFile, 'utf8');

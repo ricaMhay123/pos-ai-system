@@ -3,11 +3,23 @@ import { Search, Scan, X } from 'lucide-react';
 
 // ─── Sample catalog barcodes / SKUs used by the Scan button demo ──────────────
 const DEMO_SCAN_POOL: string[] = [
-  '480001660101', // RIC-SIN-001 – Sinandomeng Special Rice 5kg
-  '480001660102', // RIC-JAS-002 – Dinorado Jasmine Rice 5kg
-  '480001660204', // CAN-TUN-004 – Century Tuna Flakes in Oil 180g
+  '480000000001', // RIC-SIN-001 – Sinandomeng Special Rice 5kg
+  '480000000003', // BRD-GAR-003 – Gardenia Classic White Bread 600g
+  '480000000004', // CAN-TUN-004 – Century Tuna Flakes in Oil 180g
+  '480000000005', // CAN-CRN-005 – Purefoods Corned Beef 210g
+  '480000000008', // INS-LKM-008 – Lucky Me! Pancit Canton Extra Hot 80g
+  '480000000011', // BEV-NES-011 – Nescafe 3-in-1 Original 28g Sachet
+  '480000000012', // BEV-KOP-012 – Kopiko Blanca Coffee 30g Sachet
+  '480000000013', // BEV-COK-013 – Coca-Cola Original 1.5L
+  '480000000017', // SNK-PIA-017 – Piattos Cheese 85g
+  '480000000019', // PC-SAF-019 – Safeguard Pure White Soap 130g
+  '480000000020', // HH-SRF-020 – Surf Powder Detergent Rose Fresh 1kg
   'RIC-SIN-001',
-  'CAN-TUN-004',
+  'CAN-CRN-005',
+  'INS-LKM-008',
+  'BEV-COK-013',
+  'SNK-PIA-017',
+  'HH-SRF-020',
 ];
 
 // ─── Web Audio API beep ───────────────────────────────────────────────────────
