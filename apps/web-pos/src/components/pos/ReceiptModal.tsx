@@ -137,14 +137,14 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({
             ref={receiptRef}
             className="bg-at-neutral text-at-accent rounded-xl p-5 shadow-inner border border-at-neutral-muted font-mono"
           >
-            {/* Store Header / Meme Mart Branding */}
+            {/* Store Header / 21/7teen Mart Branding */}
             <div className="receipt-header text-center pb-4 border-b border-dashed border-at-neutral-muted mb-4">
               <div className="flex items-center justify-center gap-2 mb-1">
                 <Store className="w-5 h-5 text-at-secondary" />
-                <span className="store-name text-xl font-extrabold text-at-accent tracking-wide">MEME MART</span>
+                <span className="store-name text-xl font-extrabold text-at-accent tracking-wide">21/7TEEN MART</span>
               </div>
               <div className="store-subtitle text-[10px] text-at-accent/80 font-medium">
-                {transaction.storeName || 'Flagship BGC Terminal - Taguig'}
+                {transaction.storeName || 'POS Terminal - Store #01'}
               </div>
               <div className="store-subtitle text-[10px] text-at-accent/70 mt-0.5">
                 Philippine Retail POS System • VAT Registered
@@ -268,7 +268,7 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({
 
             {/* Receipt Footer */}
             <div className="receipt-footer border-t border-dashed border-at-neutral-muted mt-4 pt-3 text-center space-y-0.5 text-[9px] text-at-accent/70">
-              <div className="font-bold text-at-accent">Thank you for shopping at Meme Mart!</div>
+              <div className="font-bold text-at-accent">Thank you for shopping at 21/7teen Mart!</div>
               <div>Please keep this receipt for returns or exchanges.</div>
               <div>BIR Permit No. 0324-123-45678-000</div>
               <div>Machine SN: MM-POS-2026-001</div>

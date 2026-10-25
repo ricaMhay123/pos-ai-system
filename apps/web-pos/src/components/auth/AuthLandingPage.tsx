@@ -38,7 +38,7 @@ export const AuthLandingPage: React.FC<AuthLandingPageProps> = ({ onLogin }) => 
         username: 'manager',
         role: 'store_manager',
         name: 'Maria Santos (Manager)',
-        storeName: 'Flagship BGC Terminal - Taguig',
+        storeName: '21/7teen Mart - POS Terminal - Store #01',
         terminalCode: 'POS-BGC-01',
       });
     } else if (u === 'cashier' && p === 'cashier123') {
@@ -47,7 +47,7 @@ export const AuthLandingPage: React.FC<AuthLandingPageProps> = ({ onLogin }) => 
         username: 'cashier',
         role: 'cashier',
         name: 'Juan Dela Cruz (Cashier)',
-        storeName: 'Flagship BGC Terminal - Taguig',
+        storeName: '21/7teen Mart - POS Terminal - Store #01',
         terminalCode: 'POS-BGC-01',
       });
     } else {

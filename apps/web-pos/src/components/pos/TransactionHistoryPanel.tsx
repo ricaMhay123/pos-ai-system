@@ -39,7 +39,7 @@ const SEED_TRANSACTIONS: TransactionHistoryItem[] = [
     total: 732.50,
     cashierName: 'Juan Dela Cruz',
     cashierId: '20000000-0000-0000-0000-000000000011',
-    storeName: 'Meme Mart - Flagship BGC',
+    storeName: '21/7teen Mart - Store #01',
     storeId: '10000000-0000-0000-0000-000000000001',
     lineItems: [
       { productName: 'Sinandomeng Special Rice 5kg', sku: 'RIC-SIN-001', quantity: 1, unitPrice: 285.00, totalPrice: 285.00, taxRate: 0, discountAmount: 0 },
@@ -61,7 +61,7 @@ const SEED_TRANSACTIONS: TransactionHistoryItem[] = [
     total: 1245.00,
     cashierName: 'Maria Santos',
     cashierId: '20000000-0000-0000-0000-000000000012',
-    storeName: 'Meme Mart - Flagship BGC',
+    storeName: '21/7teen Mart - Store #01',
     storeId: '10000000-0000-0000-0000-000000000001',
     lineItems: [
       { productName: 'San Miguel Pale Pilsen 330ml 6-pack', sku: 'BEV-SMP-006', quantity: 2, unitPrice: 290.00, totalPrice: 580.00, taxRate: 0.12, discountAmount: 0 },
@@ -82,7 +82,7 @@ const SEED_TRANSACTIONS: TransactionHistoryItem[] = [
     total: 336.00,
     cashierName: 'Juan Dela Cruz',
     cashierId: '20000000-0000-0000-0000-000000000011',
-    storeName: 'Meme Mart - Flagship BGC',
+    storeName: '21/7teen Mart - Store #01',
     storeId: '10000000-0000-0000-0000-000000000001',
     lineItems: [
       { productName: 'Sinandomeng Special Rice 5kg', sku: 'RIC-SIN-001', quantity: 1, unitPrice: 285.00, totalPrice: 285.00, taxRate: 0, discountAmount: 57.00 },
@@ -102,7 +102,7 @@ const SEED_TRANSACTIONS: TransactionHistoryItem[] = [
     total: 2150.00,
     cashierName: 'Maria Santos',
     cashierId: '20000000-0000-0000-0000-000000000012',
-    storeName: 'Meme Mart - Flagship BGC',
+    storeName: '21/7teen Mart - Store #01',
     storeId: '10000000-0000-0000-0000-000000000001',
     lineItems: [
       { productName: 'Sinandomeng Special Rice 25kg Sack', sku: 'RIC-SIN-025', quantity: 1, unitPrice: 1350.00, totalPrice: 1350.00, taxRate: 0, discountAmount: 0 },
@@ -122,7 +122,7 @@ const SEED_TRANSACTIONS: TransactionHistoryItem[] = [
     total: 312.00,
     cashierName: 'Juan Dela Cruz',
     cashierId: '20000000-0000-0000-0000-000000000011',
-    storeName: 'Meme Mart - Flagship BGC',
+    storeName: '21/7teen Mart - Store #01',
     storeId: '10000000-0000-0000-0000-000000000001',
     lineItems: [
       { productName: 'Kopiko Brown Coffee 10s', sku: 'BEV-KOP-BRN', quantity: 2, unitPrice: 85.00, totalPrice: 170.00, taxRate: 0.12, discountAmount: 0 },
@@ -141,7 +141,7 @@ const SEED_TRANSACTIONS: TransactionHistoryItem[] = [
     total: 580.00,
     cashierName: 'Maria Santos',
     cashierId: '20000000-0000-0000-0000-000000000012',
-    storeName: 'Meme Mart - Flagship BGC',
+    storeName: '21/7teen Mart - Store #01',
     storeId: '10000000-0000-0000-0000-000000000001',
     lineItems: [
       { productName: 'San Miguel Light 330ml 6-pack', sku: 'BEV-SML-006', quantity: 2, unitPrice: 290.00, totalPrice: 580.00, taxRate: 0.12, discountAmount: 0 },
@@ -159,7 +159,7 @@ const SEED_TRANSACTIONS: TransactionHistoryItem[] = [
     total: 189.00,
     cashierName: 'Juan Dela Cruz',
     cashierId: '20000000-0000-0000-0000-000000000011',
-    storeName: 'Meme Mart - Flagship BGC',
+    storeName: '21/7teen Mart - Store #01',
     storeId: '10000000-0000-0000-0000-000000000001',
     lineItems: [
       { productName: 'Century Tuna Flakes in Oil 180g', sku: 'CAN-TUN-004', quantity: 2, unitPrice: 46.50, totalPrice: 93.00, taxRate: 0.12, discountAmount: 0 },
@@ -178,7 +178,7 @@ const SEED_TRANSACTIONS: TransactionHistoryItem[] = [
     total: 960.00,
     cashierName: 'Maria Santos',
     cashierId: '20000000-0000-0000-0000-000000000012',
-    storeName: 'Meme Mart - Flagship BGC',
+    storeName: '21/7teen Mart - Store #01',
     storeId: '10000000-0000-0000-0000-000000000001',
     lineItems: [
       { productName: 'Safeguard Pure White Soap 130g 3-pack', sku: 'PER-SFG-3PK', quantity: 3, unitPrice: 145.00, totalPrice: 435.00, taxRate: 0.12, discountAmount: 0 },
@@ -350,7 +350,7 @@ export const TransactionHistoryPanel: React.FC<TransactionHistoryPanelProps> = (
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `meme-mart-transactions-${new Date().toISOString().slice(0, 10)}.csv`;
+        a.download = `21-7teen-mart-transactions-${new Date().toISOString().slice(0, 10)}.csv`;
         a.click();
         URL.revokeObjectURL(url);
         return;
@@ -377,7 +377,7 @@ export const TransactionHistoryPanel: React.FC<TransactionHistoryPanelProps> = (
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `meme-mart-transactions-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.download = `21-7teen-mart-transactions-${new Date().toISOString().slice(0, 10)}.csv`;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -414,7 +414,7 @@ export const TransactionHistoryPanel: React.FC<TransactionHistoryPanelProps> = (
                   )}
                 </h2>
                 <p className="text-[11px] text-at-neutral/70">
-                  Meme Mart • Philippine Retail POS • 12% VAT
+                  21/7teen Mart • Philippine Retail POS • 12% VAT
                 </p>
               </div>
             </div>

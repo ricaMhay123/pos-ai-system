@@ -4,7 +4,7 @@
  * Historical transaction search, filtering, receipt reprint & CSV export
  * Features:
  * 1. Search & filter by Transaction ID, Date range, or Cashier Name.
- * 2. View / Print Receipt modal with itemized products, 12% VAT, and "Meme Mart" branding.
+ * 2. View / Print Receipt modal with itemized products, 12% VAT, and "21/7TEEN MART" branding.
  * 3. RBAC: Cashiers have view-only access to recent (7-day) transactions & receipt reprint.
  *    No delete/edit actions allowed. Managers have full historical scope + CSV export.
  */
@@ -94,7 +94,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'export') {
             st.transaction_number,
             st.created_at,
             COALESCE(u.first_name || ' ' || u.last_name, 'Juan Dela Cruz') as cashier_name,
-            COALESCE(s.name, 'Meme Mart BGC') as store_name,
+            COALESCE(s.name, '21/7teen Mart - Store #01') as store_name,
             st.subtotal_amount,
             st.tax_amount,
             st.discount_amount,
@@ -110,7 +110,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'export') {
     $exportRows = fetchDbTransactions($exportSql);
 
     header('Content-Type: text/csv; charset=utf-8');
-    header('Content-Disposition: attachment; filename="meme-mart-transactions-' . date('Y-m-d') . '.csv"');
+    header('Content-Disposition: attachment; filename="21-7teen-mart-transactions-' . date('Y-m-d') . '.csv"');
     $out = fopen('php://output', 'w');
     fputcsv($out, ['Transaction #', 'Date', 'Cashier', 'Store', 'Subtotal (PHP)', 'VAT 12% (PHP)', 'Discount (PHP)', 'Total (PHP)', 'Status']);
 
@@ -130,9 +130,9 @@ if (isset($_GET['action']) && $_GET['action'] === 'export') {
         }
     } else {
         // Fallback demo rows if DB is empty
-        fputcsv($out, ['TXN-PH-20261024-4821', '2026-10-24 10:23:15', 'Juan Dela Cruz', 'Meme Mart BGC', '732.50', '78.48', '0.00', '732.50', 'completed']);
-        fputcsv($out, ['TXN-PH-20261024-3159', '2026-10-24 11:45:30', 'Maria Santos', 'Meme Mart BGC', '1245.00', '133.39', '0.00', '1245.00', 'completed']);
-        fputcsv($out, ['TXN-PH-20261023-7742', '2026-10-23 14:10:22', 'Juan Dela Cruz', 'Meme Mart BGC', '456.75', '48.94', '0.00', '456.75', 'completed']);
+        fputcsv($out, ['TXN-PH-20261024-4821', '2026-10-24 10:23:15', 'Juan Dela Cruz', '21/7teen Mart - Store #01', '732.50', '78.48', '0.00', '732.50', 'completed']);
+        fputcsv($out, ['TXN-PH-20261024-3159', '2026-10-24 11:45:30', 'Maria Santos', '21/7teen Mart - Store #01', '1245.00', '133.39', '0.00', '1245.00', 'completed']);
+        fputcsv($out, ['TXN-PH-20261023-7742', '2026-10-23 14:10:22', 'Juan Dela Cruz', '21/7teen Mart - Store #01', '456.75', '48.94', '0.00', '456.75', 'completed']);
     }
     fclose($out);
     exit;
@@ -198,7 +198,7 @@ $sql = "
         st.discount_amount::FLOAT as discount,
         st.total_amount::FLOAT as total,
         COALESCE(u.first_name || ' ' || u.last_name, 'Juan Dela Cruz') as cashier_name,
-        COALESCE(s.name, 'Meme Mart - Flagship BGC') as store_name,
+        COALESCE(s.name, '21/7teen Mart - Store #01') as store_name,
         st.created_at
     FROM sales_transactions st
     LEFT JOIN users u ON u.id = st.cashier_id
@@ -222,7 +222,7 @@ if (empty($transactions)) {
             'discount' => 0.00,
             'total' => 732.50,
             'cashier_name' => 'Juan Dela Cruz',
-            'store_name' => 'Meme Mart - Flagship BGC',
+            'store_name' => '21/7teen Mart - Store #01',
             'created_at' => '2026-10-24 10:23:15',
             'line_items' => [
                 ['product_name' => 'Sinandomeng Special Rice 5kg', 'sku' => 'RIC-SIN-001', 'quantity' => 1, 'unit_price' => 285.00, 'total_price' => 285.00],
@@ -240,7 +240,7 @@ if (empty($transactions)) {
             'discount' => 0.00,
             'total' => 1245.00,
             'cashier_name' => 'Maria Santos',
-            'store_name' => 'Meme Mart - Flagship BGC',
+            'store_name' => '21/7teen Mart - Store #01',
             'created_at' => '2026-10-24 11:45:30',
             'line_items' => [
                 ['product_name' => 'Thai Jasmine Rice 5kg', 'sku' => 'RIC-JAS-5KG', 'quantity' => 2, 'unit_price' => 475.00, 'total_price' => 950.00],
@@ -256,7 +256,7 @@ if (empty($transactions)) {
             'discount' => 0.00,
             'total' => 456.75,
             'cashier_name' => 'Juan Dela Cruz',
-            'store_name' => 'Meme Mart - Flagship BGC',
+            'store_name' => '21/7teen Mart - Store #01',
             'created_at' => '2026-10-23 14:10:22',
             'line_items' => [
                 ['product_name' => 'SPAM Luncheon Meat Classic 340g', 'sku' => 'CAN-SPM-LUN', 'quantity' => 1, 'unit_price' => 235.00, 'total_price' => 235.00],
@@ -272,7 +272,7 @@ if (empty($transactions)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transaction History - Meme Mart POS AI</title>
+    <title>Transaction History - 21/7teen Mart POS AI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -309,7 +309,7 @@ if (empty($transactions)) {
                             </span>
                         <?php endif; ?>
                     </h1>
-                    <span class="text-[11px] text-slate-400">Meme Mart • Philippine Retail POS System • 12% VAT</span>
+                    <span class="text-[11px] text-slate-400">21/7TEEN MART • Philippine Retail POS System • 12% VAT</span>
                 </div>
             </div>
         </div>
@@ -486,10 +486,10 @@ if (empty($transactions)) {
 
             <!-- Receipt Body -->
             <div id="printable-receipt-content" class="p-6 font-mono text-xs max-h-[70vh] overflow-y-auto bg-slate-950 text-slate-200">
-                <!-- Meme Mart Branding Header -->
+                <!-- 21/7TEEN MART Branding Header -->
                 <div class="text-center pb-3 border-b border-dashed border-slate-700 mb-3">
-                    <div class="text-lg font-extrabold text-white tracking-wider">MEME MART</div>
-                    <div class="text-[10px] text-slate-400 mt-0.5" id="receipt-store-name">Flagship BGC Terminal - Taguig</div>
+                    <div class="text-lg font-extrabold text-white tracking-wider">21/7TEEN MART</div>
+                    <div class="text-[10px] text-slate-400 mt-0.5" id="receipt-store-name">POS Terminal - Store #01</div>
                     <div class="text-[10px] text-slate-500">VAT Registered • TIN: 000-000-000-00000</div>
                     <div class="text-[9px] text-slate-500">Official POS Sales Invoice</div>
                 </div>
@@ -549,7 +549,7 @@ if (empty($transactions)) {
 
                 <!-- Receipt Footer -->
                 <div class="text-center mt-5 pt-3 border-t border-dashed border-slate-700 text-[10px] text-slate-500">
-                    <div>Thank you for shopping at Meme Mart!</div>
+                    <div>Thank you for shopping at 21/7TEEN MART!</div>
                     <div class="text-[9px] text-slate-600 mt-1">This document serves as your Official Receipt.</div>
                 </div>
             </div>
@@ -562,7 +562,7 @@ if (empty($transactions)) {
             document.getElementById('receipt-txn').textContent = txn.transaction_number;
             document.getElementById('receipt-date').textContent = txn.created_at;
             document.getElementById('receipt-cashier').textContent = txn.cashier_name;
-            document.getElementById('receipt-store-name').textContent = txn.store_name || 'Flagship BGC Terminal - Taguig';
+            document.getElementById('receipt-store-name').textContent = txn.store_name || 'POS Terminal - Store #01';
 
             const sub = parseFloat(txn.subtotal) || 0;
             const vat = parseFloat(txn.tax) || (sub - (sub / 1.12));

@@ -160,11 +160,11 @@ export const PostPaymentReceiptModal: React.FC<PostPaymentReceiptModalProps> = (
               <div className="flex items-center justify-center gap-2 mb-1">
                 <Store className="w-4 h-4 text-at-secondary" />
                 <span className="sn text-lg font-extrabold text-at-accent tracking-widest">
-                  MEME MART
+                  21/7TEEN MART
                 </span>
               </div>
               <div className="ss text-[10px] text-at-accent/80 font-medium">
-                {receipt.storeName || 'Flagship BGC Terminal - Taguig'}
+                {receipt.storeName || 'POS Terminal - Store #01'}
               </div>
               <div className="ss text-[10px] text-at-accent/70 mt-0.5">
                 Terminal: {receipt.terminalCode} • VAT Registered
@@ -287,7 +287,7 @@ export const PostPaymentReceiptModal: React.FC<PostPaymentReceiptModalProps> = (
             {/* Footer */}
             <div className="footer text-center mt-4 pt-3 border-t border-dashed border-at-neutral-muted">
               <div className="text-[10px] text-at-accent font-semibold">
-                Thank you for shopping at Meme Mart!
+                Thank you for shopping at 21/7teen Mart!
               </div>
               <div className="text-[9px] text-at-accent/70 mt-0.5">
                 This serves as your Official Receipt

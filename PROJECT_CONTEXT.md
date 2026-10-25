@@ -1,7 +1,7 @@
 # Project Context & AI Execution Rules
 
 ## System Overview
-This project is an enterprise Point of Sale (POS) system integrated with an AI-driven Inventory Recommendation Engine tailored for the **Philippine retail market**.
+This project is an enterprise Point of Sale (POS) system integrated with an AI-driven Inventory Recommendation Engine tailored for the **Philippine retail market**. The canonical store brand is **21/7teen Mart** (stylized as "21/7teen Mart" in prose and "21/7TEEN MART" in receipt headers). All UI components, receipt templates, PHP views, and database seeds must use this brand exclusively.
 
 ---
 
@@ -60,3 +60,4 @@ When picking up tasks on this project:
 2. Ensure any new UI components automatically format currency values using the `formatPHP` utility.
 3. Update this file (`PROJECT_CONTEXT.md`) **only** when completing a phase, altering the core tech stack, or adding explicit business rules.
 4. **NO Docker / Docker Compose**: Do NOT use or propose Docker/docker-compose commands. All services run natively on Windows with local PostgreSQL (`host: localhost, port: 5432, user: postgres, pass: postgres, db: pos_db`), Node.js/NestJS, React/Vite, and Python ML pipelines.
+5. **Store Branding**: The canonical store name is **21/7teen Mart**. Never write "Meme Mart", "Jakhora Mart", or "Flagship BGC Terminal - Taguig" in any new code or docs. Use "POS Terminal - Store #01" as the terminal subtitle.

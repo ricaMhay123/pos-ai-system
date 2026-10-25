@@ -40,7 +40,7 @@ interface PosCheckoutShellProps {
 
 export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
   initialProducts,
-  storeName = 'Meme Mart - Flagship BGC Terminal - Taguig',
+  storeName = '21/7teen Mart - POS Terminal - Store #01',
   terminalCode = 'POS-BGC-01',
   cashierName = 'Juan Dela Cruz',
   cashierRole = 'Cashier (EMP-CSH-003)',
@@ -433,7 +433,7 @@ export const PosCheckoutShell: React.FC<PosCheckoutShellProps> = ({
         isProcessing={isProcessingPayment}
       />
 
-      {/* 4. Post-Payment Meme Mart Receipt Modal */}
+      {/* 4. Post-Payment 21/7teen Mart Receipt Modal */}
       <PostPaymentReceiptModal
         isOpen={isReceiptOpen}
         receipt={receiptData}

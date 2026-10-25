@@ -65,7 +65,7 @@ The POS AI system delivers high-throughput retail checkout with embedded machine
 1. **Station Launch:** Open the POS client in Google Chrome, Microsoft Edge, or the dedicated terminal wrapper at `http://localhost:5173` (or the production Vercel URL).
 2. **Shift Login:** Enter your Employee Credentials (e.g., `cashier_01` / `Password123!`).
 3. **Terminal Verification:** Confirm that the top banner indicates:
-   - **Store Name:** `Flagship BGC Terminal - Taguig`
+   - **Store Name:** `21/7teen Mart - POS Terminal - Store #01`
    - **Terminal Code:** `POS-BGC-01`
    - **Cashier Badge:** `Juan Dela Cruz (EMP-CSH-003)`
    - **Network Status:** `Online / Synced`
@@ -210,7 +210,7 @@ Upon clicking **Authorize & Complete Sale**:
 ```text
 ============================================================
               POS AI ENTERPRISE SUPERMARKET                 
-             Flagship BGC Terminal - Taguig                 
+             21/7teen Mart - POS Terminal - Store #01                 
       Bonifacio High Street, Taguig City, Metro Manila      
                   VAT Reg TIN: 000-123-456-001              
 ============================================================
@@ -354,7 +354,7 @@ When supplier delivery trucks arrive at the store:
 The **Restock Capital (PHP / ₱)** card tallies the total capital expenditure required across all approved or recommended purchase orders.
 
 Store managers can view store-specific breakdowns across branches:
-- `STR-BGC-01` (Flagship BGC Terminal - Taguig)
+- `STR-BGC-01` (21/7teen Mart - POS Terminal - Store #01)
 - `STR-MAK-01` (Makati Central Store)
 - `STR-CEB-01` (Cebu IT Park Hub)
 

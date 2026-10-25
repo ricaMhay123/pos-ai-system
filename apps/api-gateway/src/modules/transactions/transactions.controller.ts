@@ -98,7 +98,7 @@ export class TransactionsController {
   @Roles('cashier', 'store_manager', 'admin')
   @ApiBearerAuth()
   @ApiOperation({
-    summary: 'Get full transaction receipt with itemized products, 12% VAT, and Meme Mart branding',
+    summary: 'Get full transaction receipt with itemized products, 12% VAT, and 21/7teen Mart branding',
   })
   @ApiResponse({ status: 200, description: 'Transaction receipt with line items and payment details' })
   @ApiResponse({ status: 404, description: 'Transaction not found' })

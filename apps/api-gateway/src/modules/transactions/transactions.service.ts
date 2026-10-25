@@ -107,7 +107,7 @@ export class TransactionsService {
             st.total_amount::FLOAT AS total,
             COALESCE(u.first_name || ' ' || u.last_name, 'Unknown Cashier') AS "cashierName",
             COALESCE(st.cashier_id::TEXT, '') AS "cashierId",
-            COALESCE(s.name, 'Meme Mart') AS "storeName",
+            COALESCE(s.name, '21/7teen Mart') AS "storeName",
             COALESCE(st.store_id::TEXT, '') AS "storeId",
             st.created_at AS "createdAt"
           FROM sales_transactions st
@@ -197,7 +197,7 @@ export class TransactionsService {
            st.total_amount::FLOAT AS total,
            COALESCE(u.first_name || ' ' || u.last_name, 'Unknown Cashier') AS "cashierName",
            COALESCE(st.cashier_id::TEXT, '') AS "cashierId",
-           COALESCE(s.name, 'Meme Mart') AS "storeName",
+           COALESCE(s.name, '21/7teen Mart') AS "storeName",
            COALESCE(st.store_id::TEXT, '') AS "storeId",
            st.created_at AS "createdAt"
          FROM sales_transactions st

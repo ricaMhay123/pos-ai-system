@@ -212,7 +212,7 @@ function formatPHP($val) {
                 </div>
                 <div>
                     <h1 class="text-sm font-bold text-white leading-none">POS AI Inventory Manager</h1>
-                    <span class="text-[11px] text-slate-400">Flagship BGC Terminal &bull; Philippine Retail Standards</span>
+                    <span class="text-[11px] text-slate-400">21/7teen Mart &bull; Philippine Retail Standards</span>
                 </div>
             </div>
             <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold">

@@ -142,7 +142,7 @@ function formatPhp($amount) {
                 <h1 class="text-sm font-bold text-white flex items-center gap-2">
                     POS AI Register <span class="text-xs px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-mono font-normal">POS-BGC-01</span>
                 </h1>
-                <p class="text-[10px] text-slate-400">Flagship BGC Supermarket • Taguig City, Metro Manila</p>
+                <p class="text-[10px] text-slate-400">21/7teen Mart • POS Terminal - Store #01</p>
             </div>
         </div>
 
