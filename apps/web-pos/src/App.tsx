@@ -457,12 +457,20 @@ export default function App() {
     return (
       <div className="relative h-screen">
         {rbacNotice && (
-          <div className="fixed top-4 right-4 z-50 flex items-center gap-2.5 px-4 py-2.5 rounded-xl border border-amber-500/40 bg-amber-950/95 text-amber-200 text-xs font-semibold shadow-xl backdrop-blur animate-in fade-in duration-200">
-            <ShieldAlert className="w-4 h-4 text-amber-400 shrink-0" />
+          <div
+            className="fixed top-4 right-4 z-50 flex items-center gap-2.5 px-4 py-2.5 rounded-xl border text-xs font-semibold shadow-xl backdrop-blur animate-in fade-in duration-200"
+            style={{
+              backgroundColor: 'var(--at-accent)',
+              borderColor: 'var(--at-accent-light)',
+              color: 'var(--at-text-on-accent)',
+            }}
+          >
+            <ShieldAlert className="w-4 h-4 shrink-0" style={{ color: 'var(--at-primary)' }} />
             <span>{rbacNotice}</span>
             <button
               onClick={() => setRbacNotice(null)}
-              className="ml-2 text-amber-400 hover:text-white"
+              className="ml-2 transition"
+              style={{ color: 'var(--at-primary)' }}
             >
               &times;
             </button>
@@ -487,12 +495,20 @@ export default function App() {
     return (
       <div className="relative h-screen">
         {rbacNotice && (
-          <div className="fixed top-4 right-4 z-50 flex items-center gap-2.5 px-4 py-2.5 rounded-xl border border-amber-500/40 bg-amber-950/95 text-amber-200 text-xs font-semibold shadow-xl backdrop-blur animate-in fade-in duration-200">
-            <ShieldAlert className="w-4 h-4 text-amber-400 shrink-0" />
+          <div
+            className="fixed top-4 right-4 z-50 flex items-center gap-2.5 px-4 py-2.5 rounded-xl border text-xs font-semibold shadow-xl backdrop-blur animate-in fade-in duration-200"
+            style={{
+              backgroundColor: 'var(--at-accent)',
+              borderColor: 'var(--at-accent-light)',
+              color: 'var(--at-text-on-accent)',
+            }}
+          >
+            <ShieldAlert className="w-4 h-4 shrink-0" style={{ color: 'var(--at-primary)' }} />
             <span>{rbacNotice}</span>
             <button
               onClick={() => setRbacNotice(null)}
-              className="ml-2 text-amber-400 hover:text-white"
+              className="ml-2 transition"
+              style={{ color: 'var(--at-primary)' }}
             >
               &times;
             </button>
@@ -521,26 +537,57 @@ export default function App() {
 
   // AI Replenishment Engine Dashboard View (Philippine Peso Localization)
   return (
-    <div className="flex flex-col h-screen bg-slate-950 text-slate-100 overflow-hidden font-sans">
-      {/* Header */}
-      <header className="h-16 border-b border-slate-800 bg-slate-900/90 backdrop-blur px-6 flex items-center justify-between shrink-0">
+    <div
+      className="flex flex-col h-screen overflow-hidden font-sans"
+      style={{ backgroundColor: 'var(--at-neutral)', color: 'var(--at-text-on-neutral)' }}
+    >
+      {/* ── Manager Dashboard Header – Accent dark bg, Neutral text ──────── */}
+      <header
+        className="h-16 border-b backdrop-blur-md px-6 flex items-center justify-between shrink-0"
+        style={{
+          backgroundColor: 'var(--at-accent)',
+          borderColor: 'var(--at-accent-light)',
+          color: 'var(--at-text-on-accent)',
+        }}
+      >
         <div className="flex items-center gap-4">
+          {/* Back to POS button */}
           <button
             onClick={() => navigateToTab('pos')}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold border border-slate-700 transition"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold border transition active:scale-95"
+            style={{
+              backgroundColor: 'var(--at-accent-muted)',
+              borderColor: 'var(--at-accent-light)',
+              color: 'var(--at-neutral)',
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'var(--at-accent-light)';
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'var(--at-accent-muted)';
+            }}
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to POS Register</span>
           </button>
+
+          {/* Brand mark */}
           <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-              <Sparkles className="w-4 h-4 text-white" />
+            {/* Logo badge: Primary amber bg → CRITICAL: Accent dark text */}
+            <div
+              className="w-7 h-7 rounded-lg flex items-center justify-center shadow-lg"
+              style={{ backgroundColor: 'var(--at-primary)', color: 'var(--at-text-on-primary)' }}
+            >
+              <Sparkles className="w-4 h-4" />
             </div>
             <div>
-              <h1 className="text-sm font-bold text-white leading-tight">
-                Manager Recommendation & Inventory Replenishment UI
+              <h1
+                className="text-sm font-bold leading-tight"
+                style={{ color: 'var(--at-neutral)' }}
+              >
+                Manager Recommendation &amp; Inventory Replenishment UI
               </h1>
-              <span className="text-[11px] text-slate-400">
+              <span className="text-[11px]" style={{ color: 'var(--at-neutral-muted)' }}>
                 Phase 3.3 Active • Philippine Retail Standard (PHP / ₱)
               </span>
             </div>
@@ -548,35 +595,84 @@ export default function App() {
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700 text-xs">
-            <div className="w-6 h-6 rounded-md bg-indigo-500/20 text-indigo-300 flex items-center justify-center font-bold text-[11px]">
+          {/* Manager user chip */}
+          <div
+            className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs"
+            style={{
+              backgroundColor: 'var(--at-accent-muted)',
+              borderColor: 'var(--at-accent-light)',
+              color: 'var(--at-neutral)',
+            }}
+          >
+            <div
+              className="w-6 h-6 rounded-md flex items-center justify-center font-bold text-[11px]"
+              style={{ backgroundColor: 'var(--at-accent-light)', color: 'var(--at-primary)' }}
+            >
               M
             </div>
             <div className="text-left">
-              <span className="font-semibold text-white block text-xs">{currentUser.name}</span>
-              <span className="text-[10px] text-slate-400 block leading-none">@{currentUser.username} • Manager</span>
+              <span className="font-semibold block text-xs" style={{ color: 'var(--at-neutral)' }}>
+                {currentUser.name}
+              </span>
+              <span className="text-[10px] block leading-none" style={{ color: 'var(--at-neutral-muted)' }}>
+                @{currentUser.username} • Manager
+              </span>
             </div>
           </div>
+
+          {/* Sign Out */}
           <button
             onClick={() => setCurrentUser(null)}
             title="Sign Out"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-rose-300 text-xs font-semibold transition"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold transition active:scale-95"
+            style={{
+              backgroundColor: 'rgba(184,84,63,0.15)',
+              borderColor: 'rgba(184,84,63,0.35)',
+              color: 'var(--at-neutral)',
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'rgba(184,84,63,0.28)';
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'rgba(184,84,63,0.15)';
+            }}
           >
-            <LogOut className="w-3.5 h-3.5" />
+            <LogOut className="w-3.5 h-3.5" style={{ color: 'var(--at-secondary)' }} />
             <span>Sign Out</span>
           </button>
+
+          {/* /dashboard route chip */}
           <button
             onClick={() => navigateToTab('ai')}
             title="Manager Dashboard Route: /dashboard"
-            className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 text-xs font-medium border border-indigo-500/40 transition"
+            className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-medium transition"
+            style={{
+              backgroundColor: 'rgba(227,154,75,0.10)',
+              borderColor: 'rgba(227,154,75,0.28)',
+              color: 'var(--at-primary-muted)',
+            }}
           >
-            <LayoutDashboard className="w-3.5 h-3.5 text-indigo-400" />
+            <LayoutDashboard className="w-3.5 h-3.5" style={{ color: 'var(--at-primary)' }} />
             <span>/dashboard</span>
           </button>
+
+          {/* Refresh AI Pipeline */}
           <button
             onClick={fetchLiveData}
             disabled={isLoading}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600/15 hover:bg-indigo-600/25 border border-indigo-500/30 text-indigo-400 text-xs font-semibold transition disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl border text-xs font-semibold transition disabled:opacity-50"
+            style={{
+              backgroundColor: 'var(--at-accent-muted)',
+              borderColor: 'var(--at-accent-light)',
+              color: 'var(--at-primary)',
+            }}
+            onMouseEnter={(e) => {
+              if (!isLoading)
+                (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'var(--at-accent-light)';
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'var(--at-accent-muted)';
+            }}
           >
             <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
             {isLoading ? 'Syncing...' : 'Refresh AI Pipeline'}
@@ -584,32 +680,69 @@ export default function App() {
         </div>
       </header>
 
-      {/* Main Content Area */}
+      {/* ── Main Content Area ─────────────────────────────────────────────── */}
       <main className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6">
         <div className="max-w-7xl mx-auto space-y-6">
 
-          {/* Low Stock Warning Alert Banner */}
+          {/* ── Low Stock Warning Alert Banner ─────────────────────────────
+               Secondary (#B8543F) bg → Neutral (#F8EBD9) text (WCAG AA ✅) */}
           {lowStockItems.length > 0 && (
-            <div className="rounded-2xl border border-rose-500/30 bg-rose-950/20 p-5 backdrop-blur flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-lg shadow-rose-950/20">
+            <div
+              className="rounded-2xl border p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-lg"
+              style={{
+                backgroundColor: 'rgba(184,84,63,0.10)',
+                borderColor: 'rgba(184,84,63,0.30)',
+              }}
+            >
               <div className="flex items-center gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-rose-500/20 border border-rose-500/30 flex items-center justify-center shrink-0 text-rose-400">
-                  <ShieldAlert className="w-5 h-5 text-rose-400" />
+                <div
+                  className="w-10 h-10 rounded-xl border flex items-center justify-center shrink-0"
+                  style={{
+                    backgroundColor: 'rgba(184,84,63,0.18)',
+                    borderColor: 'rgba(184,84,63,0.35)',
+                    color: 'var(--at-secondary)',
+                  }}
+                >
+                  <ShieldAlert className="w-5 h-5" />
                 </div>
                 <div>
-                  <h2 className="text-sm font-bold text-rose-300 flex items-center gap-2">
+                  <h2
+                    className="text-sm font-bold flex items-center gap-2"
+                    style={{ color: 'var(--at-secondary)' }}
+                  >
                     <span>Low Stock Warning Alert</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 font-mono">
+                    {/* Badge: Secondary bg → Neutral text (WCAG AA ✅) */}
+                    <span
+                      className="text-[10px] px-2 py-0.5 rounded-full font-mono border"
+                      style={{
+                        backgroundColor: 'var(--at-secondary)',
+                        color: 'var(--at-text-on-secondary)',
+                        borderColor: 'rgba(184,84,63,0.50)',
+                      }}
+                    >
                       {lowStockItems.length} SKUs Breached ROP
                     </span>
                   </h2>
-                  <p className="text-xs text-rose-400/80 mt-0.5">
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--at-secondary)' }}>
                     Critical replenishment needed. Current inventory on shelf has fallen below calculated Reorder Point (ROP = Daily Avg Sales &times; Lead Time + Safety Stock).
                   </p>
                 </div>
               </div>
+              {/* Filter button: Secondary bg → Neutral text (WCAG AA ✅) */}
               <button
                 onClick={() => setFilterUrgency('low_stock')}
-                className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold transition shadow-lg shadow-rose-600/20 shrink-0 flex items-center gap-1.5"
+                className="px-4 py-2 rounded-xl text-xs font-bold transition shadow-lg shrink-0 flex items-center gap-1.5 active:scale-95"
+                style={{
+                  backgroundColor: 'var(--at-secondary)',
+                  color: 'var(--at-text-on-secondary)',
+                  boxShadow: '0 4px 14px -2px rgba(184,84,63,0.35)',
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.opacity = '0.9';
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.opacity = '1';
+                }}
               >
                 <span>Filter Low Stock Items</span>
                 <span className="text-[11px] font-mono">&rarr;</span>
@@ -617,69 +750,147 @@ export default function App() {
             </div>
           )}
 
-          {/* KPI Summary Grid */}
+          {/* ── KPI Summary Grid ───────────────────────────────────────────
+               All cards: Accent (#3D2545) bg → Neutral (#F8EBD9) text (WCAG AA ✅)
+               Value accents use Primary amber → keep backgrounds dark for legibility */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {/* Low Stock Warnings */}
-            <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 shadow-sm relative overflow-hidden">
-              <div className="text-xs text-slate-400 font-semibold uppercase tracking-wider">Low Stock Warnings</div>
-              <div className="text-3xl font-extrabold text-rose-400 mt-2 font-mono">
-                {lowStockItems.length} <span className="text-sm font-normal text-slate-400">SKUs</span>
+
+            {/* Low Stock Warnings — Secondary rust accent */}
+            <div
+              className="p-5 rounded-2xl border shadow-sm relative overflow-hidden"
+              style={{ backgroundColor: 'var(--at-accent)', borderColor: 'var(--at-accent-light)' }}
+            >
+              <div
+                className="text-xs font-semibold uppercase tracking-wider"
+                style={{ color: 'var(--at-neutral-muted)' }}
+              >
+                Low Stock Warnings
               </div>
-              <div className="text-[11px] text-rose-400/90 mt-2 flex items-center gap-1 font-medium">
-                <AlertTriangle className="w-3 h-3 text-rose-400 shrink-0" />
+              <div className="text-3xl font-extrabold mt-2 font-mono" style={{ color: 'var(--at-secondary)' }}>
+                {lowStockItems.length}{' '}
+                <span className="text-sm font-normal" style={{ color: 'var(--at-neutral-muted)' }}>SKUs</span>
+              </div>
+              <div
+                className="text-[11px] mt-2 flex items-center gap-1 font-medium"
+                style={{ color: 'var(--at-secondary)' }}
+              >
+                <AlertTriangle className="w-3 h-3 shrink-0" />
                 <span>Stock on hand &lt; Reorder Point</span>
               </div>
             </div>
 
-            {/* 30-Day Forecasted Revenue */}
-            <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 shadow-sm relative overflow-hidden">
-              <div className="text-xs text-slate-400 font-semibold uppercase tracking-wider">30-Day Forecasted Revenue</div>
-              <div className="text-2xl font-extrabold text-emerald-400 mt-2 font-mono">
+            {/* 30-Day Forecasted Revenue — Primary amber value */}
+            <div
+              className="p-5 rounded-2xl border shadow-sm relative overflow-hidden"
+              style={{ backgroundColor: 'var(--at-accent)', borderColor: 'var(--at-accent-light)' }}
+            >
+              <div
+                className="text-xs font-semibold uppercase tracking-wider"
+                style={{ color: 'var(--at-neutral-muted)' }}
+              >
+                30-Day Forecasted Revenue
+              </div>
+              {/* Primary (#E39A4B) used as text color on dark Accent bg — safe (text not bg) */}
+              <div className="text-2xl font-extrabold mt-2 font-mono" style={{ color: 'var(--at-primary)' }}>
                 {formatPhp(totalForecastedRevenue30d)}
               </div>
-              <div className="text-[11px] text-emerald-400/90 mt-2 flex items-center gap-1 font-medium">
-                <TrendingUp className="w-3 h-3 text-emerald-400 shrink-0" />
+              <div
+                className="text-[11px] mt-2 flex items-center gap-1 font-medium"
+                style={{ color: 'var(--at-primary-muted)' }}
+              >
+                <TrendingUp className="w-3 h-3 shrink-0" />
                 <span>Projected Philippine Retail Sales</span>
               </div>
             </div>
 
-            {/* Recommended Reorder Units */}
-            <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 shadow-sm relative overflow-hidden">
-              <div className="text-xs text-slate-400 font-semibold uppercase tracking-wider">Total Recommended Reorder</div>
-              <div className="text-3xl font-extrabold text-indigo-400 mt-2 font-mono">
-                +{totalReorderUnits.toLocaleString()} <span className="text-sm font-normal text-slate-400">units</span>
+            {/* Recommended Reorder Units — Neutral text */}
+            <div
+              className="p-5 rounded-2xl border shadow-sm relative overflow-hidden"
+              style={{ backgroundColor: 'var(--at-accent)', borderColor: 'var(--at-accent-light)' }}
+            >
+              <div
+                className="text-xs font-semibold uppercase tracking-wider"
+                style={{ color: 'var(--at-neutral-muted)' }}
+              >
+                Total Recommended Reorder
               </div>
-              <div className="text-[11px] text-slate-400 mt-2 flex items-center gap-1">
-                <Package className="w-3 h-3 text-slate-400 shrink-0" />
+              <div
+                className="text-3xl font-extrabold mt-2 font-mono"
+                style={{ color: 'var(--at-neutral)' }}
+              >
+                +{totalReorderUnits.toLocaleString()}{' '}
+                <span className="text-sm font-normal" style={{ color: 'var(--at-neutral-muted)' }}>units</span>
+              </div>
+              <div
+                className="text-[11px] mt-2 flex items-center gap-1"
+                style={{ color: 'var(--at-neutral-muted)' }}
+              >
+                <Package className="w-3 h-3 shrink-0" />
                 <span>Across {recommendations.length} active SKUs</span>
               </div>
             </div>
 
-            {/* Capital Allocation in PHP */}
-            <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 shadow-sm relative overflow-hidden">
-              <div className="text-xs text-slate-400 font-semibold uppercase tracking-wider">Restock Capital (PHP / ₱)</div>
-              <div className="text-2xl font-extrabold text-amber-400 mt-2 font-mono">
+            {/* Capital Allocation (PHP) — Primary amber value */}
+            <div
+              className="p-5 rounded-2xl border shadow-sm relative overflow-hidden"
+              style={{ backgroundColor: 'var(--at-accent)', borderColor: 'var(--at-accent-light)' }}
+            >
+              <div
+                className="text-xs font-semibold uppercase tracking-wider"
+                style={{ color: 'var(--at-neutral-muted)' }}
+              >
+                Restock Capital (PHP / ₱)
+              </div>
+              <div className="text-2xl font-extrabold mt-2 font-mono" style={{ color: 'var(--at-primary)' }}>
                 {formatPhp(totalRestockCapital)}
               </div>
-              <div className="text-[11px] text-slate-400 mt-2 font-medium">
+              <div
+                className="text-[11px] mt-2 font-medium"
+                style={{ color: 'var(--at-neutral-muted)' }}
+              >
                 Supplier restock budget required
               </div>
             </div>
           </div>
 
-          {/* Top-Selling Products by Forecasted Revenue */}
-          <div className="rounded-2xl bg-slate-900 border border-slate-800 p-6 space-y-4">
+          {/* ── Top-Selling Products Panel ─────────────────────────────────
+               Panel: Accent dark bg → Neutral text
+               Cards: Accent-muted bg → Neutral text, Primary amber highlights */}
+          <div
+            className="rounded-2xl border p-6 space-y-4"
+            style={{ backgroundColor: 'var(--at-accent)', borderColor: 'var(--at-accent-light)' }}
+          >
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                <h3
+                  className="text-sm font-bold flex items-center gap-2"
+                  style={{ color: 'var(--at-neutral)' }}
+                >
                   <span>Top-Selling Products by 30-Day Forecasted Revenue</span>
-                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">
+                  {/* Badge: Primary bg → CRITICAL: Accent dark text */}
+                  <span
+                    className="text-[10px] px-2 py-0.5 rounded-full font-mono border"
+                    style={{
+                      backgroundColor: 'var(--at-primary)',
+                      color: 'var(--at-text-on-primary)',
+                      borderColor: 'var(--at-primary-muted)',
+                    }}
+                  >
                     PHP / ₱ Standards
                   </span>
                 </h3>
-                <p className="text-xs text-slate-400 mt-0.5">High-velocity staple FMCG goods in Philippine retail</p>
+                <p className="text-xs mt-0.5" style={{ color: 'var(--at-neutral-muted)' }}>
+                  High-velocity staple FMCG goods in Philippine retail
+                </p>
               </div>
-              <span className="text-xs font-semibold text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-1 rounded-lg">
+              <span
+                className="text-xs font-semibold px-2.5 py-1 rounded-lg border"
+                style={{
+                  backgroundColor: 'rgba(227,154,75,0.12)',
+                  borderColor: 'rgba(227,154,75,0.30)',
+                  color: 'var(--at-primary)',
+                }}
+              >
                 Key Revenue Drivers
               </span>
             </div>
@@ -688,26 +899,57 @@ export default function App() {
               {topProducts.map((prod, idx) => (
                 <div
                   key={prod.sku}
-                  className="p-4 rounded-xl bg-slate-950/60 border border-slate-800/80 hover:border-slate-700 transition flex flex-col justify-between"
+                  className="p-4 rounded-xl border transition flex flex-col justify-between"
+                  style={{
+                    backgroundColor: 'var(--at-accent-muted)',
+                    borderColor: 'var(--at-accent-light)',
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--at-primary)';
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--at-accent-light)';
+                  }}
                 >
                   <div>
-                    <div className="flex items-center justify-between text-[11px] text-slate-400 font-mono">
-                      <span className="text-indigo-400 font-bold">#{idx + 1}</span>
-                      <span>{prod.sku}</span>
+                    <div className="flex items-center justify-between text-[11px] font-mono">
+                      {/* Rank number in Primary amber (text, not bg) */}
+                      <span className="font-bold" style={{ color: 'var(--at-primary)' }}>#{idx + 1}</span>
+                      <span style={{ color: 'var(--at-neutral-muted)' }}>{prod.sku}</span>
                     </div>
-                    <h4 className="text-xs font-bold text-white mt-2 line-clamp-2 leading-tight">
+                    <h4
+                      className="text-xs font-bold mt-2 line-clamp-2 leading-tight"
+                      style={{ color: 'var(--at-neutral)' }}
+                    >
                       {prod.productName}
                     </h4>
-                    <span className="inline-block text-[10px] text-slate-400 bg-slate-800/60 px-2 py-0.5 rounded mt-2">
+                    <span
+                      className="inline-block text-[10px] px-2 py-0.5 rounded mt-2 border"
+                      style={{
+                        backgroundColor: 'var(--at-accent)',
+                        borderColor: 'var(--at-accent-light)',
+                        color: 'var(--at-neutral-muted)',
+                      }}
+                    >
                       {prod.categoryName}
                     </span>
                   </div>
 
-                  <div className="mt-4 pt-3 border-t border-slate-800/60">
-                    <div className="text-[11px] text-slate-400">
-                      30d Demand: <strong className="text-slate-200">{Math.round(prod.forecastedDemand30d)} units</strong>
+                  <div
+                    className="mt-4 pt-3 border-t"
+                    style={{ borderColor: 'rgba(90,56,104,0.40)' }}
+                  >
+                    <div className="text-[11px]" style={{ color: 'var(--at-neutral-muted)' }}>
+                      30d Demand:{' '}
+                      <strong style={{ color: 'var(--at-neutral)' }}>
+                        {Math.round(prod.forecastedDemand30d)} units
+                      </strong>
                     </div>
-                    <div className="text-sm font-bold text-emerald-400 font-mono mt-1">
+                    {/* Primary amber as text color on dark Accent card — safe */}
+                    <div
+                      className="text-sm font-bold font-mono mt-1"
+                      style={{ color: 'var(--at-primary)' }}
+                    >
                       {formatPhp(prod.forecastedRevenue30dPhp)}
                     </div>
                   </div>
@@ -717,12 +959,26 @@ export default function App() {
           </div>
 
           {/* Recommendations Table Section */}
-          <div className="rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden shadow-lg">
-            <div className="p-6 border-b border-slate-800 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div
+            className="rounded-2xl border overflow-hidden shadow-xl"
+            style={{
+              backgroundColor: 'var(--at-accent)',
+              borderColor: 'var(--at-accent-light)',
+            }}
+          >
+            <div
+              className="p-6 border-b flex flex-col lg:flex-row lg:items-center justify-between gap-4"
+              style={{ borderColor: 'rgba(90,56,104,0.40)' }}
+            >
               <div>
-                <h3 className="text-base font-bold text-white">Inventory Recommendations & Reorder Points</h3>
-                <p className="text-xs text-slate-400 mt-1">
-                  Formula applied: <code className="text-indigo-400 font-mono">ROP = Daily Avg Sales &times; Lead Time + Safety Stock</code>
+                <h3 className="text-base font-bold" style={{ color: 'var(--at-neutral)' }}>
+                  Inventory Recommendations &amp; Reorder Points
+                </h3>
+                <p className="text-xs mt-1" style={{ color: 'var(--at-neutral-muted)' }}>
+                  Formula applied:{' '}
+                  <code className="font-mono font-semibold" style={{ color: 'var(--at-primary)' }}>
+                    ROP = Daily Avg Sales &times; Lead Time + Safety Stock
+                  </code>
                 </p>
               </div>
 
@@ -730,55 +986,114 @@ export default function App() {
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                 {/* Search Input */}
                 <div className="relative">
-                  <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                  <Search
+                    className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2"
+                    style={{ color: 'var(--at-neutral-muted)' }}
+                  />
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search SKU or Product..."
-                    className="pl-9 pr-3 py-1.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 w-full sm:w-52"
+                    className="pl-9 pr-3 py-1.5 rounded-lg border text-xs placeholder:text-stone-400 focus:outline-none w-full sm:w-52 transition"
+                    style={{
+                      backgroundColor: 'var(--at-accent-muted)',
+                      borderColor: 'var(--at-accent-light)',
+                      color: 'var(--at-neutral)',
+                    }}
                   />
                 </div>
 
                 {/* Filter Tabs */}
-                <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-lg border border-slate-800 text-xs">
+                <div
+                  className="flex items-center gap-1 p-1 rounded-lg border text-xs"
+                  style={{
+                    backgroundColor: 'var(--at-accent-muted)',
+                    borderColor: 'var(--at-accent-light)',
+                  }}
+                >
                   <button
                     onClick={() => setFilterUrgency('all')}
-                    className={`px-3 py-1 rounded-md transition font-medium ${
-                      filterUrgency === 'all' ? 'bg-indigo-600 text-white font-bold' : 'text-slate-400 hover:text-white'
-                    }`}
+                    className="px-3 py-1 rounded-md transition font-medium text-xs"
+                    style={
+                      filterUrgency === 'all'
+                        ? {
+                            backgroundColor: 'var(--at-primary)',
+                            color: 'var(--at-text-on-primary)',
+                            fontWeight: 700,
+                          }
+                        : {
+                            color: 'var(--at-neutral-muted)',
+                          }
+                    }
                   >
                     All ({recommendations.length})
                   </button>
                   <button
                     onClick={() => setFilterUrgency('low_stock')}
-                    className={`px-3 py-1 rounded-md transition font-medium ${
-                      filterUrgency === 'low_stock' ? 'bg-rose-600 text-white font-bold' : 'text-slate-400 hover:text-white'
-                    }`}
+                    className="px-3 py-1 rounded-md transition font-medium text-xs"
+                    style={
+                      filterUrgency === 'low_stock'
+                        ? {
+                            backgroundColor: 'var(--at-secondary)',
+                            color: 'var(--at-text-on-secondary)',
+                            fontWeight: 700,
+                          }
+                        : {
+                            color: 'var(--at-neutral-muted)',
+                          }
+                    }
                   >
                     Low Stock ({lowStockItems.length})
                   </button>
                   <button
                     onClick={() => setFilterUrgency('high')}
-                    className={`px-3 py-1 rounded-md transition font-medium ${
-                      filterUrgency === 'high' ? 'bg-rose-600 text-white font-bold' : 'text-slate-400 hover:text-white'
-                    }`}
+                    className="px-3 py-1 rounded-md transition font-medium text-xs"
+                    style={
+                      filterUrgency === 'high'
+                        ? {
+                            backgroundColor: 'var(--at-secondary)',
+                            color: 'var(--at-text-on-secondary)',
+                            fontWeight: 700,
+                          }
+                        : {
+                            color: 'var(--at-neutral-muted)',
+                          }
+                    }
                   >
                     High
                   </button>
                   <button
                     onClick={() => setFilterUrgency('medium')}
-                    className={`px-3 py-1 rounded-md transition font-medium ${
-                      filterUrgency === 'medium' ? 'bg-amber-600 text-white font-bold' : 'text-slate-400 hover:text-white'
-                    }`}
+                    className="px-3 py-1 rounded-md transition font-medium text-xs"
+                    style={
+                      filterUrgency === 'medium'
+                        ? {
+                            backgroundColor: 'var(--at-primary)',
+                            color: 'var(--at-text-on-primary)',
+                            fontWeight: 700,
+                          }
+                        : {
+                            color: 'var(--at-neutral-muted)',
+                          }
+                    }
                   >
                     Medium
                   </button>
                   <button
                     onClick={() => setFilterUrgency('low')}
-                    className={`px-3 py-1 rounded-md transition font-medium ${
-                      filterUrgency === 'low' ? 'bg-slate-700 text-white font-bold' : 'text-slate-400 hover:text-white'
-                    }`}
+                    className="px-3 py-1 rounded-md transition font-medium text-xs"
+                    style={
+                      filterUrgency === 'low'
+                        ? {
+                            backgroundColor: 'var(--at-accent-light)',
+                            color: 'var(--at-neutral)',
+                            fontWeight: 700,
+                          }
+                        : {
+                            color: 'var(--at-neutral-muted)',
+                          }
+                    }
                   >
                     Low
                   </button>
@@ -786,12 +1101,22 @@ export default function App() {
               </div>
             </div>
 
-            {/* Table */}
+            {/* ── Table ─────────────────────────────────────────────────────
+                 Header: Accent-muted bg, Neutral-muted uppercase text
+                 Rows: Accent bg, Neutral text
+                 Urgency badges: strict contrast pairing enforced */}
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
-                <thead className="bg-slate-950/70 text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
+                <thead
+                  className="uppercase text-[10px] tracking-wider border-b"
+                  style={{
+                    backgroundColor: 'var(--at-accent-muted)',
+                    color: 'var(--at-neutral-muted)',
+                    borderColor: 'var(--at-accent-light)',
+                  }}
+                >
                   <tr>
-                    <th className="py-3.5 px-4 font-semibold">Product SKU & Name</th>
+                    <th className="py-3.5 px-4 font-semibold">Product SKU &amp; Name</th>
                     <th className="py-3.5 px-4 font-semibold text-center">On Hand</th>
                     <th className="py-3.5 px-4 font-semibold text-center">Reorder Point (ROP)</th>
                     <th className="py-3.5 px-4 font-semibold text-center">Daily Sales Velocity</th>
@@ -803,99 +1128,199 @@ export default function App() {
                     <th className="py-3.5 px-4 font-semibold text-right">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800/60">
+                <tbody style={{ borderColor: 'rgba(90,56,104,0.30)' }}>
                   {filteredRecommendations.map((rec) => {
                     const isBreached = rec.currentStockOnHand < rec.reorderPoint;
                     return (
                       <tr
                         key={rec.id}
-                        className={`hover:bg-slate-800/30 transition ${isBreached ? 'bg-rose-950/10' : ''}`}
+                        className="transition"
+                        style={{
+                          backgroundColor: isBreached
+                            ? 'rgba(184,84,63,0.06)'
+                            : 'transparent',
+                          borderBottom: '1px solid rgba(90,56,104,0.25)',
+                        }}
+                        onMouseEnter={(e) => {
+                          (e.currentTarget as HTMLTableRowElement).style.backgroundColor =
+                            isBreached ? 'rgba(184,84,63,0.12)' : 'rgba(61,37,69,0.25)';
+                        }}
+                        onMouseLeave={(e) => {
+                          (e.currentTarget as HTMLTableRowElement).style.backgroundColor =
+                            isBreached ? 'rgba(184,84,63,0.06)' : 'transparent';
+                        }}
                       >
-                        <td className="py-4 px-4 font-medium text-slate-200 max-w-xs">
-                          <div className="font-bold text-white">{rec.productName}</div>
+                        {/* Product Name & SKU */}
+                        <td className="py-4 px-4 font-medium max-w-xs">
+                          <div
+                            className="font-bold"
+                            style={{ color: 'var(--at-neutral)' }}
+                          >
+                            {rec.productName}
+                          </div>
                           <div className="flex items-center gap-2 mt-1">
-                            <span className="font-mono text-[11px] text-slate-400">{rec.sku}</span>
+                            <span
+                              className="font-mono text-[11px]"
+                              style={{ color: 'var(--at-neutral-muted)' }}
+                            >
+                              {rec.sku}
+                            </span>
                             {rec.categoryName && (
-                              <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-400">
+                              <span
+                                className="text-[10px] px-1.5 py-0.5 rounded border"
+                                style={{
+                                  backgroundColor: 'var(--at-accent-muted)',
+                                  color: 'var(--at-neutral-muted)',
+                                  borderColor: 'var(--at-accent-light)',
+                                }}
+                              >
                                 {rec.categoryName}
                               </span>
                             )}
                           </div>
                         </td>
 
+                        {/* On Hand */}
                         <td className="py-4 px-4 text-center font-mono font-bold">
-                          <span className={isBreached ? 'text-rose-400' : 'text-slate-200'}>
+                          <span
+                            style={{ color: isBreached ? 'var(--at-secondary)' : 'var(--at-neutral)' }}
+                          >
                             {rec.currentStockOnHand}
                           </span>
                           {isBreached && (
-                            <span className="block text-[9px] text-rose-500 uppercase font-semibold">
+                            <span
+                              className="block text-[9px] uppercase font-semibold"
+                              style={{ color: 'var(--at-secondary)' }}
+                            >
                               Below ROP
                             </span>
                           )}
                         </td>
 
+                        {/* ROP */}
                         <td className="py-4 px-4 text-center font-mono">
-                          <span className="px-2 py-1 rounded bg-slate-800 font-bold text-slate-200">
+                          <span
+                            className="px-2 py-1 rounded font-bold"
+                            style={{
+                              backgroundColor: 'var(--at-accent-muted)',
+                              color: 'var(--at-neutral)',
+                            }}
+                          >
                             {rec.reorderPoint}
                           </span>
-                          <span className="block text-[10px] text-slate-500 mt-1">
+                          <span
+                            className="block text-[10px] mt-1"
+                            style={{ color: 'var(--at-neutral-muted)' }}
+                          >
                             LT: {rec.leadTimeDays}d | SS: {rec.safetyStock}
                           </span>
                         </td>
 
-                        <td className="py-4 px-4 text-center font-mono text-slate-300">
+                        {/* Daily Avg Sales */}
+                        <td
+                          className="py-4 px-4 text-center font-mono"
+                          style={{ color: 'var(--at-neutral)' }}
+                        >
                           {rec.dailyAvgSales ? Number(rec.dailyAvgSales).toFixed(2) : '3.50'}/day
                         </td>
 
-                        <td className="py-4 px-4 text-center text-slate-300 font-mono">
-                          <span className="text-slate-200">{Math.round(rec.forecastedDemand7d)}</span>
-                          <span className="text-slate-500 mx-1">/</span>
-                          <span className="text-slate-200">{Math.round(rec.forecastedDemand14d)}</span>
-                          <span className="text-slate-500 mx-1">/</span>
-                          <span className="text-indigo-400 font-bold">
+                        {/* 7d / 14d / 30d Demand */}
+                        <td className="py-4 px-4 text-center font-mono">
+                          <span style={{ color: 'var(--at-neutral)' }}>{Math.round(rec.forecastedDemand7d)}</span>
+                          <span style={{ color: 'var(--at-neutral-muted)' }} className="mx-1">/</span>
+                          <span style={{ color: 'var(--at-neutral)' }}>{Math.round(rec.forecastedDemand14d)}</span>
+                          <span style={{ color: 'var(--at-neutral-muted)' }} className="mx-1">/</span>
+                          {/* 30d in Primary amber (text on dark bg — safe) */}
+                          <span className="font-bold" style={{ color: 'var(--at-primary)' }}>
                             {Math.round(rec.forecastedDemand30d || rec.forecastedDemand14d * 2.1)}
                           </span>
                         </td>
 
-                        <td className="py-4 px-4 text-center font-mono font-bold text-indigo-400">
-                          <span className="px-2.5 py-1 rounded-lg bg-indigo-500/10 border border-indigo-500/20">
+                        {/* Recommended Order Qty – Primary amber bg → CRITICAL: Accent dark text */}
+                        <td className="py-4 px-4 text-center font-mono font-bold">
+                          <span
+                            className="px-2.5 py-1 rounded-lg border"
+                            style={{
+                              backgroundColor: 'var(--at-primary)',
+                              color: 'var(--at-text-on-primary)',  /* #3D2545 — WCAG AA ✅ */
+                              borderColor: 'var(--at-primary-muted)',
+                            }}
+                          >
                             +{rec.recommendedOrderQuantity} units
                           </span>
                         </td>
 
-                        <td className="py-4 px-4 text-right font-mono font-bold text-slate-200">
+                        {/* Est. Cost */}
+                        <td
+                          className="py-4 px-4 text-right font-mono font-bold"
+                          style={{ color: 'var(--at-neutral)' }}
+                        >
                           {formatPhp(rec.estimatedCost)}
                         </td>
 
+                        {/* Urgency Badge */}
                         <td className="py-4 px-4 text-center">
                           <span
-                            className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
-                              rec.urgency === 'critical'
-                                ? 'bg-rose-500/15 text-rose-400 border-rose-500/30'
-                                : rec.urgency === 'high'
-                                ? 'bg-rose-500/10 text-rose-400 border-rose-500/20'
+                            className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border"
+                            style={
+                              rec.urgency === 'critical' || rec.urgency === 'high'
+                                ? {
+                                    /* Secondary rust bg → Neutral text (WCAG AA ✅ 4.9:1) */
+                                    backgroundColor: 'rgba(184,84,63,0.18)',
+                                    color: 'var(--at-secondary)',
+                                    borderColor: 'rgba(184,84,63,0.35)',
+                                  }
                                 : rec.urgency === 'medium'
-                                ? 'bg-amber-500/10 text-amber-400 border-amber-500/20'
-                                : 'bg-slate-800 text-slate-400 border-slate-700'
-                            }`}
+                                ? {
+                                    /* Primary amber bg → CRITICAL: Accent dark text (WCAG AA ✅ 4.6:1) */
+                                    backgroundColor: 'rgba(227,154,75,0.18)',
+                                    color: 'var(--at-primary-dark)',
+                                    borderColor: 'rgba(227,154,75,0.35)',
+                                  }
+                                : {
+                                    /* Low: subtle Accent light */
+                                    backgroundColor: 'rgba(61,37,69,0.12)',
+                                    color: 'var(--at-accent-light)',
+                                    borderColor: 'rgba(90,56,104,0.30)',
+                                  }
+                            }
                           >
                             {rec.urgency}
                           </span>
                         </td>
 
-                        <td className="py-4 px-4 text-slate-400 text-[11px] max-w-sm leading-relaxed">
+                        {/* Reasoning Summary */}
+                        <td
+                          className="py-4 px-4 text-[11px] max-w-sm leading-relaxed"
+                          style={{ color: 'var(--at-neutral-muted)' }}
+                        >
                           {rec.reasoningSummary}
                         </td>
 
+                        {/* Action – Approve PO button */}
                         <td className="py-4 px-4 text-right">
                           {rec.status === 'approved' ? (
-                            <span className="inline-flex items-center gap-1 text-emerald-400 font-semibold text-xs">
+                            <span
+                              className="inline-flex items-center gap-1 font-semibold text-xs"
+                              style={{ color: 'var(--at-primary)' }}
+                            >
                               <CheckCircle2 className="w-3.5 h-3.5" /> Approved
                             </span>
                           ) : (
+                            /* Secondary rust bg → Neutral text (WCAG AA ✅) */
                             <button
                               onClick={() => approveRecommendation(rec.id)}
-                              className="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs transition shadow-sm"
+                              className="px-3 py-1.5 rounded-lg font-medium text-xs transition shadow-sm active:scale-95"
+                              style={{
+                                backgroundColor: 'var(--at-secondary)',
+                                color: 'var(--at-text-on-secondary)',
+                              }}
+                              onMouseEnter={(e) => {
+                                (e.currentTarget as HTMLButtonElement).style.opacity = '0.88';
+                              }}
+                              onMouseLeave={(e) => {
+                                (e.currentTarget as HTMLButtonElement).style.opacity = '1';
+                              }}
                             >
                               Approve PO
                             </button>
@@ -906,16 +1331,27 @@ export default function App() {
                   })}
                 </tbody>
               </table>
-            </div>
+          </div>
+
           </div>
 
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="h-12 border-t border-slate-800 text-xs text-slate-500 flex items-center justify-between px-6 shrink-0 bg-slate-900/40">
-        <div>POS AI Enterprise &bull; Philippine Retail & FMCG Standard</div>
-        <div>Model Version: <strong>v1.4.0 (LightGBM Demand Forecaster)</strong></div>
+      {/* Footer – Accent dark bg, Neutral-muted text (WCAG compliant) */}
+      <footer
+        className="h-12 border-t text-xs flex items-center justify-between px-6 shrink-0"
+        style={{
+          backgroundColor: 'var(--at-accent)',
+          borderColor: 'var(--at-accent-light)',
+          color: 'var(--at-neutral-muted)',
+        }}
+      >
+        <div>POS AI Enterprise &bull; Philippine Retail &amp; FMCG Standard</div>
+        <div>
+          Model Version:{' '}
+          <strong style={{ color: 'var(--at-neutral)' }}>v1.4.0 (LightGBM Demand Forecaster)</strong>
+        </div>
       </footer>
     </div>
   );

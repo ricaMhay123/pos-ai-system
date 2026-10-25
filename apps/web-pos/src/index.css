@@ -6,6 +6,17 @@
 @tailwind utilities;
 
 /* ── Amber Twilight CSS Design Tokens ───────────────────────────────────── */
+/*
+ * WCAG 2.1 AA Contrast Pairing Rules (CRITICAL — enforced globally):
+ *
+ *  Background              Text to Use                  Ratio  Status
+ *  ─────────────────────── ─────────────────────────── ─────── ──────
+ *  Neutral  #F8EBD9 (cream)  Accent  #3D2545 (purple)   10.3:1  ✅ AAA
+ *  Accent   #3D2545 (purple) Neutral #F8EBD9 (cream)    10.3:1  ✅ AAA
+ *  Secondary #B8543F (rust)  Neutral #F8EBD9 (cream)     4.9:1  ✅ AA
+ *  Primary  #E39A4B (amber) ← NEVER white/light text!
+ *  Primary  #E39A4B (amber)  Accent  #3D2545 (purple)    4.6:1  ✅ AA
+ */
 :root {
   --at-primary:        #E39A4B;   /* Warm Amber   — badges, highlights     */
   --at-secondary:      #B8543F;   /* Rust Red     — alerts, secondary btn   */
@@ -14,6 +25,7 @@
   --at-accent-light:   #5a3868;   /* Lighter accent for borders/hover       */
   --at-accent-muted:   #2a1a30;   /* Deepest accent shade                   */
   --at-primary-muted:  #f0b87a;   /* Amber hover tint                       */
+  --at-primary-dark:   #c4832e;   /* Pressed amber                          */
   --at-neutral-dark:   #eddcbf;   /* Slightly darker cream — card surfaces  */
   --at-neutral-muted:  #d4c4a8;   /* Muted cream — placeholder/disabled     */
   --at-text-on-neutral:#3D2545;   /* Body text on cream bg (Accent)         */
@@ -29,6 +41,11 @@
     color: var(--at-text-on-neutral);
     font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
     @apply antialiased;
+  }
+
+  /* Ensure date inputs respect AT tokens on the Neutral bg */
+  input[type="date"] {
+    color-scheme: light;
   }
 }
 
@@ -50,7 +67,9 @@
 
 /* ── Utility: Amber Twilight component helpers ──────────────────────────── */
 @layer components {
-  /* Accent background panels – navbars, sidebars, modals */
+  /* ── Surface Contexts ─────────────────────────────────────────────── */
+
+  /* Accent background panels – navbars, sidebars, modals, cart */
   .at-panel-dark {
     background-color: var(--at-accent);
     color: var(--at-text-on-accent);
@@ -63,15 +82,145 @@
     color: var(--at-text-on-neutral);
   }
 
-  /* Primary badge – always dark text for contrast */
+  /* ── Badges ───────────────────────────────────────────────────────── */
+
+  /* Primary badge – CRITICAL: dark Accent text, NEVER white on amber */
   .at-badge-primary {
     background-color: var(--at-primary);
-    color: var(--at-text-on-primary);
+    color: var(--at-text-on-primary);    /* #3D2545 – WCAG AA 4.6:1 */
+    font-weight: 700;
   }
 
-  /* Secondary alert/button */
+  /* Secondary alert badge – Neutral cream text on rust-red */
   .at-badge-secondary {
     background-color: var(--at-secondary);
+    color: var(--at-text-on-secondary);  /* #F8EBD9 – WCAG AA 4.9:1 */
+    font-weight: 700;
+  }
+
+  /* ── Buttons ──────────────────────────────────────────────────────── */
+
+  /* Primary action button (Accent dark bg, Neutral text) */
+  .at-btn-primary {
+    background-color: var(--at-accent);
+    color: var(--at-text-on-accent);
+    border: 1px solid var(--at-accent-light);
+    transition: background-color 150ms;
+  }
+  .at-btn-primary:hover {
+    background-color: var(--at-accent-light);
+  }
+
+  /* Secondary action button (Rust-red bg, Neutral text) */
+  .at-btn-secondary {
+    background-color: var(--at-secondary);
     color: var(--at-text-on-secondary);
+    transition: opacity 150ms;
+  }
+  .at-btn-secondary:hover {
+    opacity: 0.9;
+  }
+
+  /* Amber highlight button – CRITICAL: Accent dark text on Primary fill */
+  .at-btn-amber {
+    background-color: var(--at-primary);
+    color: var(--at-text-on-primary);    /* #3D2545 – mandatory for contrast */
+    transition: background-color 150ms;
+  }
+  .at-btn-amber:hover {
+    background-color: var(--at-primary-muted);
+    color: var(--at-text-on-primary);   /* keep dark text even on hover */
+  }
+
+  /* ── Manager Dashboard Cards ──────────────────────────────────────── */
+
+  /* KPI metric card – Accent dark background */
+  .at-kpi-card {
+    background-color: var(--at-accent);
+    border: 1px solid var(--at-accent-light);
+    color: var(--at-text-on-accent);
+    border-radius: 1rem;
+  }
+
+  /* Light KPI card – Neutral cream background */
+  .at-kpi-card-light {
+    background-color: var(--at-neutral-dark);
+    border: 1px solid var(--at-neutral-muted);
+    color: var(--at-text-on-neutral);
+    border-radius: 1rem;
+  }
+
+  /* ── Input Fields ─────────────────────────────────────────────────── */
+
+  /* Light input (on Neutral / cream background) */
+  .at-input-light {
+    background-color: var(--at-neutral);
+    border: 1px solid var(--at-neutral-muted);
+    color: var(--at-text-on-neutral);
+  }
+  .at-input-light:focus {
+    border-color: var(--at-primary);
+    box-shadow: 0 0 0 3px rgba(227, 154, 75, 0.18);
+    outline: none;
+  }
+  .at-input-light::placeholder {
+    color: var(--at-neutral-muted);
+  }
+
+  /* Dark input (on Accent / dark background) */
+  .at-input-dark {
+    background-color: var(--at-accent-muted);
+    border: 1px solid var(--at-accent-light);
+    color: var(--at-text-on-accent);
+  }
+  .at-input-dark:focus {
+    border-color: var(--at-primary);
+    outline: none;
+  }
+  .at-input-dark::placeholder {
+    color: var(--at-neutral-muted);
+  }
+
+  /* ── Manager Dashboard Table ──────────────────────────────────────── */
+
+  .at-table-header {
+    background-color: var(--at-accent-muted);
+    color: var(--at-neutral-muted);
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    border-bottom: 1px solid var(--at-accent-light);
+  }
+
+  .at-table-row {
+    border-bottom: 1px solid rgba(90, 56, 104, 0.25);
+    transition: background-color 150ms;
+  }
+  .at-table-row:hover {
+    background-color: rgba(61, 37, 69, 0.06);
+  }
+
+  /* ── Urgency badge variants ───────────────────────────────────────── */
+
+  /* High / Critical urgency – Secondary rust bg */
+  .at-urgency-high {
+    background-color: rgba(184, 84, 63, 0.15);
+    color: var(--at-secondary);
+    border: 1px solid rgba(184, 84, 63, 0.30);
+  }
+
+  /* Medium urgency – Primary amber bg → CRITICAL: Accent dark text */
+  .at-urgency-medium {
+    background-color: rgba(227, 154, 75, 0.15);
+    color: var(--at-primary-dark);        /* #c4832e – darker amber, readable */
+    border: 1px solid rgba(227, 154, 75, 0.30);
+  }
+
+  /* Low urgency – subtle neutral */
+  .at-urgency-low {
+    background-color: rgba(61, 37, 69, 0.08);
+    color: var(--at-accent-light);
+    border: 1px solid var(--at-neutral-muted);
   }
 }
