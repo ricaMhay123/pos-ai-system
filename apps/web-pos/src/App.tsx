@@ -14,7 +14,6 @@ import {
   X,
   ExternalLink,
   LogOut,
-  LayoutDashboard,
 } from 'lucide-react';
 import { PosCheckoutShell } from './components/pos';
 import { AuthLandingPage, type AuthUser } from './components/auth/AuthLandingPage';
@@ -639,21 +638,6 @@ export default function App() {
           >
             <LogOut className="w-3.5 h-3.5" style={{ color: 'var(--at-secondary)' }} />
             <span>Sign Out</span>
-          </button>
-
-          {/* /dashboard route chip */}
-          <button
-            onClick={() => navigateToTab('ai')}
-            title="Manager Dashboard Route: /dashboard"
-            className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-medium transition"
-            style={{
-              backgroundColor: 'rgba(227,154,75,0.10)',
-              borderColor: 'rgba(227,154,75,0.28)',
-              color: 'var(--at-primary-muted)',
-            }}
-          >
-            <LayoutDashboard className="w-3.5 h-3.5" style={{ color: 'var(--at-primary)' }} />
-            <span>/dashboard</span>
           </button>
 
           {/* Refresh AI Pipeline */}
