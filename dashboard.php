@@ -33,6 +33,27 @@ $storeId = $_SESSION['store_id'] ?? ($_GET['storeId'] ?? '10000000-0000-0000-000
 $filterUrgency = $_GET['urgency'] ?? 'all';
 
 // Query database using python bridge
+$adjFeedback = null;
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'adjust_stock') {
+    $adjProductId = addslashes($_POST['product_id'] ?? '');
+    $adjSku = addslashes($_POST['sku'] ?? 'SKU-UNKNOWN');
+    $adjName = addslashes($_POST['product_name'] ?? 'Item');
+    $adjType = addslashes($_POST['adjustment_type'] ?? 'physical_count');
+    $adjDelta = (int)($_POST['quantity_delta'] ?? 0);
+    $adjReason = addslashes($_POST['reason'] ?? 'Manual stock adjustment');
+    $adjRef = 'ADJ-' . date('Ymd') . '-' . rand(1000, 9999);
+
+    if ($adjProductId) {
+        $updateSql = "
+            INSERT INTO stock_adjustments (store_id, product_id, sku, product_name, adjustment_type, quantity_delta, reason, reference_number, adjusted_by_name)
+            VALUES ('$storeId', '$adjProductId', '$adjSku', '$adjName', '$adjType', $adjDelta, '$adjReason', '$adjRef', 'Store Manager');
+            UPDATE inventory_levels SET quantity_on_hand = GREATEST(0, quantity_on_hand + ($adjDelta)), updated_at = NOW() WHERE store_id = '$storeId' AND product_id = '$adjProductId';
+            UPDATE inventory_recommendations SET current_stock_on_hand = GREATEST(0, current_stock_on_hand + ($adjDelta)), updated_at = NOW() WHERE store_id = '$storeId' AND product_id = '$adjProductId';
+        ";
+        fetchDb($updateSql);
+        $adjFeedback = "Stock adjustment saved successfully: $adjName adjusted by " . ($adjDelta > 0 ? "+$adjDelta" : $adjDelta) . " units. Ref: $adjRef";
+    }
+}
 function fetchDb($sql) {
     $envPath = addslashes(__DIR__ . DIRECTORY_SEPARATOR . '.env');
     $sqlB64 = base64_encode($sql);
@@ -212,6 +233,10 @@ function formatPHP($val) {
                 📜 Sales History
             </a>
 
+            <button onclick="document.getElementById('stockAdjustmentModal').classList.remove('hidden')" class="px-3 py-1.5 rounded-lg bg-amber-600/20 hover:bg-amber-600/30 text-amber-300 border border-amber-500/30 text-xs font-semibold transition flex items-center gap-1.5">
+                ⚖️ Audit / Adjust Stock
+            </button>
+
             <a href="dashboard.php" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium border border-slate-700 transition flex items-center gap-1.5">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
                 Refresh
@@ -236,6 +261,12 @@ function formatPHP($val) {
 
     <!-- Main Container -->
     <main class="flex-1 max-w-7xl w-full mx-auto p-6 md:p-8 space-y-8">
+
+        <?php if ($adjFeedback): ?>
+        <div class="rounded-xl border border-amber-500/30 bg-amber-950/30 p-4 text-xs font-semibold text-amber-300 flex items-center gap-2">
+            <span>✅ <?= htmlspecialchars($adjFeedback) ?></span>
+        </div>
+        <?php endif; ?>
 
         <!-- Low Stock Warning Alerts (if any critical or high exist) -->
         <?php if ($summary['low_stock_count'] > 0): ?>
@@ -468,6 +499,71 @@ function formatPHP($val) {
         </div>
 
     </main>
+
+    <!-- Stock Adjustment Modal -->
+    <div id="stockAdjustmentModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in">
+        <div class="w-full max-w-lg rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl p-6 space-y-5 text-white">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">⚖️</div>
+                    <div>
+                        <h3 class="text-sm font-bold">Inventory Audit &amp; Stock Adjustment</h3>
+                        <p class="text-[11px] text-slate-400">Strictly recorded to stock_adjustments ledger</p>
+                    </div>
+                </div>
+                <button onclick="document.getElementById('stockAdjustmentModal').classList.add('hidden')" class="p-1 rounded-lg text-slate-400 hover:text-white">&times;</button>
+            </div>
+
+            <form method="POST" action="dashboard.php" class="space-y-4 text-xs">
+                <input type="hidden" name="action" value="adjust_stock">
+
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">Select Product</label>
+                    <select name="product_id" required class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+                        <?php foreach ($recommendations as $r): ?>
+                        <option value="<?= htmlspecialchars($r['id']) ?>">
+                            <?= htmlspecialchars($r['sku']) ?> - <?= htmlspecialchars($r['product_name']) ?> (On Hand: <?= (int)$r['current_stock_on_hand'] ?>)
+                        </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">Adjustment Category</label>
+                    <select name="adjustment_type" required class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+                        <option value="physical_count">Physical Count Variance</option>
+                        <option value="spoilage">Spoilage / Expired Goods</option>
+                        <option value="damage">Damaged Packaging / Goods</option>
+                        <option value="theft">Theft / Shrinkage</option>
+                        <option value="restock_correction">Restock Correction (Surplus Receipt)</option>
+                        <option value="return">Customer Return</option>
+                        <option value="other">Other Managerial Adjustment</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">Quantity Delta</label>
+                        <input type="number" name="quantity_delta" required value="-1" step="1" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 font-mono font-bold">
+                        <span class="text-[10px] text-slate-500 mt-0.5 block">Negative for deductions, positive for adds</span>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">Audit Observation</label>
+                        <input type="text" name="reason" placeholder="e.g. Broken packaging" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-200">
+                    </div>
+                </div>
+
+                <div class="pt-3 flex items-center justify-end gap-3 border-t border-slate-800">
+                    <button type="button" onclick="document.getElementById('stockAdjustmentModal').classList.add('hidden')" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-5 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold transition shadow-lg">
+                        Commit Stock Adjustment
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="h-12 border-t border-slate-800 text-xs text-slate-500 flex items-center justify-between px-6 shrink-0">

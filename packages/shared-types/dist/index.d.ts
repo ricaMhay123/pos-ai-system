@@ -69,6 +69,8 @@ export interface ProductWithStock extends Product {
     stockReserved: number;
     stockAvailable: number;
     safetyStock: number;
+    lastAdjustedAt?: string | null;
+    lastAdjustmentType?: StockAdjustmentType | null;
 }
 export interface CreateProductDto {
     categoryId?: string | null;
@@ -85,6 +87,8 @@ export interface CreateProductDto {
     leadTimeDays?: number;
     initialStock?: number;
     storeId?: string;
+    initialAdjustmentReason?: string;
+    initialAdjustmentType?: StockAdjustmentType;
 }
 export interface UpdateProductDto {
     categoryId?: string | null;
@@ -98,6 +102,8 @@ export interface UpdateProductDto {
     reorderQuantity?: number;
     leadTimeDays?: number;
     isActive?: boolean;
+    adjustmentReason?: string;
+    adjustmentType?: StockAdjustmentType;
 }
 export type InventoryMovementType = 'sale' | 'purchase_receipt' | 'return_restock' | 'adjustment_loss' | 'adjustment_found' | 'transfer_in' | 'transfer_out';
 export interface InventoryLevel {
@@ -130,6 +136,45 @@ export interface InventoryAdjustmentDto {
     movementType: 'adjustment_loss' | 'adjustment_found' | 'return_restock' | 'purchase_receipt';
     quantityDelta: number;
     reason: string;
+}
+export type StockAdjustmentType = 'physical_count' | 'damage' | 'spoilage' | 'theft' | 'restock_correction' | 'return' | 'other';
+export interface StockAdjustment {
+    id: string;
+    storeId?: string | null;
+    productId?: string | null;
+    sku: string;
+    productName: string;
+    adjustmentType: StockAdjustmentType;
+    quantityDelta: number;
+    previousStock: number;
+    newStock: number;
+    costImpactPhp: number;
+    reason?: string | null;
+    referenceNumber?: string | null;
+    adjustedBy?: string | null;
+    adjustedByName?: string | null;
+    createdAt: string;
+    updatedAt?: string;
+}
+export interface CreateStockAdjustmentDto {
+    storeId?: string;
+    productId: string;
+    sku?: string;
+    productName?: string;
+    adjustmentType: StockAdjustmentType;
+    quantityDelta: number;
+    reason?: string;
+    referenceNumber?: string;
+    adjustedBy?: string;
+    adjustedByName?: string;
+}
+export interface StockAdjustmentQuery {
+    storeId?: string;
+    productId?: string;
+    adjustmentType?: StockAdjustmentType;
+    search?: string;
+    page?: number;
+    limit?: number;
 }
 export type TransactionStatus = 'pending' | 'completed' | 'voided' | 'refunded' | 'partially_refunded';
 export type PaymentMethod = 'cash' | 'credit_card' | 'debit_card' | 'digital_wallet' | 'gift_card' | 'split';

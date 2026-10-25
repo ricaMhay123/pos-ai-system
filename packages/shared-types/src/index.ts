@@ -83,6 +83,8 @@ export interface ProductWithStock extends Product {
   stockReserved: number;
   stockAvailable: number;
   safetyStock: number;
+  lastAdjustedAt?: string | null;
+  lastAdjustmentType?: StockAdjustmentType | null;
 }
 
 export interface CreateProductDto {
@@ -100,6 +102,8 @@ export interface CreateProductDto {
   leadTimeDays?: number;
   initialStock?: number;
   storeId?: string;
+  initialAdjustmentReason?: string;
+  initialAdjustmentType?: StockAdjustmentType;
 }
 
 export interface UpdateProductDto {
@@ -114,6 +118,8 @@ export interface UpdateProductDto {
   reorderQuantity?: number;
   leadTimeDays?: number;
   isActive?: boolean;
+  adjustmentReason?: string;
+  adjustmentType?: StockAdjustmentType;
 }
 
 // --- Inventory & Ledger ---
@@ -158,6 +164,57 @@ export interface InventoryAdjustmentDto {
   movementType: 'adjustment_loss' | 'adjustment_found' | 'return_restock' | 'purchase_receipt';
   quantityDelta: number;
   reason: string;
+}
+
+// --- Stock Adjustments (Audit, Spoilage, Damage & Physical Count Discrepancies) ---
+export type StockAdjustmentType =
+  | 'physical_count'
+  | 'damage'
+  | 'spoilage'
+  | 'theft'
+  | 'restock_correction'
+  | 'return'
+  | 'other';
+
+export interface StockAdjustment {
+  id: string;
+  storeId?: string | null;
+  productId?: string | null;
+  sku: string;
+  productName: string;
+  adjustmentType: StockAdjustmentType;
+  quantityDelta: number;
+  previousStock: number;
+  newStock: number;
+  costImpactPhp: number;
+  reason?: string | null;
+  referenceNumber?: string | null;
+  adjustedBy?: string | null;
+  adjustedByName?: string | null;
+  createdAt: string;
+  updatedAt?: string;
+}
+
+export interface CreateStockAdjustmentDto {
+  storeId?: string;
+  productId: string;
+  sku?: string;
+  productName?: string;
+  adjustmentType: StockAdjustmentType;
+  quantityDelta: number;
+  reason?: string;
+  referenceNumber?: string;
+  adjustedBy?: string;
+  adjustedByName?: string;
+}
+
+export interface StockAdjustmentQuery {
+  storeId?: string;
+  productId?: string;
+  adjustmentType?: StockAdjustmentType;
+  search?: string;
+  page?: number;
+  limit?: number;
 }
 
 // --- POS Transactions & Checkout ---

@@ -78,20 +78,20 @@ export const CartTotals: React.FC<CartTotalsProps> = ({
       <div className="space-y-1 text-xs" style={{ color: 'var(--at-neutral-muted)' }}>
         <div className="flex justify-between gap-2">
           <span className="truncate shrink-0">
-            Gross Subtotal ({itemCount} {itemCount === 1 ? 'item' : 'items'})
+            Gross Subtotal ({itemCount ?? 0} {(itemCount ?? 0) === 1 ? 'item' : 'items'})
           </span>
           <span className="font-mono shrink-0" style={{ color: 'var(--at-neutral)' }}>
-            {formatPhp(subtotal)}
+            {formatPhp(subtotal ?? 0)}
           </span>
         </div>
 
-        {discount > 0 && (
+        {(discount ?? 0) > 0 && (
           <div className="flex justify-between gap-2" style={{ color: 'var(--at-primary)' }}>
             <span className="flex items-center gap-1 truncate shrink-0">
               <Tag className="w-3 h-3 shrink-0" />
               <span>SC/PWD Discount (20%)</span>
             </span>
-            <span className="font-mono shrink-0">-{formatPhp(discount)}</span>
+            <span className="font-mono shrink-0">-{formatPhp(discount ?? 0)}</span>
           </div>
         )}
 
@@ -100,7 +100,7 @@ export const CartTotals: React.FC<CartTotalsProps> = ({
             VAT (12%{isSeniorOrPwd ? ' Exempted' : ''})
           </span>
           <span className="font-mono shrink-0" style={{ color: 'var(--at-neutral)' }}>
-            {formatPhp(tax)}
+            {formatPhp(tax ?? 0)}
           </span>
         </div>
       </div>
@@ -124,7 +124,7 @@ export const CartTotals: React.FC<CartTotalsProps> = ({
             color: 'var(--at-neutral)',
           }}
         >
-          {formatPhp(total)}
+          {formatPhp(total ?? 0)}
         </span>
       </div>
 

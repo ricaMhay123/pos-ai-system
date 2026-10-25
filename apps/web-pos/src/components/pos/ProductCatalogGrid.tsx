@@ -23,7 +23,7 @@ export const ProductCatalogGrid: React.FC<ProductCatalogGridProps> = ({
     );
   }
 
-  if (products.length === 0) {
+  if (!products || products.length === 0) {
     return (
       <div className="h-full flex flex-col items-center justify-center text-center p-8 text-at-accent/70">
         <div className="w-14 h-14 rounded-2xl bg-at-neutral-dark border border-at-neutral-muted flex items-center justify-center mb-3 shadow-sm">
@@ -42,9 +42,9 @@ export const ProductCatalogGrid: React.FC<ProductCatalogGridProps> = ({
       id="pos-product-grid"
       className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 overflow-y-auto pr-1 pb-4"
     >
-      {products.map((product) => (
+      {products?.map((product) => (
         <ProductCard
-          key={product.id}
+          key={product?.id ?? product?.sku}
           product={product}
           onAddToCart={onAddToCart}
         />

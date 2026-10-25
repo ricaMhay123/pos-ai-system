@@ -14,14 +14,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   onAddToCart,
   disabled = false,
 }) => {
-  const isOutOfStock = product.stockOnHand <= 0;
-  const isLowStock = !isOutOfStock && product.stockOnHand <= product.safetyStock;
+  const onHand = product?.stockOnHand ?? 0;
+  const safety = product?.safetyStock ?? 5;
+  const isOutOfStock = onHand <= 0;
+  const isLowStock = !isOutOfStock && onHand <= safety;
 
   return (
     <div
-      id={`product-card-${product.sku}`}
+      id={`product-card-${product?.sku ?? 'item'}`}
       onClick={() => {
-        if (!isOutOfStock && !disabled) {
+        if (!isOutOfStock && !disabled && product) {
           onAddToCart(product);
         }
       }}
@@ -54,7 +56,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             className="text-[11px] font-mono font-medium transition-colors"
             style={{ color: 'var(--at-accent-light)' }}
           >
-            {product.sku}
+            {product?.sku ?? 'SKU-N/A'}
           </span>
 
           {isOutOfStock ? (
@@ -78,7 +80,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 borderColor: 'rgba(227,154,75,0.30)',
               }}
             >
-              <AlertCircle className="w-3 h-3" /> {product.stockOnHand} left
+              <AlertCircle className="w-3 h-3" /> {onHand} left
             </span>
           ) : (
             <span
@@ -89,7 +91,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 borderColor: 'var(--at-neutral-muted)',
               }}
             >
-              {product.stockOnHand} in stock
+              {onHand} in stock
             </span>
           )}
         </div>
@@ -99,11 +101,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           className="font-semibold text-sm line-clamp-2 leading-snug"
           style={{ color: 'var(--at-accent)' }}
         >
-          {product.name}
+          {product?.name ?? 'Unnamed Product'}
         </h4>
-        {product.description && (
+        {product?.description && (
           <p className="text-xs line-clamp-1 mt-1 leading-normal" style={{ color: 'var(--at-accent-light)' }}>
-            {product.description}
+            {product?.description}
           </p>
         )}
       </div>
@@ -115,18 +117,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       >
         <div>
           <span className="text-base font-bold font-mono" style={{ color: 'var(--at-accent)' }}>
-            {formatPhp(product.retailPrice)}
+            {formatPhp(product?.retailPrice ?? 0)}
           </span>
           <span className="text-[10px] ml-1.5 font-medium" style={{ color: 'var(--at-accent-light)' }}>
-            {product.taxRate > 0 ? '+12% VAT' : 'VAT-Exempt'}
+            {(product?.taxRate ?? 0) > 0 ? '+12% VAT' : 'VAT-Exempt'}
           </span>
         </div>
 
         <button
-          id={`btn-add-${product.sku}`}
+          id={`btn-add-${product?.sku ?? 'item'}`}
           type="button"
           disabled={isOutOfStock || disabled}
-          aria-label={`Add ${product.name} to cart`}
+          aria-label={`Add ${product?.name ?? 'item'} to cart`}
           className="w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-150"
           style={
             isOutOfStock

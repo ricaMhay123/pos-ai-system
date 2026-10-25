@@ -20,13 +20,13 @@ export const CartItemRow: React.FC<CartItemRowProps> = ({
   onUpdateQuantity,
   onRemoveItem,
 }) => {
-  const lineSubtotal = item.product.retailPrice * item.quantity;
-  const lineDiscount = item.discountAmount || 0;
+  const lineSubtotal = (item?.product?.retailPrice ?? 0) * (item?.quantity ?? 1);
+  const lineDiscount = item?.discountAmount || 0;
   const lineTotal = Math.max(0, lineSubtotal - lineDiscount);
 
   return (
     <div
-      id={`cart-row-${item.product.sku}`}
+      id={`cart-row-${item?.product?.sku ?? 'item'}`}
       className="group relative p-3 rounded-xl border transition flex items-center justify-between gap-3 select-none"
       style={{
         backgroundColor: 'var(--at-accent-muted)',
@@ -37,14 +37,14 @@ export const CartItemRow: React.FC<CartItemRowProps> = ({
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
           <span className="font-mono text-[10px]" style={{ color: 'var(--at-neutral-muted)' }}>
-            {item.product.sku}
+            {item?.product?.sku ?? 'SKU-N/A'}
           </span>
           <span className="text-[10px] font-mono" style={{ color: 'var(--at-primary)' }}>
-            {formatPhp(item.product.retailPrice)}/ea
+            {formatPhp(item?.product?.retailPrice ?? 0)}/ea
           </span>
         </div>
         <div className="font-medium text-xs truncate mt-0.5" style={{ color: 'var(--at-neutral)' }}>
-          {item.product.name}
+          {item?.product?.name ?? 'Item'}
         </div>
         {lineDiscount > 0 && (
           <div className="text-[10px] font-mono mt-0.5" style={{ color: 'var(--at-primary)' }}>

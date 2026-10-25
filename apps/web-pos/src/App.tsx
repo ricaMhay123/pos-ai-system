@@ -14,14 +14,16 @@ import {
   X,
   ExternalLink,
   LogOut,
+  SlidersHorizontal,
 } from 'lucide-react';
-import { PosCheckoutShell } from './components/pos';
+import { PosCheckoutShell, StockAdjustmentModal } from './components/pos';
 import { AuthLandingPage, type AuthUser } from './components/auth/AuthLandingPage';
 import { formatPhp } from './utils/formatters';
 import type {
   ProductWithStock,
   InventoryRecommendation,
   ManagerRecommendationSummary,
+  StockAdjustment,
 } from '@pos-ai/shared-types';
 
 const INITIAL_PH_PRODUCTS: ProductWithStock[] = [
@@ -260,12 +262,51 @@ export default function App() {
       }
     }
   };
-  const [products] = useState<ProductWithStock[]>(INITIAL_PH_PRODUCTS);
+  const [products, setProducts] = useState<ProductWithStock[]>(INITIAL_PH_PRODUCTS);
   const [recommendations, setRecommendations] = useState<InventoryRecommendation[]>(INITIAL_RECOMMENDATIONS);
   const [summary, setSummary] = useState<ManagerRecommendationSummary | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [filterUrgency, setFilterUrgency] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [isAdjustmentModalOpen, setIsAdjustmentModalOpen] = useState(false);
+  const [selectedAdjustmentProductId, setSelectedAdjustmentProductId] = useState<string | undefined>(undefined);
+
+  const handleAdjustmentSuccess = (adj: StockAdjustment) => {
+    setProducts((prev) =>
+      prev?.map((p) => {
+        if (p?.id === adj?.productId || p?.sku === adj?.sku) {
+          const updatedStock = adj?.newStock ?? ((p?.stockOnHand ?? 0) + (adj?.quantityDelta ?? 0));
+          return {
+            ...p,
+            stockOnHand: updatedStock,
+            stockAvailable: Math.max(0, updatedStock - (p?.stockReserved ?? 0)),
+            lastAdjustedAt: adj?.createdAt,
+            lastAdjustmentType: adj?.adjustmentType,
+          };
+        }
+        return p;
+      }),
+    );
+
+    setRecommendations((prev) =>
+      prev?.map((r) => {
+        if (r?.productId === adj?.productId || r?.sku === adj?.sku) {
+          const updatedStock = adj?.newStock ?? ((r?.currentStockOnHand ?? 0) + (adj?.quantityDelta ?? 0));
+          return {
+            ...r,
+            currentStockOnHand: updatedStock,
+            urgency: updatedStock <= (r?.reorderPoint ?? 0) ? 'critical' : r?.urgency,
+          };
+        }
+        return r;
+      }),
+    );
+
+    setRbacNotice(
+      `Stock Adjustment Recorded: ${adj?.productName || adj?.sku} was adjusted (${adj?.quantityDelta > 0 ? '+' : ''}${adj?.quantityDelta} units). Ref: ${adj?.referenceNumber || 'N/A'}`
+    );
+    setTimeout(() => setRbacNotice(null), 4500);
+  };
 
   // Fetch live recommendations & summary from API Gateway
   const fetchLiveData = async () => {
@@ -638,6 +679,30 @@ export default function App() {
           >
             <LogOut className="w-3.5 h-3.5" style={{ color: 'var(--at-secondary)' }} />
             <span>Sign Out</span>
+          </button>
+
+          {/* Audit / Adjust Stock Button */}
+          <button
+            onClick={() => {
+              setSelectedAdjustmentProductId(undefined);
+              setIsAdjustmentModalOpen(true);
+            }}
+            title="Perform manual stock adjustment / inventory audit"
+            className="flex items-center gap-2 px-3.5 py-2 rounded-xl border text-xs font-semibold transition active:scale-95"
+            style={{
+              backgroundColor: 'var(--at-accent-muted)',
+              borderColor: 'var(--at-accent-light)',
+              color: 'var(--at-neutral)',
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'var(--at-accent-light)';
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'var(--at-accent-muted)';
+            }}
+          >
+            <SlidersHorizontal className="w-3.5 h-3.5" style={{ color: 'var(--at-primary)' }} />
+            <span>Audit / Adjust Stock</span>
           </button>
 
           {/* Refresh AI Pipeline */}
@@ -1281,34 +1346,61 @@ export default function App() {
                           {rec.reasoningSummary}
                         </td>
 
-                        {/* Action – Approve PO button */}
+                        {/* Action – Approve PO & Stock Audit buttons */}
                         <td className="py-4 px-4 text-right">
-                          {rec.status === 'approved' ? (
-                            <span
-                              className="inline-flex items-center gap-1 font-semibold text-xs"
-                              style={{ color: 'var(--at-primary)' }}
-                            >
-                              <CheckCircle2 className="w-3.5 h-3.5" /> Approved
-                            </span>
-                          ) : (
-                            /* Secondary rust bg → Neutral text (WCAG AA ✅) */
+                          <div className="flex items-center justify-end gap-2">
                             <button
-                              onClick={() => approveRecommendation(rec.id)}
-                              className="px-3 py-1.5 rounded-lg font-medium text-xs transition shadow-sm active:scale-95"
+                              onClick={() => {
+                                setSelectedAdjustmentProductId(rec?.productId);
+                                setIsAdjustmentModalOpen(true);
+                              }}
+                              title={`Adjust stock for ${rec?.productName ?? rec?.sku}`}
+                              className="px-2.5 py-1.5 rounded-lg border text-xs font-semibold transition flex items-center gap-1 active:scale-95"
                               style={{
-                                backgroundColor: 'var(--at-secondary)',
-                                color: 'var(--at-text-on-secondary)',
+                                backgroundColor: 'var(--at-accent-muted)',
+                                borderColor: 'var(--at-accent-light)',
+                                color: 'var(--at-neutral-muted)',
                               }}
                               onMouseEnter={(e) => {
-                                (e.currentTarget as HTMLButtonElement).style.opacity = '0.88';
+                                (e.currentTarget as HTMLButtonElement).style.color = 'var(--at-neutral)';
+                                (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--at-primary)';
                               }}
                               onMouseLeave={(e) => {
-                                (e.currentTarget as HTMLButtonElement).style.opacity = '1';
+                                (e.currentTarget as HTMLButtonElement).style.color = 'var(--at-neutral-muted)';
+                                (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--at-accent-light)';
                               }}
                             >
-                              Approve PO
+                              <SlidersHorizontal className="w-3.5 h-3.5" style={{ color: 'var(--at-primary)' }} />
+                              <span className="hidden sm:inline">Adjust</span>
                             </button>
-                          )}
+
+                            {rec?.status === 'approved' ? (
+                              <span
+                                className="inline-flex items-center gap-1 font-semibold text-xs whitespace-nowrap"
+                                style={{ color: 'var(--at-primary)' }}
+                              >
+                                <CheckCircle2 className="w-3.5 h-3.5" /> Approved
+                              </span>
+                            ) : (
+                              /* Secondary rust bg → Neutral text (WCAG AA ✅) */
+                              <button
+                                onClick={() => approveRecommendation(rec?.id)}
+                                className="px-3 py-1.5 rounded-lg font-medium text-xs transition shadow-sm active:scale-95 whitespace-nowrap"
+                                style={{
+                                  backgroundColor: 'var(--at-secondary)',
+                                  color: 'var(--at-text-on-secondary)',
+                                }}
+                                onMouseEnter={(e) => {
+                                  (e.currentTarget as HTMLButtonElement).style.opacity = '0.88';
+                                }}
+                                onMouseLeave={(e) => {
+                                  (e.currentTarget as HTMLButtonElement).style.opacity = '1';
+                                }}
+                              >
+                                Approve PO
+                              </button>
+                            )}
+                          </div>
                         </td>
                       </tr>
                     );
@@ -1321,6 +1413,15 @@ export default function App() {
 
         </div>
       </main>
+
+      {/* Stock Adjustment Modal */}
+      <StockAdjustmentModal
+        isOpen={isAdjustmentModalOpen}
+        onClose={() => setIsAdjustmentModalOpen(false)}
+        products={products}
+        initialProductId={selectedAdjustmentProductId}
+        onAdjustmentSuccess={handleAdjustmentSuccess}
+      />
 
       {/* Footer – Accent dark bg, Neutral-muted text (WCAG compliant) */}
       <footer

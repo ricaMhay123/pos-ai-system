@@ -12,5 +12,6 @@ export * from './PosCheckoutShell';
 export * from './ReceiptModal';
 export * from './PostPaymentReceiptModal';
 export * from './TransactionHistoryPanel';
+export * from './StockAdjustmentModal';
 export * from '../../utils/formatters';
 

@@ -6,6 +6,7 @@ import { CheckoutModule } from './modules/checkout/checkout.module';
 import { InventoryModule } from './modules/inventory/inventory.module';
 import { RecommendationsModule } from './modules/recommendations/recommendations.module';
 import { TransactionsModule } from './modules/transactions/transactions.module';
+import { StockAdjustmentsModule } from './modules/stock-adjustments/stock-adjustments.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { TransactionsModule } from './modules/transactions/transactions.module';
     InventoryModule,
     RecommendationsModule,
     TransactionsModule,
+    StockAdjustmentsModule,
   ],
 })
 export class AppModule {}
