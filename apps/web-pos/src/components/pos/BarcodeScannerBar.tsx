@@ -116,7 +116,7 @@ export const BarcodeScannerBar: React.FC<BarcodeScannerBarProps> = ({
             ? {
                 backgroundColor: 'var(--at-neutral)',
                 borderColor: 'var(--at-primary)',
-                boxShadow: '0 0 0 3px rgba(227,154,75,0.20)',
+                boxShadow: '0 0 0 3px rgba(235,160,0,0.20)',
               }
             : {
                 backgroundColor: 'var(--at-neutral)',

@@ -204,7 +204,7 @@ export const SmartCrossSellWidget: React.FC<SmartCrossSellWidgetProps> = ({
                 title={`Add ${rec.productName} to ticket`}
                 className={`shrink-0 flex items-center justify-center gap-1 px-2.5 py-1.5 rounded-md text-xs font-bold transition-all duration-200 active:scale-95 whitespace-nowrap ${
                   isAdded
-                    ? 'bg-emerald-600 text-white shadow-sm'
+                    ? 'bg-emerald-700 text-white shadow-sm'
                     : 'bg-at-primary text-at-accent hover:bg-at-primary-muted shadow-sm'
                 }`}
               >

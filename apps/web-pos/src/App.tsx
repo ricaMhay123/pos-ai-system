@@ -1113,7 +1113,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto space-y-6">
 
           {/* ── Low Stock Warning Alert Banner ─────────────────────────────
-               Secondary (#B8543F) bg → Neutral (#F8EBD9) text (WCAG AA ✅) */}
+               Secondary (#B8543F) bg → Neutral (#FDFBF7) text (WCAG AA ✅) */}
           {lowStockItems.length > 0 && (
             <div
               className="rounded-2xl border p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-lg"
@@ -1179,7 +1179,7 @@ export default function App() {
           )}
 
           {/* ── KPI Summary Grid ───────────────────────────────────────────
-               All cards: Accent (#3D2545) bg → Neutral (#F8EBD9) text (WCAG AA ✅)
+               All cards: Accent (#18335E) bg → Neutral (#FDFBF7) text (WCAG AA ✅)
                Value accents use Primary amber → keep backgrounds dark for legibility */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
@@ -1218,7 +1218,7 @@ export default function App() {
               >
                 30-Day Forecasted Revenue
               </div>
-              {/* Primary (#E39A4B) used as text color on dark Accent bg — safe (text not bg) */}
+              {/* Primary (#EBA000) used as text color on dark Accent bg — safe (text not bg) */}
               <div className="text-2xl font-extrabold mt-2 font-mono" style={{ color: 'var(--at-primary)' }}>
                 {formatPhp(totalForecastedRevenue30d)}
               </div>
@@ -1314,8 +1314,8 @@ export default function App() {
               <span
                 className="text-xs font-semibold px-2.5 py-1 rounded-lg border"
                 style={{
-                  backgroundColor: 'rgba(227,154,75,0.12)',
-                  borderColor: 'rgba(227,154,75,0.30)',
+                  backgroundColor: 'rgba(235,160,0,0.12)',
+                  borderColor: 'rgba(235,160,0,0.30)',
                   color: 'var(--at-primary)',
                 }}
               >
@@ -1571,7 +1571,7 @@ export default function App() {
                         }}
                         onMouseEnter={(e) => {
                           (e.currentTarget as HTMLTableRowElement).style.backgroundColor =
-                            isBreached ? 'rgba(184,84,63,0.12)' : 'rgba(61,37,69,0.25)';
+                            isBreached ? 'rgba(184,84,63,0.12)' : 'rgba(24,51,94,0.25)';
                         }}
                         onMouseLeave={(e) => {
                           (e.currentTarget as HTMLTableRowElement).style.backgroundColor =
@@ -1670,7 +1670,7 @@ export default function App() {
                             className="px-2.5 py-1 rounded-lg border"
                             style={{
                               backgroundColor: 'var(--at-primary)',
-                              color: 'var(--at-text-on-primary)',  /* #3D2545 — WCAG AA ✅ */
+                              color: 'var(--at-text-on-primary)',  /* #18335E — WCAG AA ✅ */
                               borderColor: 'var(--at-primary-muted)',
                             }}
                           >
@@ -1701,13 +1701,13 @@ export default function App() {
                                 : rec.urgency === 'medium'
                                 ? {
                                     /* Primary amber bg → CRITICAL: Accent dark text (WCAG AA ✅ 4.6:1) */
-                                    backgroundColor: 'rgba(227,154,75,0.18)',
+                                    backgroundColor: 'rgba(235,160,0,0.18)',
                                     color: 'var(--at-primary-dark)',
-                                    borderColor: 'rgba(227,154,75,0.35)',
+                                    borderColor: 'rgba(235,160,0,0.35)',
                                   }
                                 : {
                                     /* Low: subtle Accent light */
-                                    backgroundColor: 'rgba(61,37,69,0.12)',
+                                    backgroundColor: 'rgba(24,51,94,0.12)',
                                     color: 'var(--at-accent-light)',
                                     borderColor: 'rgba(90,56,104,0.30)',
                                   }

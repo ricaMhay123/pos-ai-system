@@ -129,7 +129,7 @@ export const CartTotals: React.FC<CartTotalsProps> = ({
       </div>
 
       {/* Charge / Checkout Button
-          Uses Secondary (#B8543F) bg → Neutral (#F8EBD9) text (WCAG AA compliant) */}
+          Uses Secondary (#B8543F) bg → Neutral (#FDFBF7) text (WCAG AA compliant) */}
       <button
         id="btn-proceed-checkout"
         type="button"
@@ -147,7 +147,7 @@ export const CartTotals: React.FC<CartTotalsProps> = ({
         <span
           className="text-[10px] px-1.5 py-0.5 rounded font-mono shrink-0"
           style={{
-            backgroundColor: 'rgba(61,37,69,0.40)',
+            backgroundColor: 'rgba(24,51,94,0.40)',
             color: 'var(--at-neutral)',
           }}
         >

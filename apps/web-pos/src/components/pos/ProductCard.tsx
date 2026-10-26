@@ -39,7 +39,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           const el = e.currentTarget as HTMLDivElement;
           el.style.borderColor = 'var(--at-primary)';
           el.style.backgroundColor = 'var(--at-neutral)';
-          el.style.boxShadow = '0 4px 20px -4px rgba(227,154,75,0.25)';
+          el.style.boxShadow = '0 4px 20px -4px rgba(235,160,0,0.25)';
         }
       }}
       onMouseLeave={(e) => {
@@ -75,9 +75,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               className="flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full border animate-pulse"
               style={{
                 /* Primary bg → CRITICAL: must use Accent (dark) text */
-                backgroundColor: 'rgba(227,154,75,0.15)',
+                backgroundColor: 'rgba(235,160,0,0.15)',
                 color: 'var(--at-primary-dark)',
-                borderColor: 'rgba(227,154,75,0.30)',
+                borderColor: 'rgba(235,160,0,0.30)',
               }}
             >
               <AlertCircle className="w-3 h-3" /> {onHand} left
@@ -86,7 +86,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             <span
               className="text-[10px] font-medium px-2 py-0.5 rounded-full border"
               style={{
-                backgroundColor: 'rgba(61,37,69,0.08)',
+                backgroundColor: 'rgba(24,51,94,0.08)',
                 color: 'var(--at-accent)',
                 borderColor: 'var(--at-neutral-muted)',
               }}
@@ -133,7 +133,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           style={
             isOutOfStock
               ? { backgroundColor: 'var(--at-neutral-muted)', color: 'var(--at-neutral-dark)' }
-              : { backgroundColor: 'rgba(227,154,75,0.15)', color: 'var(--at-primary-dark)' }
+              : { backgroundColor: 'rgba(235,160,0,0.15)', color: 'var(--at-primary-dark)' }
           }
           onMouseEnter={(e) => {
             if (!isOutOfStock) {
@@ -146,7 +146,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           onMouseLeave={(e) => {
             if (!isOutOfStock) {
               const btn = e.currentTarget as HTMLButtonElement;
-              btn.style.backgroundColor = 'rgba(227,154,75,0.15)';
+              btn.style.backgroundColor = 'rgba(235,160,0,0.15)';
               btn.style.color = 'var(--at-primary-dark)';
             }
           }}

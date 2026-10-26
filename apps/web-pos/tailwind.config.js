@@ -7,23 +7,24 @@ export default {
   theme: {
     extend: {
       colors: {
-        // ── Amber Twilight Palette ─────────────────────────────────────────
-        // Primary  – Warm Amber     #E39A4B  (text must be Accent #3D2545)
-        // Secondary – Rust Red      #B8543F  (text must be Neutral/White)
-        // Accent    – Deep Purple   #3D2545  (text must be Neutral/White)
-        // Neutral   – Warm Cream    #F8EBD9  (text must be Accent #3D2545)
+        // ── Navy & Amber Palette (WCAG 2.1 AA) ─────────────────────────────
+        // Primary   – Amber         #EBA000  (text MUST be Navy #0F2242 — 7.2:1)
+        // Secondary – Rust Red      #B8543F  (text must be Cream/White — 4.9:1)
+        // Accent    – Deep Navy     #18335E  (text must be Cream/White — 12.4:1)
+        // Neutral   – Warm Cream    #FDFBF7  (text must be Navy — 12.4:1+)
         at: {
-          primary:         '#E39A4B',  // Warm Amber  – highlights, badges
-          secondary:       '#B8543F',  // Rust Red    – secondary actions, alerts
-          accent:          '#3D2545',  // Deep Purple – navbars, dark cards, primary btn bg
-          neutral:         '#F8EBD9',  // Warm Cream  – main bg, light surfaces
+          primary:         '#EBA000',  // Amber       – primary buttons, badges, highlights
+          secondary:       '#B8543F',  // Rust Red    – destructive / alert actions
+          accent:          '#18335E',  // Deep Navy   – header, sidebar, dark cards
+          neutral:         '#FDFBF7',  // Warm Cream  – page canvas, light surfaces
+          ink:             '#0F2242',  // Dark Navy   – text base on cream & amber
           // Tonal shades for hover / border / muted states
-          'accent-light':  '#5a3868',  // lighter accent for borders / hover
-          'accent-muted':  '#2a1a30',  // darker accent for deeper cards
-          'primary-muted': '#f0b87a',  // lighter amber for hover
-          'primary-dark':  '#c4832e',  // darker amber for pressed state
-          'neutral-dark':  '#eddcbf',  // slightly darker cream for card bg
-          'neutral-muted': '#d4c4a8',  // muted cream for disabled / placeholder
+          'accent-light':  '#2B4C80',  // lighter navy for borders / hover
+          'accent-muted':  '#0F2242',  // deepest navy for inset cards / inputs
+          'primary-muted': '#F5BC3A',  // lighter amber for hover (navy text still AA)
+          'primary-dark':  '#8A5E00',  // deep amber — safe as TEXT on cream (5.5:1)
+          'neutral-dark':  '#F3EEE3',  // slightly darker cream for card surfaces
+          'neutral-muted': '#C5CFDF',  // muted light text on navy (8.6:1)
         },
       },
       fontFamily: {
@@ -38,7 +39,7 @@ export default {
   // this safelist those classes are purged in production builds.
   safelist: [
     {
-      pattern: /^(bg|text|border|ring|shadow|divide)-at-(primary|secondary|accent|neutral|accent-light|accent-muted|primary-muted|primary-dark|neutral-dark|neutral-muted)(\/\d+)?$/,
+      pattern: /^(bg|text|border|ring|shadow|divide)-at-(primary|secondary|accent|neutral|accent-light|accent-muted|primary-muted|primary-dark|neutral-dark|neutral-muted|ink)(\/\d+)?$/,
       variants: ['hover', 'focus', 'active'],
     },
   ],

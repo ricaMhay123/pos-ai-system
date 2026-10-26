@@ -75,7 +75,7 @@ export const AuthLandingPage: React.FC<AuthLandingPageProps> = ({ onLogin }) => 
       <div
         className="fixed top-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] blur-3xl pointer-events-none -z-10"
         style={{
-          background: 'radial-gradient(ellipse at center, rgba(227,154,75,0.18) 0%, rgba(184,84,63,0.10) 50%, transparent 80%)',
+          background: 'radial-gradient(ellipse at center, rgba(235,160,0,0.18) 0%, rgba(184,84,63,0.10) 50%, transparent 80%)',
         }}
       />
 
@@ -161,7 +161,7 @@ export const AuthLandingPage: React.FC<AuthLandingPageProps> = ({ onLogin }) => 
             style={{
               backgroundColor: 'var(--at-neutral-dark)',
               borderColor: 'var(--at-neutral-muted)',
-              boxShadow: '0 0 60px -12px rgba(227,154,75,0.18)',
+              boxShadow: '0 0 60px -12px rgba(235,160,0,0.18)',
             }}
           >
             <form onSubmit={handleSubmit} className="space-y-5">
@@ -193,7 +193,7 @@ export const AuthLandingPage: React.FC<AuthLandingPageProps> = ({ onLogin }) => 
                     }}
                     onFocus={(e) => {
                       e.currentTarget.style.borderColor = 'var(--at-primary)';
-                      e.currentTarget.style.boxShadow = '0 0 0 3px rgba(227,154,75,0.18)';
+                      e.currentTarget.style.boxShadow = '0 0 0 3px rgba(235,160,0,0.18)';
                     }}
                     onBlur={(e) => {
                       e.currentTarget.style.borderColor = 'var(--at-neutral-muted)';
@@ -230,7 +230,7 @@ export const AuthLandingPage: React.FC<AuthLandingPageProps> = ({ onLogin }) => 
                     }}
                     onFocus={(e) => {
                       e.currentTarget.style.borderColor = 'var(--at-primary)';
-                      e.currentTarget.style.boxShadow = '0 0 0 3px rgba(227,154,75,0.18)';
+                      e.currentTarget.style.boxShadow = '0 0 0 3px rgba(235,160,0,0.18)';
                     }}
                     onBlur={(e) => {
                       e.currentTarget.style.borderColor = 'var(--at-neutral-muted)';

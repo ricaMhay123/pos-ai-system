@@ -209,7 +209,7 @@ export const StockAdjustmentModal: React.FC<StockAdjustmentModalProps> = ({
             <div
               className="p-3 rounded-xl border text-xs flex items-center gap-2"
               style={{
-                backgroundColor: 'rgba(227,154,75,0.15)',
+                backgroundColor: 'rgba(235,160,0,0.15)',
                 borderColor: 'var(--at-primary)',
                 color: 'var(--at-neutral)',
               }}
@@ -235,7 +235,7 @@ export const StockAdjustmentModal: React.FC<StockAdjustmentModalProps> = ({
               }}
             >
               {products?.map((p) => (
-                <option key={p?.id} value={p?.id} className="bg-slate-900 text-white">
+                <option key={p?.id} value={p?.id} className="bg-at-accent-muted text-at-neutral">
                   {p?.sku} - {p?.name} (On Hand: {p?.stockOnHand ?? 0})
                 </option>
               ))}
@@ -364,7 +364,7 @@ export const StockAdjustmentModal: React.FC<StockAdjustmentModalProps> = ({
           <div
             className="p-3.5 rounded-xl border grid grid-cols-3 gap-2 text-center text-xs"
             style={{
-              backgroundColor: 'rgba(61,37,69,0.5)',
+              backgroundColor: 'rgba(24,51,94,0.5)',
               borderColor: 'var(--at-accent-light)',
             }}
           >
